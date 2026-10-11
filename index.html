@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Telco — Home</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <!-- config MUST load before app.js -->
+  <script src="config.js"></script>
+</head>
+<body>
+  <header class="site">
+    <div class="brand">Telco<span>.</span></div>
+    <nav>
+      <a href="#">Phones</a><a href="#">Plans</a><a href="#">Home Internet</a><a href="#">Perks</a>
+    </nav>
+    <div class="identity">
+      Signed in as
+      <select id="who">
+        <option value="">Anonymous visitor</option>
+      </select>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <!-- The personalization slot. SP (via DH's arbitrated decision) fills this. -->
+    <section class="foryou" id="foryou">
+      <div class="copy">
+        <div class="eyebrow">For you</div>
+        <h2 id="offer-heading">Loading your offer…</h2>
+        <p id="offer-body"></p>
+        <a class="cta" id="offer-cta" href="#">Shop now</a>
+        <div class="src">decision from <b id="offer-source">—</b> · offer <b id="offer-code">—</b></div>
+      </div>
+      <div class="art" id="offer-art"></div>
+    </section>
+
+    <h3 class="section">Browse the store</h3>
+    <div class="grid" id="catalog"></div>
+
+    <!-- Demo-only: shows the raw personalization decision so you can narrate it. -->
+    <section class="inspector">
+      <header>
+        <b>Decision inspector</b>
+        <span class="pill" id="mode-pill">—</span>
+      </header>
+      <pre id="decision-json">{}</pre>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
