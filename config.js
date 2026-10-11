@@ -1,5 +1,5 @@
 /* ─────────────────────────────────────────────────────────────────────────
- * Telco storefront — demo config.
+ * nova. storefront — demo config.
  *
  * This is the ONE file you edit to flip the site from local mock to live SP.
  *
@@ -17,6 +17,9 @@
 window.DEMO_CONFIG = {
   MOCK_MODE: true,
 
+  // Shown in the header. Pure cosmetics.
+  BRAND: "nova",
+
   // Paste the beacon from the 4b Website connector (looks like:
   // https://cdn.c360a.salesforce.com/beacon/c360a/<id>/scripts/c360a.min.js)
   BEACON_URL: "",
@@ -27,13 +30,29 @@ window.DEMO_CONFIG = {
   // Engagement channel passed as dynamic context to the recommender rules.
   CHANNEL: "Web",
 
-  // Product catalog ids used by the browse events. Replace the id values with
-  // the real Product / ProductCategory record ids from 4b once wired, so the
+  // Product catalog used by the browse events. Replace the id values with the
+  // real Product / ProductCategory record ids from 4b once wired, so the
   // Product Browse Engagement events resolve against the catalog.
   CATALOG: {
-    phone:    { id: "PROD_PHONE",    category: "CAT_DEVICES",  label: "Aurora 5G Phone" },
-    plan:     { id: "PROD_PLAN",     category: "CAT_PLANS",    label: "Unlimited Mobile Plan" },
-    internet: { id: "PROD_INTERNET", category: "CAT_INTERNET", label: "Home Internet nbn" },
-    stream:   { id: "PROD_STREAM",   category: "CAT_PERKS",    label: "Streaming Pass" }
+    phone: {
+      id: "PROD_PHONE", category: "CAT_DEVICES", label: "Aurora 5G",
+      sub: "128GB · Midnight", price: "$0 upfront · $54/mo",
+      img: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=600&q=80&auto=format&fit=crop"
+    },
+    plan: {
+      id: "PROD_PLAN", category: "CAT_PLANS", label: "Unlimited mobile",
+      sub: "Endless 5G data", price: "$45/mo",
+      img: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=600&q=80&auto=format&fit=crop"
+    },
+    internet: {
+      id: "PROD_INTERNET", category: "CAT_INTERNET", label: "Home internet nbn",
+      sub: "Fast 100 · no lock-in", price: "$69/mo",
+      img: "https://images.unsplash.com/photo-1606904825846-647eb07f5be2?w=600&q=80&auto=format&fit=crop"
+    },
+    stream: {
+      id: "PROD_STREAM", category: "CAT_PERKS", label: "nova perks",
+      sub: "Streaming & more", price: "Included",
+      img: "https://images.unsplash.com/photo-1593784991095-a205069470b6?w=600&q=80&auto=format&fit=crop"
+    }
   }
 };

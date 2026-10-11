@@ -3,22 +3,27 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Telco — Home</title>
+  <title>nova. — mobile, nbn & 5G</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
   <!-- config MUST load before app.js -->
   <script src="config.js"></script>
 </head>
 <body>
+  <div class="promo-strip">Free delivery on all devices · Switch to nova in minutes, keep your number</div>
+
   <header class="site">
-    <div class="brand">Telco<span>.</span></div>
+    <div class="brand" data-brand>nova<span>.</span></div>
     <nav>
-      <a href="#">Phones</a><a href="#">Plans</a><a href="#">Home Internet</a><a href="#">Perks</a>
+      <a href="#" data-cat="CAT_DEVICES">Phones</a>
+      <a href="#" data-cat="CAT_PLANS">Plans</a>
+      <a href="#" data-cat="CAT_INTERNET">Home internet</a>
+      <a href="#" data-cat="CAT_PERKS">Perks</a>
     </nav>
-    <div class="identity">
-      Signed in as
-      <select id="who">
+    <div class="account">
+      <span class="account-label">Signed in as</span>
+      <select id="who" aria-label="Signed-in customer">
         <option value="">Anonymous visitor</option>
       </select>
     </div>
@@ -31,24 +36,41 @@
         <div class="eyebrow">For you</div>
         <h2 id="offer-heading">Loading your offer…</h2>
         <p id="offer-body"></p>
-        <a class="cta" id="offer-cta" href="#">Shop now</a>
-        <div class="src">decision from <b id="offer-source">—</b> · offer <b id="offer-code">—</b></div>
+        <div class="cta-row">
+          <a class="cta" id="offer-cta" href="#">Shop now</a>
+          <span class="src">decision: <b id="offer-source">—</b> · offer <b id="offer-code">—</b></span>
+        </div>
       </div>
       <div class="art" id="offer-art"></div>
     </section>
 
-    <h3 class="section">Browse the store</h3>
+    <div class="section-head">
+      <h3 class="section">Shop nova</h3>
+      <span class="hint">Browse a category — your offer re-shapes in real time</span>
+    </div>
     <div class="grid" id="catalog"></div>
+
+    <section class="valueprops">
+      <div class="vp"><div class="vp-ico">⚡</div><div><b>Australia's fast 5G</b><span>99% population coverage</span></div></div>
+      <div class="vp"><div class="vp-ico">🔄</div><div><b>No lock-in contracts</b><span>Change or leave anytime</span></div></div>
+      <div class="vp"><div class="vp-ico">💬</div><div><b>Real human support</b><span>Local team, 7 days</span></div></div>
+    </section>
 
     <!-- Demo-only: shows the raw personalization decision so you can narrate it. -->
     <section class="inspector">
       <header>
-        <b>Decision inspector</b>
+        <b>Decisioning inspector</b>
         <span class="pill" id="mode-pill">—</span>
       </header>
       <pre id="decision-json">{}</pre>
     </section>
   </main>
+
+  <footer class="site-foot">
+    <div data-brand>nova<span>.</span></div>
+    <span>Mobile · Home internet · 5G · Perks</span>
+    <span class="fine">Demo storefront · personalization by Salesforce</span>
+  </footer>
 
   <script src="app.js"></script>
 </body>
