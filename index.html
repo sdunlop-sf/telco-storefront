@@ -7,6 +7,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
+
+  <!-- Data 360 Web & Mobile App connector beacon (nova Storefront).
+       Per the connector Integration Guide this is embedded as the first
+       script so data collection initialises before anything else. The same
+       URL lives in config.js (BEACON_URL) so app.js can read it / toggle. -->
+  <script src="https://cdn.c360a.salesforce.com/beacon/c360a/5e39738b-7dd0-46b3-b82d-10a7983da2fd/scripts/c360a.min.js" async></script>
+
   <!-- config MUST load before app.js -->
   <script src="config.js"></script>
 </head>

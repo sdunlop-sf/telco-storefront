@@ -24,10 +24,29 @@ window.DEMO_CONFIG = {
   BEACON_URL: "https://cdn.c360a.salesforce.com/beacon/c360a/5e39738b-7dd0-46b3-b82d-10a7983da2fd/scripts/c360a.min.js",
 
   // API name of the SP personalization point that serves the storefront slot.
-  PERSONALIZATION_POINT: "Telco_Offer_Personalisation",
+  // Generic on purpose — ONE point serves every demo vertical. The per-person
+  // OfferId match in the recommender keeps demos isolated, so this never changes.
+  PERSONALIZATION_POINT: "Decision_Offer_Personalisation",
 
   // Engagement channel passed as dynamic context to the recommender rules.
   CHANNEL: "Web",
+
+  // Data 360 Decisioning API endpoint. Paste the Data Cloud "Tenant Specific
+  // Endpoint" (Data Cloud Setup) and append /personalization/decisions, e.g.
+  //   https://<tenant>.c360a.salesforce.com/personalization/decisions
+  // Required for live mode. The point's Authentication must be unchecked so the
+  // browser can POST without credentials.
+  DECISION_ENDPOINT: "https://mm4gcmjwmzrwcnjzm02g8n3bg0.c360a.salesforce.com/personalization/decisions",
+
+  // Data space the personalization point lives in (profile graph scope).
+  DATASPACE: "default",
+
+  // How the "For you" slot renders the SP decision:
+  //   "treatment" (default) -> drop the hydrated TreatmentOutput card in whole,
+  //                            image included. Pixel-identical to the email.
+  //   "fields"              -> render structured fields into the native hero
+  //                            (needs a standalone image field on the graph).
+  RENDER_MODE: "treatment",
 
   // Product catalog used by the browse events. Replace the id values with the
   // real Product / ProductCategory record ids from 4b once wired, so the
