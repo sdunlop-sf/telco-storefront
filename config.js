@@ -15,14 +15,13 @@
  *   3. Set PERSONALIZATION_POINT to the API name of the SP personalization point.
  * ───────────────────────────────────────────────────────────────────────── */
 window.DEMO_CONFIG = {
-  MOCK_MODE: true,
+  MOCK_MODE: false,
 
   // Shown in the header. Pure cosmetics.
   BRAND: "nova",
 
-  // Paste the beacon from the 4b Website connector (looks like:
-  // https://cdn.c360a.salesforce.com/beacon/c360a/<id>/scripts/c360a.min.js)
-  BEACON_URL: "",
+  // Beacon from the 4b "nova Storefront" Website connector.
+  BEACON_URL: "https://cdn.c360a.salesforce.com/beacon/c360a/5e39738b-7dd0-46b3-b82d-10a7983da2fd/scripts/c360a.min.js",
 
   // API name of the SP personalization point that serves the storefront slot.
   PERSONALIZATION_POINT: "Telco_Offer_Personalisation",
