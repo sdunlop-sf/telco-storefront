@@ -46,7 +46,7 @@ window.DEMO_CONFIG = {
   //                            image included. Pixel-identical to the email.
   //   "fields"              -> render structured fields into the native hero
   //                            (needs a standalone image field on the graph).
-  RENDER_MODE: "treatment",
+  RENDER_MODE: "fields",
 
   // Product catalog used by the browse events. Replace the id values with the
   // real Product / ProductCategory record ids from 4b once wired, so the
