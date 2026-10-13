@@ -1,14 +1,14 @@
 :root {
-  --ink: #0b1220;
-  --muted: #64748b;
-  --line: #e6eaf0;
-  --brand: #5b2be0;        /* nova violet */
-  --brand-2: #8b5cf6;
-  --brand-ink: #3b1aa0;
-  --accent: #ff4d6d;       /* CTA coral */
-  --bg: #f4f5f9;
+  --ink: #312234;          /* amaysim dark plum */
+  --muted: #6b5b70;
+  --line: #ebe3f0;
+  --brand: #640594;        /* amaysim purple */
+  --brand-2: #9b3fc4;
+  --brand-ink: #4a0057;
+  --accent: #ff5500;       /* amaysim orange CTA */
+  --bg: #faf7fc;
   --card: #ffffff;
-  --ink-soft: #334155;
+  --ink-soft: #4c3e4f;
 }
 * { box-sizing: border-box; }
 html, body { margin: 0; }
@@ -32,14 +32,15 @@ header.site {
   padding: 15px 32px; background: var(--card); border-bottom: 1px solid var(--line);
   position: sticky; top: 0; z-index: 20;
 }
-.brand { font-weight: 900; font-size: 23px; letter-spacing: -1px; }
+.brand { display: flex; align-items: center; gap: 9px; font-weight: 800; font-size: 23px; letter-spacing: -1px; color: var(--brand); }
+.brand svg { width: 26px; height: 27px; display: block; }
 .brand span { color: var(--brand); }
 nav { display: flex; gap: 4px; margin-right: auto; }
 nav a {
   color: var(--ink-soft); text-decoration: none; font-size: 14px; font-weight: 600;
   padding: 8px 14px; border-radius: 9px; transition: background .12s, color .12s;
 }
-nav a:hover { background: #f1effb; color: var(--brand); }
+nav a:hover { background: #f4e8fa; color: var(--brand); }
 nav a.active { background: var(--brand); color: #fff; }
 
 .account { display: flex; align-items: center; gap: 9px; font-size: 13px; color: var(--muted); }
@@ -55,20 +56,21 @@ nav a.active { background: var(--brand); color: #fff; }
 .foryou {
   position: relative; border-radius: 22px; overflow: hidden; margin-bottom: 34px;
   display: grid; grid-template-columns: 1.15fr 0.85fr; min-height: 300px;
-  background: #0b1220; box-shadow: 0 20px 50px -24px rgba(11,18,32,.5);
+  background: linear-gradient(135deg, #4a0057 0%, #640594 100%);
+  box-shadow: 0 20px 50px -24px rgba(74,0,87,.55);
 }
 .foryou .copy { padding: 44px 46px; display: flex; flex-direction: column; justify-content: center; color: #fff; z-index: 2; }
 .foryou .eyebrow {
   font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase;
-  color: var(--brand-2); font-weight: 700; margin-bottom: 14px;
+  color: #e5d1ff; font-weight: 700; margin-bottom: 14px;
 }
 .foryou h2 { font-size: 34px; margin: 0 0 14px; line-height: 1.08; font-weight: 800; letter-spacing: -.6px; max-width: 460px; }
-.foryou p { color: #c3ccda; font-size: 16px; line-height: 1.5; margin: 0 0 26px; max-width: 440px; }
+.foryou p { color: #ead9f5; font-size: 16px; line-height: 1.5; margin: 0 0 26px; max-width: 440px; }
 .cta-row { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
 .foryou .cta {
   background: var(--accent); color: #fff; border: 0;
   padding: 14px 30px; border-radius: 11px; font-weight: 700; font-size: 14.5px;
-  cursor: pointer; text-decoration: none; box-shadow: 0 10px 24px -8px rgba(255,77,109,.6);
+  cursor: pointer; text-decoration: none; box-shadow: 0 10px 24px -8px rgba(255,85,0,.6);
   transition: transform .1s;
 }
 .foryou .cta:hover { transform: translateY(-1px); }
@@ -76,8 +78,8 @@ nav a.active { background: var(--brand); color: #fff; }
   background-size: cover; background-position: center;
   transition: background-image .25s ease;
 }
-.foryou .src { font-size: 11.5px; color: #8795a8; }
-.foryou .src b { color: var(--brand-2); font-weight: 700; }
+.foryou .src { font-size: 11.5px; color: #c9aedd; }
+.foryou .src b { color: #ff5500; font-weight: 700; }
 
 /* section head */
 .section-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 18px; }
@@ -95,7 +97,7 @@ h3.section { font-size: 19px; font-weight: 800; letter-spacing: -.3px; margin: 0
 .product .meta { padding: 16px 16px 18px; }
 .product .chip {
   display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: .4px; text-transform: uppercase;
-  color: var(--brand); background: #f1effb; padding: 3px 9px; border-radius: 20px; margin-bottom: 9px;
+  color: var(--brand); background: #f4e8fa; padding: 3px 9px; border-radius: 20px; margin-bottom: 9px;
 }
 .product .name { font-weight: 700; font-size: 16px; letter-spacing: -.2px; }
 .product .sub { color: var(--muted); font-size: 13px; margin-top: 2px; }

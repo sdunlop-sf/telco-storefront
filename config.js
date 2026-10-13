@@ -18,7 +18,7 @@ window.DEMO_CONFIG = {
   MOCK_MODE: false,
 
   // Shown in the header. Pure cosmetics.
-  BRAND: "nova",
+  BRAND: "amaysim",
 
   // Beacon from the 4b "nova Storefront" Website connector.
   BEACON_URL: "https://cdn.c360a.salesforce.com/beacon/c360a/5e39738b-7dd0-46b3-b82d-10a7983da2fd/scripts/c360a.min.js",
@@ -40,6 +40,14 @@ window.DEMO_CONFIG = {
 
   // Data space the personalization point lives in (profile graph scope).
   DATASPACE: "default",
+
+  // Live re-poll interval (ms) for the "For you" slot. >0 re-requests the SP
+  // decision on a timer so a signal-driven re-decision (DH supersedes the old
+  // offer + streams a new active one) is SEEN swapping in near-real-time — the
+  // "stale offer vanishes, fresh one appears" beat. 0 disables (serve once on
+  // arrival/browse only). Each poll is a live decision call and writes a
+  // Personalization Record to the lake — fine for demo; set 0 for a static shell.
+  POLL_MS: 4000,
 
   // How the "For you" slot renders the SP decision:
   //   "treatment" (default) -> drop the hydrated TreatmentOutput card in whole,
@@ -68,7 +76,7 @@ window.DEMO_CONFIG = {
       img: "https://images.unsplash.com/photo-1606904825846-647eb07f5be2?w=600&q=80&auto=format&fit=crop"
     },
     stream: {
-      id: "PROD_STREAM", category: "CAT_PERKS", label: "nova perks",
+      id: "PROD_STREAM", category: "CAT_PERKS", label: "amaysim rewards",
       sub: "Streaming & more", price: "Included",
       img: "https://images.unsplash.com/photo-1593784991095-a205069470b6?w=600&q=80&auto=format&fit=crop"
     }

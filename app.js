@@ -49,6 +49,7 @@
   };
 
   let state = { individualId: "", lastCategory: null, lastDecision: null };
+  let pollTimer = null;
 
   /* ---------- response mapping (vertical-agnostic) ---------- */
   // Pull the first non-empty value across possible field-name casings the SDK
@@ -207,7 +208,12 @@
       .then((resp) => {
         const item = firstItem(resp);
         if (item && (item.TreatmentOutput__c || item.OfferHeading__c || item.personalizationContentId)) {
+          const prevOffer = state.lastDecision && state.lastDecision.offerId;
+          const newOffer  = pick(item, "OfferId__c", "OfferTreatmentCode__c", "Id__c");
           renderItem(item, "DH decision · served by SP (live)");
+          // Visible "stale offer vanishes, fresh one appears" beat: flash the
+          // slot only when a re-decision actually changed the served offer.
+          if (prevOffer && newOffer && prevOffer !== newOffer) flashForYou();
         } else {
           console.warn("[storefront] empty personalization — identity likely not " +
             "resolving to the unified profile that holds the decision", resp);
@@ -237,6 +243,26 @@
                 (Array.isArray(resp) ? resp : null);
     if (Array.isArray(arr) && arr.length) return arr[0].attributes || arr[0];
     return resp.attributes || resp;
+  }
+
+  // Brief outline pulse on the "For you" section when the served offer changes,
+  // so the live swap reads on screen without depending on styles.css.
+  function flashForYou() {
+    const sec = document.getElementById("foryou");
+    if (!sec) return;
+    sec.style.transition = "box-shadow .25s ease";
+    sec.style.boxShadow = "0 0 0 3px rgba(10,102,194,.9)";
+    setTimeout(() => { sec.style.boxShadow = "none"; }, 900);
+  }
+
+  // Re-poll the SP decision on cfg.POLL_MS so a signal-driven re-decision is
+  // seen swapping live. Restarted whenever identity changes; no-op in mock or
+  // when POLL_MS <= 0 / no identity selected.
+  function startPolling() {
+    if (pollTimer) { clearInterval(pollTimer); pollTimer = null; }
+    const ms = Number(cfg.POLL_MS) || 0;
+    if (cfg.MOCK_MODE || ms <= 0 || !state.individualId) return;
+    pollTimer = setInterval(requestDecision, ms);
   }
 
   /* ---------- browse (shared by catalog cards + nav) ---------- */
@@ -300,6 +326,7 @@
       highlight(null);
       setIdentity(state.individualId);
       requestDecision(); // fresh arrival = serve the DH decision for this person
+      startPolling();    // watch for live re-decisions on this identity
     };
   }
 
@@ -335,6 +362,7 @@
     const ready = () => {
       console.log("[storefront] SDK ready; personalization point:", cfg.PERSONALIZATION_POINT);
       requestDecision();
+      startPolling();
     };
     if (window.SalesforceInteractions) return ready();
     let waited = 0;
