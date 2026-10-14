@@ -482,6 +482,25 @@
     }, 200);
   }
 
+  // Which identity the storefront opens on (the parity beat starts logged in).
+  //   ?who=<first name | contact id>  -> that persona
+  //   ?who=anon | anonymous           -> anonymous / generic (no login)
+  //   (no param)                      -> Marcus (at-risk) by default
+  // On refresh the same identity is kept, so "fire decisions -> refresh" shows
+  // the newly-served offer against a stable logged-in customer.
+  function resolveOpeningPersona() {
+    const who = (new URLSearchParams(location.search).get("who") || "").trim().toLowerCase();
+    if (who === "anon" || who === "anonymous") return null;
+    if (who) {
+      const m = PERSONAS.find(p =>
+        p.id.toLowerCase() === who ||
+        p.name.toLowerCase().split(" ")[0] === who ||
+        p.name.toLowerCase().includes(who));
+      if (m) return m;
+    }
+    return PERSONAS.find(p => p.name.toLowerCase().startsWith("marcus")) || PERSONAS[0] || null;
+  }
+
   /* ---------- boot ---------- */
   function boot() {
     const pill = document.getElementById("mode-pill");
@@ -494,10 +513,17 @@
       renderItem(MOCK_ITEM, "MOCK · local sample");
     } else {
       pill.textContent = "LIVE · Salesforce Personalization"; pill.className = "pill live";
-      // Open GENERIC: no customer selected, so the hero shows the un-personalised
-      // amaysim offer and the account panel stays hidden. Picking a customer in
-      // the switcher is what brings in context (the inbound-parity beat).
-      renderGeneric();
+      // Open LOGGED IN (default: Marcus) so the parity beat starts in a real
+      // My amaysim account and the served offer updates on refresh as decisions
+      // fire. ?who=anon opens anonymous/generic instead.
+      const opening = resolveOpeningPersona();
+      if (opening) {
+        document.getElementById("who").value = opening.id;
+        state.individualId = opening.id;
+        renderAccount(opening);
+      } else {
+        renderGeneric();
+      }
       initLive();
     }
   }
