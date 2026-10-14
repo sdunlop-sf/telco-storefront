@@ -63,6 +63,19 @@
     OfferId__c: "SAMPLE"
   };
 
+  // Generic, UN-PERSONALISED opening offer shown to an anonymous visitor (no
+  // identity selected). This is the "before context" state: a brand/acquisition
+  // hero every visitor sees, no account chrome. Picking a customer swaps this
+  // for the DH-arbitrated, SP-served personal offer (the inbound-parity beat).
+  const GENERIC_OFFER = {
+    eyebrow: "amaysim plans",
+    heading: "Big data. No lock-in. On the Optus network.",
+    body: "Welcome to amaysim. Browse our mobile &amp; nbn plans — <strong>sign in</strong> and your offer re-shapes to your account.",
+    cta: "See all plans",
+    url: "#",
+    img: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=1000&q=80&auto=format&fit=crop"
+  };
+
   const CAT_LABEL = {
     CAT_DEVICES: "Devices", CAT_PLANS: "Plans",
     CAT_INTERNET: "Home internet", CAT_PERKS: "Perks"
@@ -109,6 +122,7 @@
                     || imageFromTreatment(pick(item, "TreatmentOutput__c", "treatmentOutput"));
     const code    = pick(item, "OfferId__c", "OfferTreatmentCode__c", "Id__c") || "—";
 
+    setEyebrow("Recommended for you"); // personalised again (generic reset)
     document.getElementById("offer-heading").textContent = heading;
     document.getElementById("offer-body").innerHTML = body; // body carries <strong>/entities
     const ctaEl = document.getElementById("offer-cta");
@@ -176,6 +190,45 @@
       JSON.stringify({ individualId: state.individualId || "anonymous", status: "no-decision" }, null, 2);
   }
 
+  function setEyebrow(text) {
+    const el = document.querySelector("#foryou .eyebrow");
+    if (el) el.textContent = text;
+  }
+
+  // Render the generic, un-personalised amaysim hero for an anonymous visitor.
+  // Paints the native hero fields directly (synthetic content, not an SP call),
+  // hides the My amaysim account chrome, and restores the native hero if a
+  // drop-in treatment card was previously injected (persona -> anonymous).
+  function renderGeneric() {
+    renderAccount(null); // no account chrome when anonymous
+
+    // If a hydrated treatment card was dropped in earlier, remove it and bring
+    // the native .copy/.art hero back so the generic creative is visible.
+    const slot = document.getElementById("treatment-slot");
+    if (slot) {
+      slot.remove();
+      document.querySelectorAll("#foryou .copy, #foryou .art")
+        .forEach(n => (n.style.display = ""));
+    }
+
+    setEyebrow(GENERIC_OFFER.eyebrow);
+    document.getElementById("offer-heading").textContent = GENERIC_OFFER.heading;
+    document.getElementById("offer-body").innerHTML = GENERIC_OFFER.body;
+    const ctaEl = document.getElementById("offer-cta");
+    ctaEl.textContent = GENERIC_OFFER.cta;
+    ctaEl.setAttribute("href", GENERIC_OFFER.url);
+    document.getElementById("offer-code").textContent = "—";
+    document.getElementById("offer-source").textContent = "generic · not personalised";
+
+    const art = document.getElementById("offer-art");
+    art.style.backgroundImage =
+      `linear-gradient(120deg, rgba(8,14,26,.45), rgba(8,14,26,.05)), url('${GENERIC_OFFER.img}')`;
+
+    state.lastDecision = null;
+    document.getElementById("decision-json").textContent =
+      JSON.stringify({ individualId: "anonymous", status: "generic offer — no personalization" }, null, 2);
+  }
+
   // Drop the hydrated treatment card in whole. Hides the native hero layout
   // once and injects the HTML into a single slot inside the "For you" section.
   function dropInTreatment(html, source, item) {
@@ -233,7 +286,7 @@
     }
 
     const id = state.individualId;
-    if (!id) return renderEmpty("no identity selected");
+    if (!id) return renderGeneric(); // anonymous visitor -> un-personalised brand hero
     if (!cfg.DECISION_ENDPOINT) {
       console.warn("[storefront] DECISION_ENDPOINT not set in config.js — paste the " +
         "Data Cloud Tenant Specific Endpoint + /personalization/decisions.");
@@ -441,15 +494,10 @@
       renderItem(MOCK_ITEM, "MOCK · local sample");
     } else {
       pill.textContent = "LIVE · Salesforce Personalization"; pill.className = "pill live";
-      // Land signed-in: pre-select the first persona so the My amaysim account
-      // chrome shows immediately. initLive() then serves that person's decision.
-      const sel = document.getElementById("who");
-      if (PERSONAS.length) {
-        sel.value = PERSONAS[0].id;
-        state.individualId = PERSONAS[0].id;
-        renderAccount(PERSONAS[0]);
-      }
-      renderEmpty("waiting for SDK");
+      // Open GENERIC: no customer selected, so the hero shows the un-personalised
+      // amaysim offer and the account panel stays hidden. Picking a customer in
+      // the switcher is what brings in context (the inbound-parity beat).
+      renderGeneric();
       initLive();
     }
   }
