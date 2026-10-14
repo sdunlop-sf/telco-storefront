@@ -165,9 +165,9 @@
   }
 
   function renderEmpty(source) {
-    document.getElementById("offer-heading").textContent = "No live decision yet";
+    document.getElementById("offer-heading").textContent = "Loading your offer…";
     document.getElementById("offer-body").textContent =
-      "Pick a signed-in customer to inherit the offer Decisioning already decided for them.";
+      "Fetching the offer Decisioning has decided for your account.";
     const ctaEl = document.getElementById("offer-cta");
     ctaEl.textContent = "—"; ctaEl.setAttribute("href", "#");
     document.getElementById("offer-code").textContent = "—";
@@ -412,6 +412,7 @@
   function initLive() {
     const ready = () => {
       console.log("[storefront] SDK ready; personalization point:", cfg.PERSONALIZATION_POINT);
+      setIdentity(state.individualId); // register the signed-in individual with the SDK
       requestDecision();
       startPolling();
     };
@@ -440,6 +441,14 @@
       renderItem(MOCK_ITEM, "MOCK · local sample");
     } else {
       pill.textContent = "LIVE · Salesforce Personalization"; pill.className = "pill live";
+      // Land signed-in: pre-select the first persona so the My amaysim account
+      // chrome shows immediately. initLive() then serves that person's decision.
+      const sel = document.getElementById("who");
+      if (PERSONAS.length) {
+        sel.value = PERSONAS[0].id;
+        state.individualId = PERSONAS[0].id;
+        renderAccount(PERSONAS[0]);
+      }
       renderEmpty("waiting for SDK");
       initLive();
     }
