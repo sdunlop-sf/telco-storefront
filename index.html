@@ -40,14 +40,49 @@
   </header>
 
   <main class="wrap">
+    <!-- Logged-in prepaid account summary. Hidden until a customer is selected;
+         populated per-persona from app.js (demo dressing, not SP data). -->
+    <section class="account-summary" id="account-summary" hidden>
+      <div class="greeting">
+        <div class="avatar" id="acct-avatar">a</div>
+        <div class="greeting-copy">
+          <div class="hello">Hi <b id="acct-name">there</b></div>
+          <div class="acct-sub" id="acct-since">Welcome back to My amaysim</div>
+        </div>
+        <span class="tier-chip" id="acct-tier">amaysim Rewards</span>
+      </div>
+      <div class="plan-grid">
+        <div class="pcell">
+          <span class="plabel">Your plan</span>
+          <span class="pval" id="acct-plan">—</span>
+          <span class="pfine" id="acct-price">—</span>
+        </div>
+        <div class="pcell">
+          <span class="plabel">Data remaining</span>
+          <span class="pval" id="acct-data">—</span>
+          <div class="bar"><i id="acct-bar"></i></div>
+        </div>
+        <div class="pcell">
+          <span class="plabel">Expires</span>
+          <span class="pval" id="acct-expiry">—</span>
+          <span class="pfine" id="acct-expiry-days">—</span>
+        </div>
+        <div class="pcell">
+          <span class="plabel">Balance</span>
+          <span class="pval" id="acct-balance">—</span>
+          <a class="recharge" href="#">Recharge</a>
+        </div>
+      </div>
+    </section>
+
     <!-- The personalization slot. SP (via DH's arbitrated decision) fills this. -->
     <section class="foryou" id="foryou">
       <div class="copy">
-        <div class="eyebrow">For you</div>
+        <div class="eyebrow">Recommended for you</div>
         <h2 id="offer-heading">Loading your offer…</h2>
         <p id="offer-body"></p>
         <div class="cta-row">
-          <a class="cta" id="offer-cta" href="#">Shop now</a>
+          <a class="cta" id="offer-cta" href="#">View offer</a>
           <span class="src">decision: <b id="offer-source">—</b> · offer <b id="offer-code">—</b></span>
         </div>
       </div>
@@ -55,8 +90,8 @@
     </section>
 
     <div class="section-head">
-      <h3 class="section">Shop amaysim</h3>
-      <span class="hint">Browse a category — your offer re-shapes in real time</span>
+      <h3 class="section">Boost your plan</h3>
+      <span class="hint">Browse an add-on — your offer re-shapes in real time</span>
     </div>
     <div class="grid" id="catalog"></div>
 

@@ -26,10 +26,30 @@
   // per demo is a config concern, not a code concern; kept here for the demo
   // switcher convenience only.
   const PERSONAS = [
-    { id: "003Kh00001uijWCIAY", name: "Ava Mitchell", tag: "Bundle-ready"  },
-    { id: "003Kh00001uijWDIAY", name: "Sam Okafor",   tag: "Upgrade-ready" },
-    { id: "003Kh00001uijWEIAY", name: "Marcus Reid",  tag: "At-risk"       },
-    { id: "003Kh00001uijWFIAY", name: "Priya Nair",   tag: "Near-tier"     }
+    { id: "003Kh00001uijWCIAY", name: "Ava Mitchell", tag: "Bundle-ready",
+      account: {
+        plan: "Unlimited Talk & Text + 50GB", price: "$30 / 28 days",
+        dataLeftGb: 38, dataTotalGb: 50, expires: "22 Oct", expiresInDays: 11,
+        balance: "$0.00", tier: "Rewards · Gold", since: "Member since 2020"
+      } },
+    { id: "003Kh00001uijWDIAY", name: "Sam Okafor", tag: "Upgrade-ready",
+      account: {
+        plan: "40GB Mobile", price: "$30 / 28 days",
+        dataLeftGb: 6, dataTotalGb: 40, expires: "17 Oct", expiresInDays: 6,
+        balance: "$5.00 credit", tier: "Rewards · Silver", since: "Member since 2022"
+      } },
+    { id: "003Kh00001uijWEIAY", name: "Marcus Reid", tag: "At-risk",
+      account: {
+        plan: "20GB Mobile", price: "$20 / 28 days",
+        dataLeftGb: 1.2, dataTotalGb: 20, expires: "15 Oct", expiresInDays: 2,
+        balance: "$0.00", tier: "Rewards · Bronze", since: "Member since 2019"
+      } },
+    { id: "003Kh00001uijWFIAY", name: "Priya Nair", tag: "Near-tier",
+      account: {
+        plan: "60GB Mobile", price: "$35 / 28 days",
+        dataLeftGb: 44, dataTotalGb: 60, expires: "25 Oct", expiresInDays: 14,
+        balance: "$0.00", tier: "Rewards · Silver", since: "1 recharge from Gold"
+      } }
   ];
 
   // Neutral local sample for MOCK_MODE / offline shell. Deliberately generic —
@@ -112,6 +132,36 @@
     };
     document.getElementById("decision-json").textContent =
       JSON.stringify(state.lastDecision, null, 2);
+  }
+
+  // Populate the logged-in prepaid account summary from the selected persona.
+  // Demo dressing only — this is NOT SP/decision data; it just makes the offer
+  // land inside a believable "My amaysim" account context. Hidden when anonymous.
+  function renderAccount(persona) {
+    const panel = document.getElementById("account-summary");
+    if (!panel) return;
+    const a = persona && persona.account;
+    if (!a) { panel.hidden = true; return; }
+
+    document.getElementById("acct-avatar").textContent = (persona.name || "a").trim()[0];
+    document.getElementById("acct-name").textContent = (persona.name || "").split(" ")[0];
+    document.getElementById("acct-since").textContent = a.since || "Welcome back to My amaysim";
+    document.getElementById("acct-tier").textContent = a.tier || "amaysim Rewards";
+    document.getElementById("acct-plan").textContent = a.plan || "—";
+    document.getElementById("acct-price").textContent = a.price || "";
+    document.getElementById("acct-data").textContent =
+      a.dataLeftGb != null ? `${a.dataLeftGb}GB of ${a.dataTotalGb}GB` : "—";
+    document.getElementById("acct-expiry").textContent = a.expires || "—";
+    document.getElementById("acct-expiry-days").textContent =
+      a.expiresInDays != null ? `in ${a.expiresInDays} day${a.expiresInDays === 1 ? "" : "s"}` : "";
+    document.getElementById("acct-balance").textContent = a.balance || "—";
+
+    const pct = a.dataTotalGb ? Math.max(2, Math.round((a.dataLeftGb / a.dataTotalGb) * 100)) : 0;
+    const bar = document.getElementById("acct-bar");
+    bar.style.width = pct + "%";
+    bar.parentElement.classList.toggle("low", pct < 20);
+
+    panel.hidden = false;
   }
 
   function renderEmpty(source) {
@@ -324,6 +374,7 @@
       state.individualId = sel.value;
       state.lastCategory = null;
       highlight(null);
+      renderAccount(PERSONAS.find(p => p.id === sel.value)); // log in / out of My amaysim
       setIdentity(state.individualId);
       requestDecision(); // fresh arrival = serve the DH decision for this person
       startPolling();    // watch for live re-decisions on this identity
