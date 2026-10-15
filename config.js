@@ -26,7 +26,7 @@ window.DEMO_CONFIG = {
   // API name of the SP personalization point that serves the storefront slot.
   // Generic on purpose — ONE point serves every demo vertical. The per-person
   // OfferId match in the recommender keeps demos isolated, so this never changes.
-  PERSONALIZATION_POINT: "Decision_Offer_Personalisation",
+  PERSONALIZATION_POINT: "DA_Perso_Point",
 
   // Engagement channel passed as dynamic context to the recommender rules.
   CHANNEL: "Web",
