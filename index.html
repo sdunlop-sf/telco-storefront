@@ -3,33 +3,40 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>amaysim — mobile, nbn & 5G</title>
+  <title>My Suncorp — insurance, home & motor</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 
-  <!-- Data 360 Web & Mobile App connector beacon (nova Storefront).
-       Per the connector Integration Guide this is embedded as the first
-       script so data collection initialises before anything else. The same
-       URL lives in config.js (BEACON_URL) so app.js can read it / toggle. -->
+  <!-- Data 360 Web & Mobile App connector beacon. Embedded as the first script
+       per the connector Integration Guide so data collection initialises before
+       anything else. Same URL lives in config.js (BEACON_URL). Harness-shared
+       across demos — serve isolation is per-person in the recommender. -->
   <script src="https://cdn.c360a.salesforce.com/beacon/c360a/5e39738b-7dd0-46b3-b82d-10a7983da2fd/scripts/c360a.min.js" async></script>
 
   <!-- config MUST load before app.js -->
   <script src="config.js"></script>
 </head>
 <body>
-  <div class="promo-strip">Free delivery on all devices · Switch to amaysim in minutes, keep your number</div>
+  <div class="promo-strip">Combine home &amp; car and save up to 15% · Lodge and track claims online 24/7</div>
 
   <header class="site">
     <div class="brand">
-      <svg viewBox="0 0 47 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M36.3667 4.56046C32.5804 1.70441 27.9575 0 22.9383 0C10.2584 0 0 10.7793 0 24C0 37.2207 10.2584 48 22.9383 48C27.9575 48 32.5804 46.2956 36.3667 43.4395V46.8023H46.9333V1.1977H36.3667V4.56046ZM22.8943 37.3589C15.8499 37.3589 10.1263 31.3704 10.1263 24C10.1263 16.6296 15.8499 10.6411 22.8943 10.6411C29.9387 10.6411 35.6623 16.6296 35.6623 24C35.6623 31.3704 29.9387 37.3589 22.8943 37.3589Z" fill="#FF5500"/></svg>
-      <span data-brand>amaysim</span>
+      <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="24" cy="24" r="10" fill="#FFB000"/>
+        <g stroke="#FFB000" stroke-width="3" stroke-linecap="round">
+          <path d="M24 2v6"/><path d="M24 40v6"/><path d="M2 24h6"/><path d="M40 24h6"/>
+          <path d="M8.5 8.5l4.2 4.2"/><path d="M35.3 35.3l4.2 4.2"/>
+          <path d="M39.5 8.5l-4.2 4.2"/><path d="M12.7 35.3l-4.2 4.2"/>
+        </g>
+      </svg>
+      <span data-brand>Suncorp</span>
     </div>
     <nav>
-      <a href="#" data-cat="CAT_DEVICES">Phones</a>
-      <a href="#" data-cat="CAT_PLANS">Mobile plans</a>
-      <a href="#" data-cat="CAT_INTERNET">nbn</a>
-      <a href="#" data-cat="CAT_PERKS">Rewards</a>
+      <a href="#" data-cat="CAT_HOME">Home</a>
+      <a href="#" data-cat="CAT_MOTOR">Motor</a>
+      <a href="#" data-cat="CAT_CLAIMS">Claims</a>
+      <a href="#" data-cat="CAT_REWARDS">Rewards</a>
     </nav>
     <div class="account">
       <span class="account-label">Signed in as</span>
@@ -40,39 +47,19 @@
   </header>
 
   <main class="wrap">
-    <!-- Logged-in prepaid account summary. Hidden until a customer is selected;
+    <!-- Logged-in "My Suncorp" summary. Hidden until a customer is selected;
          populated per-persona from app.js (demo dressing, not SP data). -->
     <section class="account-summary" id="account-summary" hidden>
       <div class="greeting">
-        <div class="avatar" id="acct-avatar">a</div>
+        <div class="avatar" id="acct-avatar">s</div>
         <div class="greeting-copy">
           <div class="hello">Hi <b id="acct-name">there</b></div>
-          <div class="acct-sub" id="acct-since">Welcome back to My amaysim</div>
+          <div class="acct-sub" id="acct-since">Welcome back to My Suncorp</div>
         </div>
-        <span class="tier-chip" id="acct-tier">amaysim Rewards</span>
+        <span class="tier-chip" id="acct-tier">Suncorp Member</span>
       </div>
-      <div class="plan-grid">
-        <div class="pcell">
-          <span class="plabel">Your plan</span>
-          <span class="pval" id="acct-plan">—</span>
-          <span class="pfine" id="acct-price">—</span>
-        </div>
-        <div class="pcell">
-          <span class="plabel">Data remaining</span>
-          <span class="pval" id="acct-data">—</span>
-          <div class="bar"><i id="acct-bar"></i></div>
-        </div>
-        <div class="pcell">
-          <span class="plabel">Expires</span>
-          <span class="pval" id="acct-expiry">—</span>
-          <span class="pfine" id="acct-expiry-days">—</span>
-        </div>
-        <div class="pcell">
-          <span class="plabel">Balance</span>
-          <span class="pval" id="acct-balance">—</span>
-          <a class="recharge" href="#">Recharge</a>
-        </div>
-      </div>
+      <!-- Policy cards injected by renderAccount() -->
+      <div class="policy-grid" id="acct-policies"></div>
     </section>
 
     <!-- The personalization slot. SP (via DH's arbitrated decision) fills this. -->
@@ -90,15 +77,15 @@
     </section>
 
     <div class="section-head">
-      <h3 class="section">Boost your plan</h3>
-      <span class="hint">Browse an add-on — your offer re-shapes in real time</span>
+      <h3 class="section">Protect more with Suncorp</h3>
+      <span class="hint">Explore a product — your offer re-shapes in real time</span>
     </div>
     <div class="grid" id="catalog"></div>
 
     <section class="valueprops">
-      <div class="vp"><div class="vp-ico">⚡</div><div><b>Australia's fast 5G</b><span>Powered by the Optus network</span></div></div>
-      <div class="vp"><div class="vp-ico">🔄</div><div><b>No lock-in contracts</b><span>Change or leave anytime</span></div></div>
-      <div class="vp"><div class="vp-ico">💬</div><div><b>Great value, no fuss</b><span>Mobile, nbn & more</span></div></div>
+      <div class="vp"><div class="vp-ico">🛡️</div><div><b>One of Australia's largest insurers</b><span>Home, motor, and more</span></div></div>
+      <div class="vp"><div class="vp-ico">📱</div><div><b>Claims online, 24/7</b><span>Lodge and track in minutes</span></div></div>
+      <div class="vp"><div class="vp-ico">💸</div><div><b>Multi-policy savings</b><span>Combine and save up to 15%</span></div></div>
     </section>
 
     <!-- Demo-only: shows the raw personalization decision so you can narrate it. -->
@@ -112,9 +99,9 @@
   </main>
 
   <footer class="site-foot">
-    <div data-brand>amaysim</div>
-    <span>Mobile · nbn · 5G · Rewards</span>
-    <span class="fine">Demo storefront · personalization by Salesforce</span>
+    <div data-brand>Suncorp</div>
+    <span>Home · Motor · Claims · Rewards</span>
+    <span class="fine">Demo portal · personalization by Salesforce</span>
   </footer>
 
   <script src="app.js"></script>

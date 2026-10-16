@@ -26,29 +26,43 @@
   // per demo is a config concern, not a code concern; kept here for the demo
   // switcher convenience only.
   const PERSONAS = [
-    { id: "003Kh00001uijWCIAY", name: "Ava Mitchell", tag: "Bundle-ready",
+    { id: "003Kh00001uijWCIAY", name: "Olivia Chen", tag: "Bundle-ready",
       account: {
-        plan: "Unlimited Talk & Text + 50GB", price: "$30 / 28 days",
-        dataLeftGb: 38, dataTotalGb: 50, expires: "22 Oct", expiresInDays: 11,
-        balance: "$0.00", tier: "Rewards · Gold", since: "Member since 2020"
+        since: "Customer since 2021", tier: "Suncorp Member",
+        policies: [
+          { kind: "Motor", label: "Comprehensive Car", ref: "MOT-4471920",
+            renews: "14 Nov", renewsInDays: 29, premium: "$1,180 / yr", status: "Active" }
+        ]
       } },
-    { id: "003Kh00001uijWDIAY", name: "Sam Okafor", tag: "Upgrade-ready",
+    { id: "003Kh00001uijWDIAY", name: "James Patel", tag: "Coverage gap",
       account: {
-        plan: "40GB Mobile", price: "$30 / 28 days",
-        dataLeftGb: 6, dataTotalGb: 40, expires: "17 Oct", expiresInDays: 6,
-        balance: "$5.00 credit", tier: "Rewards · Silver", since: "Member since 2022"
+        since: "Customer since 2019", tier: "Suncorp Member",
+        policies: [
+          { kind: "Motor", label: "Comprehensive Car", ref: "MOT-5520133",
+            renews: "02 Nov", renewsInDays: 17, premium: "$1,340 / yr", status: "No roadside" }
+        ]
       } },
-    { id: "003Kh00001uijWEIAY", name: "Marcus Reid", tag: "At-risk",
+    { id: "003Kh00001uijWEIAY", name: "Marcus Reid", tag: "At-risk renewal",
       account: {
-        plan: "20GB Mobile", price: "$20 / 28 days",
-        dataLeftGb: 1.2, dataTotalGb: 20, expires: "15 Oct", expiresInDays: 2,
-        balance: "$0.00", tier: "Rewards · Bronze", since: "Member since 2019"
+        since: "Customer since 2016", tier: "Platinum",
+        policies: [
+          { kind: "Home", label: "Home & Contents", ref: "HOM-2210874",
+            renews: "18 Oct", renewsInDays: 2, premium: "$1,840 / yr", status: "Renewal due" },
+          { kind: "Motor", label: "Comprehensive Car", ref: "MOT-2210875",
+            renews: "18 Oct", renewsInDays: 2, premium: "$1,120 / yr", status: "Renewal due" }
+        ]
       } },
-    { id: "003Kh00001uijWFIAY", name: "Priya Nair", tag: "Near-tier",
+    { id: "003Kh00001uijWFIAY", name: "Priya Nair", tag: "Loyalty",
       account: {
-        plan: "60GB Mobile", price: "$35 / 28 days",
-        dataLeftGb: 44, dataTotalGb: 60, expires: "25 Oct", expiresInDays: 14,
-        balance: "$0.00", tier: "Rewards · Silver", since: "1 recharge from Gold"
+        since: "Customer since 2014", tier: "Platinum",
+        policies: [
+          { kind: "Home", label: "Home & Contents", ref: "HOM-1904560",
+            renews: "25 Nov", renewsInDays: 40, premium: "$2,010 / yr", status: "Active" },
+          { kind: "Motor", label: "Comprehensive Car", ref: "MOT-1904561",
+            renews: "25 Nov", renewsInDays: 40, premium: "$990 / yr", status: "Active" },
+          { kind: "Landlord", label: "Landlord Insurance", ref: "LAN-1904562",
+            renews: "25 Nov", renewsInDays: 40, premium: "$760 / yr", status: "Active" }
+        ]
       } }
   ];
 
@@ -68,17 +82,66 @@
   // hero every visitor sees, no account chrome. Picking a customer swaps this
   // for the DH-arbitrated, SP-served personal offer (the inbound-parity beat).
   const GENERIC_OFFER = {
-    eyebrow: "amaysim plans",
-    heading: "Big data. No lock-in. On the Optus network.",
-    body: "Welcome to amaysim. Browse our mobile &amp; nbn plans — <strong>sign in</strong> and your offer re-shapes to your account.",
-    cta: "See all plans",
+    eyebrow: "Suncorp insurance",
+    heading: "Cover for your home, your car, and your life.",
+    body: "Welcome to Suncorp. Explore home &amp; motor cover — <strong>sign in</strong> and your offer re-shapes to your policies.",
+    cta: "Get a quote",
     url: "#",
-    img: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=1000&q=80&auto=format&fit=crop"
+    img: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1000&q=80&auto=format&fit=crop"
   };
 
+  // Per-persona local offer shown in the logged-in hero when the live SP serve
+  // has not resolved yet (fresh identity, item graph mid-refresh, propagation
+  // lag). Mirrors each persona's HOME decision so the logged-in page is always a
+  // complete Suncorp mock-up. A live SP decision ALWAYS overrides this — the
+  // fallback only fills the gap so the hero never shows an empty "no-decision"
+  // state in front of a customer. Keyed by Contact Id.
+  const FALLBACK_OFFER = {
+    "003Kh00001uijWCIAY": { // Olivia — Multi-Policy Bundle
+      eyebrow: "Recommended for you",
+      heading: "Combine your home and car — save up to 15%",
+      body: "Bring your <strong>home and car</strong> together on one Suncorp account and save <strong>up to 15%</strong>, with a single renewal date.",
+      cta: "See my bundle saving", url: "#",
+      img: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1000&q=80&auto=format&fit=crop" },
+    "003Kh00001uijWDIAY": { // James — Roadside Assist
+      eyebrow: "Recommended for you",
+      heading: "Never stranded — add 24/7 roadside assist",
+      body: "Add <strong>24/7 roadside assistance</strong> to your motor policy for a few dollars a month — tows, flat batteries and lockouts, Australia-wide.",
+      cta: "Add roadside assist", url: "#",
+      img: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=1000&q=80&auto=format&fit=crop" },
+    "003Kh00001uijWEIAY": { // Marcus — Renewal Save (at-risk)
+      eyebrow: "Recommended for you",
+      heading: "Before you switch — let us keep you covered",
+      body: "Your renewal is coming up. We can <strong>price-match a competitor quote</strong> and add a <strong>loyalty credit</strong> so you keep the Suncorp cover you trust.",
+      cta: "Keep my cover", url: "#",
+      img: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1000&q=80&auto=format&fit=crop" },
+    "003Kh00001uijWFIAY": { // Priya — Loyalty Renewal Reward
+      eyebrow: "Recommended for you",
+      heading: "A $150 loyalty reward on your renewal",
+      body: "Thank you for staying with Suncorp. We have applied a <strong>$150 loyalty credit</strong> to your next renewal — nothing for you to do.",
+      cta: "View my renewal", url: "#",
+      img: "https://images.unsplash.com/photo-1607083206869-4c7672e72a8a?w=1000&q=80&auto=format&fit=crop" }
+  };
+
+  // The Suncorp offer Ids on 4b. Used by HERO_SOURCE:"auto" to accept a live SP
+  // decision only when it serves a Suncorp offer (so a stale non-Suncorp serve
+  // is ignored and the local home offer shows instead).
+  const SUNCORP_OFFER_IDS = new Set([
+    "1XhKh000000PBQ2KAO", "1XhKh000000PBQ3KAO", "1XhKh000000PBQ4KAO", "1XhKh000000PBQ5KAO",
+    "1XhKh000000PBQ6KAO", "1XhKh000000PBQ7KAO", "1XhKh000000PBQ8KAO", "1XhKh000000PBQ9KAO"
+  ]);
+  function isSuncorpItem(item) {
+    const oid = pick(item, "OfferId__c", "offerId");
+    if (oid && SUNCORP_OFFER_IDS.has(String(oid).substring(0, 15))) return true;
+    // Fallback discriminator when the graph does not expose OfferId: brand token.
+    const txt = (pick(item, "TreatmentOutput__c", "treatmentOutput") || "") +
+                (pick(item, "OfferBody__c", "offerBody") || "");
+    return /suncorp/i.test(txt);
+  }
+
   const CAT_LABEL = {
-    CAT_DEVICES: "Devices", CAT_PLANS: "Plans",
-    CAT_INTERNET: "Home internet", CAT_PERKS: "Perks"
+    CAT_HOME: "Home", CAT_MOTOR: "Motor",
+    CAT_CLAIMS: "Claims", CAT_REWARDS: "Rewards"
   };
 
   let state = { individualId: "", lastCategory: null, lastDecision: null };
@@ -148,32 +211,45 @@
       JSON.stringify(state.lastDecision, null, 2);
   }
 
-  // Populate the logged-in prepaid account summary from the selected persona.
+  // Populate the logged-in "My Suncorp" summary from the selected persona.
   // Demo dressing only — this is NOT SP/decision data; it just makes the offer
-  // land inside a believable "My amaysim" account context. Hidden when anonymous.
+  // land inside a believable account context. Hidden when anonymous.
   function renderAccount(persona) {
     const panel = document.getElementById("account-summary");
     if (!panel) return;
     const a = persona && persona.account;
     if (!a) { panel.hidden = true; return; }
 
-    document.getElementById("acct-avatar").textContent = (persona.name || "a").trim()[0];
+    document.getElementById("acct-avatar").textContent = (persona.name || "s").trim()[0];
     document.getElementById("acct-name").textContent = (persona.name || "").split(" ")[0];
-    document.getElementById("acct-since").textContent = a.since || "Welcome back to My amaysim";
-    document.getElementById("acct-tier").textContent = a.tier || "amaysim Rewards";
-    document.getElementById("acct-plan").textContent = a.plan || "—";
-    document.getElementById("acct-price").textContent = a.price || "";
-    document.getElementById("acct-data").textContent =
-      a.dataLeftGb != null ? `${a.dataLeftGb}GB of ${a.dataTotalGb}GB` : "—";
-    document.getElementById("acct-expiry").textContent = a.expires || "—";
-    document.getElementById("acct-expiry-days").textContent =
-      a.expiresInDays != null ? `in ${a.expiresInDays} day${a.expiresInDays === 1 ? "" : "s"}` : "";
-    document.getElementById("acct-balance").textContent = a.balance || "—";
+    document.getElementById("acct-since").textContent = a.since || "Welcome back to My Suncorp";
+    document.getElementById("acct-tier").textContent = a.tier || "Suncorp Member";
 
-    const pct = a.dataTotalGb ? Math.max(2, Math.round((a.dataLeftGb / a.dataTotalGb) * 100)) : 0;
-    const bar = document.getElementById("acct-bar");
-    bar.style.width = pct + "%";
-    bar.parentElement.classList.toggle("low", pct < 20);
+    // Render one card per policy. A policy renewing soon ("Renewal due" or
+    // within 7 days) is flagged so the retention beat lands in context.
+    const grid = document.getElementById("acct-policies");
+    grid.innerHTML = "";
+    (a.policies || []).forEach(p => {
+      const soon = (p.renewsInDays != null && p.renewsInDays <= 7) ||
+                   /renewal/i.test(p.status || "");
+      const el = document.createElement("div");
+      el.className = "pcell policy" + (soon ? " low" : "");
+      el.innerHTML = `
+        <span class="plabel">${p.kind || "Policy"}</span>
+        <span class="pval">${p.label || "—"}</span>
+        <span class="pfine">${p.ref || ""}</span>
+        <div class="policy-foot">
+          <span class="prem">${p.premium || ""}</span>
+          <span class="renew${soon ? " due" : ""}">${
+            p.renews ? "Renews " + p.renews +
+              (p.renewsInDays != null
+                ? ` · in ${p.renewsInDays} day${p.renewsInDays === 1 ? "" : "s"}`
+                : "")
+            : (p.status || "")
+          }</span>
+        </div>`;
+      grid.appendChild(el);
+    });
 
     panel.hidden = false;
   }
@@ -195,9 +271,46 @@
     if (el) el.textContent = text;
   }
 
-  // Render the generic, un-personalised amaysim hero for an anonymous visitor.
+  // Render the logged-in persona's local HOME offer into the native hero. Used
+  // when SP has not served yet so the mock-up is always complete. Clears any
+  // dropped-in treatment card first so the native .copy/.art hero is visible.
+  // Returns true if a fallback was rendered, false if none is defined.
+  function renderFallback(id, source) {
+    const f = FALLBACK_OFFER[id];
+    if (!f) return false;
+
+    const slot = document.getElementById("treatment-slot");
+    if (slot) {
+      slot.remove();
+      document.querySelectorAll("#foryou .copy, #foryou .art")
+        .forEach(n => (n.style.display = ""));
+    }
+
+    setEyebrow(f.eyebrow);
+    document.getElementById("offer-heading").textContent = f.heading;
+    document.getElementById("offer-body").innerHTML = f.body;
+    const ctaEl = document.getElementById("offer-cta");
+    ctaEl.textContent = f.cta; ctaEl.setAttribute("href", f.url);
+    document.getElementById("offer-code").textContent = "home";
+    document.getElementById("offer-source").textContent = source || "home offer · awaiting live decision";
+
+    const art = document.getElementById("offer-art");
+    art.style.backgroundImage =
+      `linear-gradient(120deg, rgba(8,14,26,.45), rgba(8,14,26,.05)), url('${f.img}')`;
+
+    state.lastDecision = {
+      offerId: null, treatment: null, heading: f.heading,
+      source: source || "fallback", individualId: id, channel: cfg.CHANNEL,
+      ts: new Date().toISOString()
+    };
+    document.getElementById("decision-json").textContent =
+      JSON.stringify({ individualId: id, status: "home offer (local) — awaiting live SP decision" }, null, 2);
+    return true;
+  }
+
+  // Render the generic, un-personalised Suncorp hero for an anonymous visitor.
   // Paints the native hero fields directly (synthetic content, not an SP call),
-  // hides the My amaysim account chrome, and restores the native hero if a
+  // hides the My Suncorp account chrome, and restores the native hero if a
   // drop-in treatment card was previously injected (persona -> anonymous).
   function renderGeneric() {
     renderAccount(null); // no account chrome when anonymous
@@ -287,6 +400,13 @@
 
     const id = state.individualId;
     if (!id) return renderGeneric(); // anonymous visitor -> un-personalised brand hero
+
+    // Mock-up mode: skip SP entirely and render the local home offer. The
+    // logged-in page is a complete Suncorp visual with no Data Cloud dependency.
+    if ((cfg.HERO_SOURCE || "live") === "fallback") {
+      if (renderFallback(id, "home offer · local mock-up")) return;
+    }
+
     if (!cfg.DECISION_ENDPOINT) {
       console.warn("[storefront] DECISION_ENDPOINT not set in config.js — paste the " +
         "Data Cloud Tenant Specific Endpoint + /personalization/decisions.");
@@ -310,7 +430,11 @@
       .then((r) => r.json())
       .then((resp) => {
         const item = firstItem(resp);
-        if (item && (item.TreatmentOutput__c || item.OfferHeading__c || item.personalizationContentId)) {
+        // In "auto" only accept a live decision that serves a Suncorp offer;
+        // otherwise fall through to the local home offer (ignores stale serves).
+        const accept = item && (item.TreatmentOutput__c || item.OfferHeading__c || item.personalizationContentId)
+          && ((cfg.HERO_SOURCE || "live") !== "auto" || isSuncorpItem(item));
+        if (accept) {
           const prevOffer = state.lastDecision && state.lastDecision.offerId;
           const newOffer  = pick(item, "OfferId__c", "OfferTreatmentCode__c", "Id__c");
           renderItem(item, "DH decision · served by SP (live)");
@@ -319,13 +443,16 @@
           if (prevOffer && newOffer && prevOffer !== newOffer) flashForYou();
         } else {
           console.warn("[storefront] empty personalization — identity likely not " +
-            "resolving to the unified profile that holds the decision", resp);
-          renderEmpty("no decision for this identity");
+            "resolving to the unified profile that holds the decision; " +
+            "showing local home offer", resp);
+          if (!renderFallback(id, "home offer · awaiting live decision"))
+            renderEmpty("no decision for this identity");
         }
       })
       .catch((err) => {
         console.warn("[storefront] decision request failed (CORS? endpoint?)", err);
-        renderEmpty("decision request error — see console");
+        if (!renderFallback(id, "home offer · live decision unavailable"))
+          renderEmpty("decision request error — see console");
       });
   }
 
@@ -427,7 +554,7 @@
       state.individualId = sel.value;
       state.lastCategory = null;
       highlight(null);
-      renderAccount(PERSONAS.find(p => p.id === sel.value)); // log in / out of My amaysim
+      renderAccount(PERSONAS.find(p => p.id === sel.value)); // log in / out of My Suncorp
       setIdentity(state.individualId);
       requestDecision(); // fresh arrival = serve the DH decision for this person
       startPolling();    // watch for live re-decisions on this identity
@@ -514,7 +641,7 @@
     } else {
       pill.textContent = "LIVE · Salesforce Personalization"; pill.className = "pill live";
       // Open LOGGED IN (default: Marcus) so the parity beat starts in a real
-      // My amaysim account and the served offer updates on refresh as decisions
+      // My Suncorp account and the served offer updates on refresh as decisions
       // fire. ?who=anon opens anonymous/generic instead.
       const opening = resolveOpeningPersona();
       if (opening) {

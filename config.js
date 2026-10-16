@@ -18,7 +18,7 @@ window.DEMO_CONFIG = {
   MOCK_MODE: false,
 
   // Shown in the header. Pure cosmetics.
-  BRAND: "amaysim",
+  BRAND: "Suncorp",
 
   // Beacon from the 4b "nova Storefront" Website connector.
   BEACON_URL: "https://cdn.c360a.salesforce.com/beacon/c360a/5e39738b-7dd0-46b3-b82d-10a7983da2fd/scripts/c360a.min.js",
@@ -49,6 +49,19 @@ window.DEMO_CONFIG = {
   // Personalization Record to the lake — fine for demo; set 0 for a static shell.
   POLL_MS: 4000,
 
+  // Where the logged-in "For you" hero sources its offer:
+  //   "fallback" -> ALWAYS render the local per-persona home offer (app.js
+  //                 FALLBACK_OFFER). Guaranteed-clean Suncorp mock-up, no
+  //                 dependency on Data Cloud. Use for a visual / while the item
+  //                 graph is mid-refresh or propagation is lagging.
+  //   "auto"     -> prefer the live SP decision, but only accept it when the
+  //                 served OfferId is a known Suncorp offer; otherwise show the
+  //                 local home offer. Self-upgrades to live once DC serves
+  //                 Suncorp (stale non-Suncorp serves are ignored).
+  //   "live"     -> trust whatever SP serves (original behaviour; needed for the
+  //                 live web-flip beat once DC is refreshed).
+  HERO_SOURCE: "fallback",
+
   // How the "For you" slot renders the SP decision:
   //   "treatment" (default) -> drop the hydrated TreatmentOutput card in whole,
   //                            image included. Pixel-identical to the email.
@@ -60,25 +73,25 @@ window.DEMO_CONFIG = {
   // real Product / ProductCategory record ids from 4b once wired, so the
   // Product Browse Engagement events resolve against the catalog.
   CATALOG: {
-    phone: {
-      id: "PROD_PHONE", category: "CAT_DEVICES", label: "Aurora 5G",
-      sub: "128GB · Midnight", price: "$0 upfront · $54/mo",
-      img: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=600&q=80&auto=format&fit=crop"
+    home: {
+      id: "PROD_HOME", category: "CAT_HOME", label: "Home & Contents",
+      sub: "Storm, fire & theft cover", price: "from $38/mo",
+      img: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=600&q=80&auto=format&fit=crop"
     },
-    plan: {
-      id: "PROD_PLAN", category: "CAT_PLANS", label: "Unlimited mobile",
-      sub: "Endless 5G data", price: "$45/mo",
-      img: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=600&q=80&auto=format&fit=crop"
+    motor: {
+      id: "PROD_MOTOR", category: "CAT_MOTOR", label: "Comprehensive Car",
+      sub: "Choice of repairer · roadside add-on", price: "from $29/mo",
+      img: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=600&q=80&auto=format&fit=crop"
     },
-    internet: {
-      id: "PROD_INTERNET", category: "CAT_INTERNET", label: "Home internet nbn",
-      sub: "Fast 100 · no lock-in", price: "$69/mo",
-      img: "https://images.unsplash.com/photo-1606904825846-647eb07f5be2?w=600&q=80&auto=format&fit=crop"
+    claims: {
+      id: "PROD_CLAIMS", category: "CAT_CLAIMS", label: "Lodge a claim",
+      sub: "Online, 24/7 · track in minutes", price: "Included",
+      img: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=600&q=80&auto=format&fit=crop"
     },
-    stream: {
-      id: "PROD_STREAM", category: "CAT_PERKS", label: "amaysim rewards",
-      sub: "Streaming & more", price: "Included",
-      img: "https://images.unsplash.com/photo-1593784991095-a205069470b6?w=600&q=80&auto=format&fit=crop"
+    rewards: {
+      id: "PROD_REWARDS", category: "CAT_REWARDS", label: "Member perks",
+      sub: "Fuel, retail & wellbeing", price: "Included",
+      img: "https://images.unsplash.com/photo-1607083206869-4c7672e72a8a?w=600&q=80&auto=format&fit=crop"
     }
   }
 };
