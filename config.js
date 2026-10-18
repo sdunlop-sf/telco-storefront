@@ -60,7 +60,7 @@ window.DEMO_CONFIG = {
   //                 Bupa (stale non-Bupa serves are ignored).
   //   "live"     -> trust whatever SP serves (original behaviour; needed for the
   //                 live web-flip beat once DC is refreshed).
-  HERO_SOURCE: "fallback",
+  HERO_SOURCE: "auto",
 
   // How the "For you" slot renders the SP decision:
   //   "treatment" (default) -> drop the hydrated TreatmentOutput card in whole,

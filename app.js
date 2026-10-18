@@ -614,7 +614,7 @@
   // Which identity the storefront opens on (the parity beat starts logged in).
   //   ?who=<first name | contact id>  -> that persona
   //   ?who=anon | anonymous           -> anonymous / generic (no login)
-  //   (no param)                      -> Rebecca (at-risk renewal) by default
+  //   (no param)                      -> Hannah (Extras-ready) by default
   // On refresh the same identity is kept, so "fire decisions -> refresh" shows
   // the newly-served offer against a stable logged-in customer.
   function resolveOpeningPersona() {
@@ -627,7 +627,7 @@
         p.name.toLowerCase().includes(who));
       if (m) return m;
     }
-    return PERSONAS.find(p => p.name.toLowerCase().startsWith("rebecca")) || PERSONAS[0] || null;
+    return PERSONAS.find(p => p.name.toLowerCase().startsWith("hannah")) || PERSONAS[0] || null;
   }
 
   /* ---------- boot ---------- */
@@ -642,7 +642,7 @@
       renderItem(MOCK_ITEM, "MOCK · local sample");
     } else {
       pill.textContent = "LIVE · Salesforce Personalization"; pill.className = "pill live";
-      // Open LOGGED IN (default: Rebecca) so the parity beat starts in a real
+      // Open LOGGED IN (default: Hannah) so the parity beat starts in a real
       // myBupa account and the served offer updates on refresh as decisions
       // fire. ?who=anon opens anonymous/generic instead.
       const opening = resolveOpeningPersona();
