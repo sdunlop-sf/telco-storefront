@@ -35,15 +35,8 @@ header.site {
   padding: 15px 32px; background: var(--card); border-bottom: 1px solid var(--line);
   position: sticky; top: 0; z-index: 20;
 }
-.brand { display: flex; align-items: center; gap: 9px; font-weight: 800; font-size: 23px; letter-spacing: -1px; color: var(--brand); }
-.brand svg { width: 26px; height: 27px; display: block; }
-.brand span { color: var(--brand); }
-.brand-mark {
-  width: 30px; height: 30px; border-radius: 9px; flex: none;
-  background: var(--brand); color: #fff !important;
-  display: inline-flex; align-items: center; justify-content: center;
-  font-weight: 900; font-size: 20px; line-height: 1; text-transform: lowercase;
-}
+.brand { display: flex; align-items: center; gap: 9px; text-decoration: none; }
+.brand-logo { height: 30px; width: auto; display: block; }
 nav { display: flex; gap: 4px; margin-right: auto; }
 nav a {
   color: var(--ink-soft); text-decoration: none; font-size: 14px; font-weight: 600;
