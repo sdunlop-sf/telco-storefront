@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>My Suncorp — insurance, home & motor</title>
+  <title>myBupa — health insurance, hospital & extras</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
@@ -18,47 +18,40 @@
   <script src="config.js"></script>
 </head>
 <body>
-  <div class="promo-strip">Combine home &amp; car and save up to 15% · Lodge and track claims online 24/7</div>
+  <div class="promo-strip">Combine hospital &amp; extras cover and save · Claim on the go with the myBupa app</div>
 
   <header class="site">
     <div class="brand">
-      <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <circle cx="24" cy="24" r="10" fill="#FFB000"/>
-        <g stroke="#FFB000" stroke-width="3" stroke-linecap="round">
-          <path d="M24 2v6"/><path d="M24 40v6"/><path d="M2 24h6"/><path d="M40 24h6"/>
-          <path d="M8.5 8.5l4.2 4.2"/><path d="M35.3 35.3l4.2 4.2"/>
-          <path d="M39.5 8.5l-4.2 4.2"/><path d="M12.7 35.3l-4.2 4.2"/>
-        </g>
-      </svg>
-      <span data-brand>Suncorp</span>
+      <span class="brand-mark" aria-hidden="true">b</span>
+      <span data-brand>Bupa</span>
     </div>
     <nav>
-      <a href="#" data-cat="CAT_HOME">Home</a>
-      <a href="#" data-cat="CAT_MOTOR">Motor</a>
+      <a href="#" data-cat="CAT_HOSPITAL">Hospital</a>
+      <a href="#" data-cat="CAT_EXTRAS">Extras</a>
       <a href="#" data-cat="CAT_CLAIMS">Claims</a>
-      <a href="#" data-cat="CAT_REWARDS">Rewards</a>
+      <a href="#" data-cat="CAT_BENEFITS">Benefits</a>
     </nav>
     <div class="account">
       <span class="account-label">Signed in as</span>
-      <select id="who" aria-label="Signed-in customer">
+      <select id="who" aria-label="Signed-in member">
         <option value="">Anonymous visitor</option>
       </select>
     </div>
   </header>
 
   <main class="wrap">
-    <!-- Logged-in "My Suncorp" summary. Hidden until a customer is selected;
+    <!-- Logged-in "myBupa" summary. Hidden until a member is selected;
          populated per-persona from app.js (demo dressing, not SP data). -->
     <section class="account-summary" id="account-summary" hidden>
       <div class="greeting">
-        <div class="avatar" id="acct-avatar">s</div>
+        <div class="avatar" id="acct-avatar">b</div>
         <div class="greeting-copy">
           <div class="hello">Hi <b id="acct-name">there</b></div>
-          <div class="acct-sub" id="acct-since">Welcome back to My Suncorp</div>
+          <div class="acct-sub" id="acct-since">Welcome back to myBupa</div>
         </div>
-        <span class="tier-chip" id="acct-tier">Suncorp Member</span>
+        <span class="tier-chip" id="acct-tier">Bupa Member</span>
       </div>
-      <!-- Policy cards injected by renderAccount() -->
+      <!-- Cover cards injected by renderAccount() -->
       <div class="policy-grid" id="acct-policies"></div>
     </section>
 
@@ -77,15 +70,15 @@
     </section>
 
     <div class="section-head">
-      <h3 class="section">Protect more with Suncorp</h3>
+      <h3 class="section">Boost your cover with Bupa</h3>
       <span class="hint">Explore a product — your offer re-shapes in real time</span>
     </div>
     <div class="grid" id="catalog"></div>
 
     <section class="valueprops">
-      <div class="vp"><div class="vp-ico">🛡️</div><div><b>One of Australia's largest insurers</b><span>Home, motor, and more</span></div></div>
-      <div class="vp"><div class="vp-ico">📱</div><div><b>Claims online, 24/7</b><span>Lodge and track in minutes</span></div></div>
-      <div class="vp"><div class="vp-ico">💸</div><div><b>Multi-policy savings</b><span>Combine and save up to 15%</span></div></div>
+      <div class="vp"><div class="vp-ico">🏥</div><div><b>Members First network</b><span>Lower or no gaps at recognised providers</span></div></div>
+      <div class="vp"><div class="vp-ico">📱</div><div><b>Claim on the myBupa app</b><span>Swipe your card or snap a receipt</span></div></div>
+      <div class="vp"><div class="vp-ico">💙</div><div><b>Health &amp; wellbeing support</b><span>Preventive checks, programs and perks</span></div></div>
     </section>
 
     <!-- Demo-only: shows the raw personalization decision so you can narrate it. -->
@@ -99,8 +92,8 @@
   </main>
 
   <footer class="site-foot">
-    <div data-brand>Suncorp</div>
-    <span>Home · Motor · Claims · Rewards</span>
+    <div data-brand>Bupa</div>
+    <span>Hospital · Extras · Claims · Benefits</span>
     <span class="fine">Demo portal · personalization by Salesforce</span>
   </footer>
 

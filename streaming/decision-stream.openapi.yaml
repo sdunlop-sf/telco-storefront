@@ -1,0 +1,67 @@
+openapi: 3.0.3
+info:
+  title: NBA Decision Stream
+  description: >-
+    Streaming decision records pushed by the Decisioning Hub into Data Cloud so
+    Salesforce Personalization can serve a fresh decision inbound in seconds,
+    beating the batch CRM connector lag. One object: Decision. The graph
+    projects only status=active decisions, so a superseded decision drops out of
+    what SP can serve (the "stale offer vanishes" beat).
+  version: "1.0.0"
+paths: {}
+components:
+  schemas:
+    Decision:
+      type: object
+      properties:
+        decisionId:
+          type: string
+          maxLength: 18
+          description: NBADecision__c record Id. Primary key for the DMO.
+        contactId:
+          type: string
+          maxLength: 18
+          description: >-
+            Salesforce Contact Id. Resolves to the unified individual through
+            IndividualIdentityLink__dlm (SourceRecordId = Contact Id) — the
+            same join proven on the batch path. REQUIRED for SP to see it.
+        individualId:
+          type: string
+          maxLength: 128
+          description: Optional unified individual key fallback (person-only orgs).
+        offerId:
+          type: string
+          maxLength: 18
+          description: Chosen Offer record Id. Matches OfferTreatment.OfferId__c.
+        treatmentId:
+          type: string
+          maxLength: 18
+          description: Chosen OfferTreatment Id (the hydrated creative).
+        actionId:
+          type: string
+          maxLength: 18
+          description: Winning NBA_Action__c Id.
+        triggerType:
+          type: string
+          maxLength: 80
+          description: Trigger that produced this decision (e.g. bup_upgrade).
+        status:
+          type: string
+          maxLength: 20
+          description: >-
+            active | superseded | consumed | expired. The RT graph projects
+            only "active" — this is where freshness is enforced.
+        supersedes:
+          type: string
+          maxLength: 18
+          description: Prior decisionId this one replaces (audit of the re-decide).
+        validUntil:
+          type: string
+          format: date-time
+          description: Decision TTL. Past this, treat as expired.
+        eventTime:
+          type: string
+          format: date-time
+          description: >-
+            When the decision was written. Event time field for the DMO — drives
+            recency / "latest decision wins" in the graph.

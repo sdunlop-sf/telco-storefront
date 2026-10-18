@@ -1,14 +1,15 @@
 :root {
-  --ink: #23262b;          /* Suncorp charcoal */
-  --muted: #6a6f78;
-  --line: #e7e9ee;
-  --brand: #ffb000;        /* Suncorp sun amber */
-  --brand-2: #ff7a00;
-  --brand-ink: #1f2227;
-  --accent: #ee6c00;       /* Suncorp orange CTA */
-  --tint: #fff3df;         /* warm amber tint (chips / hovers) */
-  --tint-line: #ffe2b0;    /* warm amber border */
-  --bg: #f7f8fa;
+  --ink: #21272a;          /* Bupa near-black text */
+  --muted: #6b717a;
+  --line: #d9e1e7;
+  --brand: #0079c8;        /* Bupa blue */
+  --brand-2: #005397;      /* deeper blue */
+  --brand-ink: #00335b;    /* Bupa navy */
+  --accent: #0079c8;       /* Bupa blue CTA */
+  --accent-2: #6a2ca1;     /* Bupa purple (secondary accent) */
+  --tint: #e6f2fb;         /* light blue tint (chips / hovers) */
+  --tint-line: #bfccd6;    /* blue-grey border */
+  --bg: #f8f7f4;           /* Bupa warm white */
   --card: #ffffff;
   --ink-soft: #3a3e45;
 }
@@ -37,6 +38,12 @@ header.site {
 .brand { display: flex; align-items: center; gap: 9px; font-weight: 800; font-size: 23px; letter-spacing: -1px; color: var(--brand); }
 .brand svg { width: 26px; height: 27px; display: block; }
 .brand span { color: var(--brand); }
+.brand-mark {
+  width: 30px; height: 30px; border-radius: 9px; flex: none;
+  background: var(--brand); color: #fff !important;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-weight: 900; font-size: 20px; line-height: 1; text-transform: lowercase;
+}
 nav { display: flex; gap: 4px; margin-right: auto; }
 nav a {
   color: var(--ink-soft); text-decoration: none; font-size: 14px; font-weight: 600;
@@ -88,9 +95,9 @@ nav a.active { background: var(--brand); color: #fff; }
 .pfine { font-size: 12px; color: var(--muted); }
 .bar { height: 6px; border-radius: 6px; background: #f1ece3; overflow: hidden; margin-top: 6px; }
 .bar i { display: block; height: 100%; border-radius: 6px; background: linear-gradient(90deg, var(--brand), var(--brand-2)); transition: width .4s ease; }
-.bar.low i { background: linear-gradient(90deg, #ff7a2f, var(--accent)); }
+.bar.low i { background: linear-gradient(90deg, #f5a623, #e8820e); }
 
-/* ── Suncorp policy cards (logged-in portal) ── */
+/* ── Bupa policy cards (logged-in member portal) ── */
 .policy-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
 .pcell.policy {
   padding: 16px 18px; border-left: 0; border: 1px solid var(--line);
@@ -101,32 +108,32 @@ nav a.active { background: var(--brand); color: #fff; }
 .policy-foot { display: flex; align-items: center; justify-content: space-between; margin-top: 8px; gap: 10px; }
 .prem { font-size: 13px; font-weight: 800; color: var(--ink); }
 .renew { font-size: 11.5px; font-weight: 700; color: var(--muted); }
-.renew.due { color: var(--accent); }
+.renew.due { color: #d64d2f; }
 .recharge {
   align-self: flex-start; margin-top: 4px; font-size: 12.5px; font-weight: 700;
   color: #fff; background: var(--accent); text-decoration: none;
-  padding: 6px 14px; border-radius: 8px; box-shadow: 0 6px 16px -8px rgba(255,85,0,.6);
+  padding: 6px 14px; border-radius: 8px; box-shadow: 0 6px 16px -8px rgba(0,121,200,.6);
 }
 
 /* personalization slot */
 .foryou {
   position: relative; border-radius: 22px; overflow: hidden; margin-bottom: 34px;
   display: grid; grid-template-columns: 1.15fr 0.85fr; min-height: 300px;
-  background: linear-gradient(135deg, #ffc01e 0%, #ff8a1e 60%, #ff6a13 100%);
-  box-shadow: 0 20px 50px -24px rgba(255,122,0,.55);
+  background: linear-gradient(135deg, #00335b 0%, #005397 55%, #0079c8 100%);
+  box-shadow: 0 20px 50px -24px rgba(0,51,91,.55);
 }
-.foryou .copy { padding: 44px 46px; display: flex; flex-direction: column; justify-content: center; color: var(--ink); z-index: 2; }
+.foryou .copy { padding: 44px 46px; display: flex; flex-direction: column; justify-content: center; color: #fff; z-index: 2; }
 .foryou .eyebrow {
   font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase;
-  color: #7a3a00; font-weight: 700; margin-bottom: 14px;
+  color: #bfd9ee; font-weight: 700; margin-bottom: 14px;
 }
-.foryou h2 { font-size: 34px; margin: 0 0 14px; line-height: 1.08; font-weight: 800; letter-spacing: -.6px; max-width: 460px; color: var(--ink); }
-.foryou p { color: #4a3410; font-size: 16px; line-height: 1.5; margin: 0 0 26px; max-width: 440px; }
+.foryou h2 { font-size: 34px; margin: 0 0 14px; line-height: 1.08; font-weight: 800; letter-spacing: -.6px; max-width: 460px; color: #fff; }
+.foryou p { color: #dcebf7; font-size: 16px; line-height: 1.5; margin: 0 0 26px; max-width: 440px; }
 .cta-row { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
 .foryou .cta {
-  background: var(--ink); color: #fff; border: 0;
+  background: #fff; color: var(--brand-ink); border: 0;
   padding: 14px 30px; border-radius: 11px; font-weight: 700; font-size: 14.5px;
-  cursor: pointer; text-decoration: none; box-shadow: 0 10px 24px -10px rgba(26,26,26,.6);
+  cursor: pointer; text-decoration: none; box-shadow: 0 10px 24px -10px rgba(0,20,40,.6);
   transition: transform .1s;
 }
 .foryou .cta:hover { transform: translateY(-1px); }
@@ -134,8 +141,8 @@ nav a.active { background: var(--brand); color: #fff; }
   background-size: cover; background-position: center;
   transition: background-image .25s ease;
 }
-.foryou .src { font-size: 11.5px; color: #7a4a12; }
-.foryou .src b { color: var(--brand-ink); font-weight: 700; }
+.foryou .src { font-size: 11.5px; color: #bfd9ee; }
+.foryou .src b { color: #fff; font-weight: 700; }
 
 /* section head */
 .section-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 18px; }
@@ -179,9 +186,9 @@ h3.section { font-size: 19px; font-weight: 800; letter-spacing: -.3px; margin: 0
   border: 1px solid #182236;
 }
 .inspector header { display: flex; justify-content: space-between; align-items: center; padding: 13px 18px; border-bottom: 1px solid #1b2740; }
-.inspector header b { color: #ffb000; font-family: 'Inter', sans-serif; letter-spacing: .3px; }
+.inspector header b { color: #4aa3dd; font-family: 'Inter', sans-serif; letter-spacing: .3px; }
 .inspector pre { margin: 0; padding: 18px; overflow: auto; max-height: 260px; }
-.pill { font-size: 11px; padding: 3px 10px; border-radius: 20px; background: #2a2416; color: #ffb000; font-family: 'Inter', sans-serif; font-weight: 700; letter-spacing: .3px; }
+.pill { font-size: 11px; padding: 3px 10px; border-radius: 20px; background: #13263a; color: #4aa3dd; font-family: 'Inter', sans-serif; font-weight: 700; letter-spacing: .3px; }
 .pill.mock { background: #3a2a12; color: #f0b47a; }
 .pill.live { background: #0d3a2a; color: #5fd3a3; }
 

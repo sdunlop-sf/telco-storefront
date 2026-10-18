@@ -26,42 +26,44 @@
   // per demo is a config concern, not a code concern; kept here for the demo
   // switcher convenience only.
   const PERSONAS = [
-    { id: "003Kh00001uijWCIAY", name: "Olivia Chen", tag: "Bundle-ready",
+    { id: "003Kh00001uijWCIAY", name: "Hannah Nguyen", tag: "Extras-ready",
       account: {
-        since: "Customer since 2021", tier: "Suncorp Member",
+        since: "Member since 2021", tier: "Bupa Member",
         policies: [
-          { kind: "Motor", label: "Comprehensive Car", ref: "MOT-4471920",
-            renews: "14 Nov", renewsInDays: 29, premium: "$1,180 / yr", status: "Active" }
+          { kind: "Hospital", label: "Silver Plus Hospital", ref: "BUPA-4471920",
+            renews: "14 Nov", renewsInDays: 26, premium: "$94 / mo", status: "Active" }
         ]
       } },
-    { id: "003Kh00001uijWDIAY", name: "James Patel", tag: "Coverage gap",
+    { id: "003Kh00001uijWDIAY", name: "Daniel Chen", tag: "Cover gap",
       account: {
-        since: "Customer since 2019", tier: "Suncorp Member",
+        since: "Member since 2019", tier: "Bupa Member",
         policies: [
-          { kind: "Motor", label: "Comprehensive Car", ref: "MOT-5520133",
-            renews: "02 Nov", renewsInDays: 17, premium: "$1,340 / yr", status: "No roadside" }
+          { kind: "Hospital", label: "Bronze Hospital", ref: "BUPA-5520133",
+            renews: "02 Nov", renewsInDays: 14, premium: "$78 / mo", status: "Active" },
+          { kind: "Extras", label: "Starter Extras", ref: "BUPA-5520134",
+            renews: "02 Nov", renewsInDays: 14, premium: "$22 / mo", status: "Dental limit low" }
         ]
       } },
-    { id: "003Kh00001uijWEIAY", name: "Marcus Reid", tag: "At-risk renewal",
+    { id: "003Kh00001uijWEIAY", name: "Rebecca Hall", tag: "At-risk renewal",
       account: {
-        since: "Customer since 2016", tier: "Platinum",
+        since: "Member since 2016", tier: "Gold Member",
         policies: [
-          { kind: "Home", label: "Home & Contents", ref: "HOM-2210874",
-            renews: "18 Oct", renewsInDays: 2, premium: "$1,840 / yr", status: "Renewal due" },
-          { kind: "Motor", label: "Comprehensive Car", ref: "MOT-2210875",
-            renews: "18 Oct", renewsInDays: 2, premium: "$1,120 / yr", status: "Renewal due" }
+          { kind: "Hospital", label: "Gold Hospital", ref: "BUPA-2210874",
+            renews: "21 Oct", renewsInDays: 2, premium: "$168 / mo", status: "Renewal due" },
+          { kind: "Extras", label: "Top Extras", ref: "BUPA-2210875",
+            renews: "21 Oct", renewsInDays: 2, premium: "$61 / mo", status: "Renewal due" }
         ]
       } },
-    { id: "003Kh00001uijWFIAY", name: "Priya Nair", tag: "Loyalty",
+    { id: "003Kh00001uijWFIAY", name: "Anita Kapoor", tag: "Loyalty",
       account: {
-        since: "Customer since 2014", tier: "Platinum",
+        since: "Member since 2012", tier: "Gold Member · 10+ yrs",
         policies: [
-          { kind: "Home", label: "Home & Contents", ref: "HOM-1904560",
-            renews: "25 Nov", renewsInDays: 40, premium: "$2,010 / yr", status: "Active" },
-          { kind: "Motor", label: "Comprehensive Car", ref: "MOT-1904561",
-            renews: "25 Nov", renewsInDays: 40, premium: "$990 / yr", status: "Active" },
-          { kind: "Landlord", label: "Landlord Insurance", ref: "LAN-1904562",
-            renews: "25 Nov", renewsInDays: 40, premium: "$760 / yr", status: "Active" }
+          { kind: "Hospital", label: "Gold Hospital (Family)", ref: "BUPA-1904560",
+            renews: "25 Nov", renewsInDays: 37, premium: "$214 / mo", status: "Active" },
+          { kind: "Extras", label: "Top Extras (Family)", ref: "BUPA-1904561",
+            renews: "25 Nov", renewsInDays: 37, premium: "$88 / mo", status: "Active" },
+          { kind: "Ambulance", label: "Ambulance Cover", ref: "BUPA-1904562",
+            renews: "25 Nov", renewsInDays: 37, premium: "$6 / mo", status: "Active" }
         ]
       } }
   ];
@@ -82,66 +84,66 @@
   // hero every visitor sees, no account chrome. Picking a customer swaps this
   // for the DH-arbitrated, SP-served personal offer (the inbound-parity beat).
   const GENERIC_OFFER = {
-    eyebrow: "Suncorp insurance",
-    heading: "Cover for your home, your car, and your life.",
-    body: "Welcome to Suncorp. Explore home &amp; motor cover — <strong>sign in</strong> and your offer re-shapes to your policies.",
-    cta: "Get a quote",
+    eyebrow: "Bupa health insurance",
+    heading: "Health cover that looks after you.",
+    body: "Welcome to Bupa. Explore hospital &amp; extras cover — <strong>sign in</strong> and your offer re-shapes to your membership.",
+    cta: "Find a cover",
     url: "#",
-    img: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1000&q=80&auto=format&fit=crop"
+    img: "https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?w=1000&q=80&auto=format&fit=crop"
   };
 
   // Per-persona local offer shown in the logged-in hero when the live SP serve
   // has not resolved yet (fresh identity, item graph mid-refresh, propagation
   // lag). Mirrors each persona's HOME decision so the logged-in page is always a
-  // complete Suncorp mock-up. A live SP decision ALWAYS overrides this — the
+  // complete Bupa mock-up. A live SP decision ALWAYS overrides this — the
   // fallback only fills the gap so the hero never shows an empty "no-decision"
   // state in front of a customer. Keyed by Contact Id.
   const FALLBACK_OFFER = {
-    "003Kh00001uijWCIAY": { // Olivia — Multi-Policy Bundle
+    "003Kh00001uijWCIAY": { // Hannah — Add Extras Cover
       eyebrow: "Recommended for you",
-      heading: "Combine your home and car — save up to 15%",
-      body: "Bring your <strong>home and car</strong> together on one Suncorp account and save <strong>up to 15%</strong>, with a single renewal date.",
-      cta: "See my bundle saving", url: "#",
-      img: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1000&q=80&auto=format&fit=crop" },
-    "003Kh00001uijWDIAY": { // James — Roadside Assist
+      heading: "Add Extras and claim on dental, optical & physio",
+      body: "Add <strong>Extras cover</strong> to your Bupa membership and start claiming on <strong>dental, optical and physio</strong>, with lower or no gaps at Members First providers.",
+      cta: "Add Extras cover", url: "#",
+      img: "https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=1000&q=80&auto=format&fit=crop" },
+    "003Kh00001uijWDIAY": { // Daniel — Combine Hospital + Extras
       eyebrow: "Recommended for you",
-      heading: "Never stranded — add 24/7 roadside assist",
-      body: "Add <strong>24/7 roadside assistance</strong> to your motor policy for a few dollars a month — tows, flat batteries and lockouts, Australia-wide.",
-      cta: "Add roadside assist", url: "#",
-      img: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=1000&q=80&auto=format&fit=crop" },
-    "003Kh00001uijWEIAY": { // Marcus — Renewal Save (at-risk)
+      heading: "Combine hospital and extras — and save",
+      body: "Bring your <strong>hospital and extras</strong> together on one Bupa membership for simpler cover, one payment and a <strong>combined-cover saving</strong>.",
+      cta: "See my combined cover", url: "#",
+      img: "https://images.unsplash.com/photo-1505751172876-fa1923c5c528?w=1000&q=80&auto=format&fit=crop" },
+    "003Kh00001uijWEIAY": { // Rebecca — Renewal Save (at-risk)
       eyebrow: "Recommended for you",
-      heading: "Before you switch — let us keep you covered",
-      body: "Your renewal is coming up. We can <strong>price-match a competitor quote</strong> and add a <strong>loyalty credit</strong> so you keep the Suncorp cover you trust.",
+      heading: "Before you switch funds — let us keep you covered",
+      body: "Your renewal is coming up. We can <strong>review your cover for better value</strong> and add a <strong>loyalty benefit</strong> so you keep the Bupa cover and Members First network you trust.",
       cta: "Keep my cover", url: "#",
-      img: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1000&q=80&auto=format&fit=crop" },
-    "003Kh00001uijWFIAY": { // Priya — Loyalty Renewal Reward
+      img: "https://images.unsplash.com/photo-1551076805-e1869033e561?w=1000&q=80&auto=format&fit=crop" },
+    "003Kh00001uijWFIAY": { // Anita — Loyalty Renewal Reward
       eyebrow: "Recommended for you",
-      heading: "A $150 loyalty reward on your renewal",
-      body: "Thank you for staying with Suncorp. We have applied a <strong>$150 loyalty credit</strong> to your next renewal — nothing for you to do.",
+      heading: "A loyalty reward on your renewal",
+      body: "Thank you for being with Bupa. We have applied a <strong>loyalty benefit</strong> to your next renewal — nothing for you to do.",
       cta: "View my renewal", url: "#",
-      img: "https://images.unsplash.com/photo-1607083206869-4c7672e72a8a?w=1000&q=80&auto=format&fit=crop" }
+      img: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=1000&q=80&auto=format&fit=crop" }
   };
 
-  // The Suncorp offer Ids on 4b. Used by HERO_SOURCE:"auto" to accept a live SP
-  // decision only when it serves a Suncorp offer (so a stale non-Suncorp serve
-  // is ignored and the local home offer shows instead).
-  const SUNCORP_OFFER_IDS = new Set([
-    "1XhKh000000PBQ2KAO", "1XhKh000000PBQ3KAO", "1XhKh000000PBQ4KAO", "1XhKh000000PBQ5KAO",
-    "1XhKh000000PBQ6KAO", "1XhKh000000PBQ7KAO", "1XhKh000000PBQ8KAO", "1XhKh000000PBQ9KAO"
+  // The Bupa offer Ids on 4b (15-char prefixes). Used by HERO_SOURCE:"auto" to
+  // accept a live SP decision only when it serves a Bupa offer (so a stale
+  // non-Bupa serve is ignored and the local home offer shows instead).
+  const BUPA_OFFER_IDS = new Set([
+    "1XhKh000000PBQA", "1XhKh000000PBQB", "1XhKh000000PBQC", "1XhKh000000PBQD",
+    "1XhKh000000PBQE", "1XhKh000000PBQF", "1XhKh000000PBQG", "1XhKh000000PBQH"
   ]);
-  function isSuncorpItem(item) {
+  function isBupaItem(item) {
     const oid = pick(item, "OfferId__c", "offerId");
-    if (oid && SUNCORP_OFFER_IDS.has(String(oid).substring(0, 15))) return true;
+    if (oid && BUPA_OFFER_IDS.has(String(oid).substring(0, 15))) return true;
     // Fallback discriminator when the graph does not expose OfferId: brand token.
     const txt = (pick(item, "TreatmentOutput__c", "treatmentOutput") || "") +
                 (pick(item, "OfferBody__c", "offerBody") || "");
-    return /suncorp/i.test(txt);
+    return /bupa/i.test(txt);
   }
 
   const CAT_LABEL = {
-    CAT_HOME: "Home", CAT_MOTOR: "Motor",
-    CAT_CLAIMS: "Claims", CAT_REWARDS: "Rewards"
+    CAT_HOSPITAL: "Hospital", CAT_EXTRAS: "Extras",
+    CAT_CLAIMS: "Claims", CAT_BENEFITS: "Benefits"
   };
 
   let state = { individualId: "", lastCategory: null, lastDecision: null };
@@ -211,7 +213,7 @@
       JSON.stringify(state.lastDecision, null, 2);
   }
 
-  // Populate the logged-in "My Suncorp" summary from the selected persona.
+  // Populate the logged-in "myBupa" summary from the selected persona.
   // Demo dressing only — this is NOT SP/decision data; it just makes the offer
   // land inside a believable account context. Hidden when anonymous.
   function renderAccount(persona) {
@@ -222,8 +224,8 @@
 
     document.getElementById("acct-avatar").textContent = (persona.name || "s").trim()[0];
     document.getElementById("acct-name").textContent = (persona.name || "").split(" ")[0];
-    document.getElementById("acct-since").textContent = a.since || "Welcome back to My Suncorp";
-    document.getElementById("acct-tier").textContent = a.tier || "Suncorp Member";
+    document.getElementById("acct-since").textContent = a.since || "Welcome back to myBupa";
+    document.getElementById("acct-tier").textContent = a.tier || "Bupa Member";
 
     // Render one card per policy. A policy renewing soon ("Renewal due" or
     // within 7 days) is flagged so the retention beat lands in context.
@@ -308,9 +310,9 @@
     return true;
   }
 
-  // Render the generic, un-personalised Suncorp hero for an anonymous visitor.
+  // Render the generic, un-personalised Bupa hero for an anonymous visitor.
   // Paints the native hero fields directly (synthetic content, not an SP call),
-  // hides the My Suncorp account chrome, and restores the native hero if a
+  // hides the myBupa account chrome, and restores the native hero if a
   // drop-in treatment card was previously injected (persona -> anonymous).
   function renderGeneric() {
     renderAccount(null); // no account chrome when anonymous
@@ -402,7 +404,7 @@
     if (!id) return renderGeneric(); // anonymous visitor -> un-personalised brand hero
 
     // Mock-up mode: skip SP entirely and render the local home offer. The
-    // logged-in page is a complete Suncorp visual with no Data Cloud dependency.
+    // logged-in page is a complete Bupa visual with no Data Cloud dependency.
     if ((cfg.HERO_SOURCE || "live") === "fallback") {
       if (renderFallback(id, "home offer · local mock-up")) return;
     }
@@ -430,10 +432,10 @@
       .then((r) => r.json())
       .then((resp) => {
         const item = firstItem(resp);
-        // In "auto" only accept a live decision that serves a Suncorp offer;
+        // In "auto" only accept a live decision that serves a Bupa offer;
         // otherwise fall through to the local home offer (ignores stale serves).
         const accept = item && (item.TreatmentOutput__c || item.OfferHeading__c || item.personalizationContentId)
-          && ((cfg.HERO_SOURCE || "live") !== "auto" || isSuncorpItem(item));
+          && ((cfg.HERO_SOURCE || "live") !== "auto" || isBupaItem(item));
         if (accept) {
           const prevOffer = state.lastDecision && state.lastDecision.offerId;
           const newOffer  = pick(item, "OfferId__c", "OfferTreatmentCode__c", "Id__c");
@@ -554,7 +556,7 @@
       state.individualId = sel.value;
       state.lastCategory = null;
       highlight(null);
-      renderAccount(PERSONAS.find(p => p.id === sel.value)); // log in / out of My Suncorp
+      renderAccount(PERSONAS.find(p => p.id === sel.value)); // log in / out of myBupa
       setIdentity(state.individualId);
       requestDecision(); // fresh arrival = serve the DH decision for this person
       startPolling();    // watch for live re-decisions on this identity
@@ -612,7 +614,7 @@
   // Which identity the storefront opens on (the parity beat starts logged in).
   //   ?who=<first name | contact id>  -> that persona
   //   ?who=anon | anonymous           -> anonymous / generic (no login)
-  //   (no param)                      -> Marcus (at-risk) by default
+  //   (no param)                      -> Rebecca (at-risk renewal) by default
   // On refresh the same identity is kept, so "fire decisions -> refresh" shows
   // the newly-served offer against a stable logged-in customer.
   function resolveOpeningPersona() {
@@ -625,7 +627,7 @@
         p.name.toLowerCase().includes(who));
       if (m) return m;
     }
-    return PERSONAS.find(p => p.name.toLowerCase().startsWith("marcus")) || PERSONAS[0] || null;
+    return PERSONAS.find(p => p.name.toLowerCase().startsWith("rebecca")) || PERSONAS[0] || null;
   }
 
   /* ---------- boot ---------- */
@@ -640,8 +642,8 @@
       renderItem(MOCK_ITEM, "MOCK · local sample");
     } else {
       pill.textContent = "LIVE · Salesforce Personalization"; pill.className = "pill live";
-      // Open LOGGED IN (default: Marcus) so the parity beat starts in a real
-      // My Suncorp account and the served offer updates on refresh as decisions
+      // Open LOGGED IN (default: Rebecca) so the parity beat starts in a real
+      // myBupa account and the served offer updates on refresh as decisions
       // fire. ?who=anon opens anonymous/generic instead.
       const opening = resolveOpeningPersona();
       if (opening) {
