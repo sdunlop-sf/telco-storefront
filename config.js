@@ -40,7 +40,7 @@ window.DEMO_CONFIG = {
   //                 served OfferId is a known FLG offer; else show the local one.
   //   "live"     -> trust whatever SP serves (needed for the live web-flip beat
   //                 once the DC item graph is refreshed).
-  HERO_SOURCE: "fallback",
+  HERO_SOURCE: "auto",
 
   // How the "For you" slot renders the SP decision: "treatment" drops the
   // hydrated card in whole; "fields" paints the native hero from fields.
