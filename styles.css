@@ -42,7 +42,7 @@ body.ff {
 
 .phone { flex: none; }
 .phone-shell {
-  width: 408px; padding: 14px; border-radius: 54px;
+  width: max-content; padding: 13px; border-radius: 52px;
   background: linear-gradient(160deg, #2a2a2a, #050505);
   box-shadow:
     0 40px 90px -30px rgba(0,0,0,.8),
@@ -51,12 +51,17 @@ body.ff {
   position: relative;
 }
 .phone-notch {
+  /* Dynamic Island — scales with the screen width */
   position: absolute; top: 20px; left: 50%; transform: translateX(-50%);
-  width: 130px; height: 26px; background: #000; border-radius: 0 0 16px 16px; z-index: 40;
+  width: 31%; height: 24px; background: #000; border-radius: 16px; z-index: 40;
 }
 .phone-screen {
-  position: relative; background: var(--bg); border-radius: 42px; overflow: hidden auto;
-  height: 812px; max-height: calc(100vh - 150px);
+  /* True iPhone 15 Pro proportions (393 x 852 pt). Height drives the size and
+     fits the viewport; width follows the aspect ratio so it never goes squat. */
+  position: relative; background: var(--bg); border-radius: 40px; overflow: hidden auto;
+  aspect-ratio: 393 / 852;
+  height: min(852px, calc(100vh - 96px));
+  width: auto;
   scrollbar-width: none;
 }
 .phone-screen::-webkit-scrollbar { display: none; }
