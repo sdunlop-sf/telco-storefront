@@ -25,45 +25,46 @@
   // knowledge — the decision for each is served live by SP. Swapping personas
   // per demo is a config concern, not a code concern; kept here for the demo
   // switcher convenience only.
+  // HEALTH SERVICES re-skin: the "account" is now a CARE PROFILE across Bupa's
+  // services arm (Bupa Dental, Bupa Optical, allied health, telehealth wellbeing)
+  // - not insurance policies. Each item is a service / appointment / care plan.
   const PERSONAS = [
-    { id: "003Kh00001uijWCIAY", name: "Hannah Nguyen", tag: "Extras-ready",
+    { id: "003Kh00001uijWCIAY", name: "Hannah Nguyen", tag: "Dental due",
       account: {
-        since: "Member since 2021", tier: "Bupa Member",
+        since: "Bupa Health member since 2021", tier: "Bupa Health member",
         policies: [
-          { kind: "Hospital", label: "Silver Plus Hospital", ref: "BUPA-4471920",
-            renews: "14 Nov", renewsInDays: 26, premium: "$94 / mo", status: "Active" }
+          { kind: "Dental", label: "Check-up & clean", ref: "Bupa Dental · Members First",
+            renews: "soon", renewsInDays: 5, premium: "Last visit 8 months ago", status: "Due now" }
         ]
       } },
-    { id: "003Kh00001uijWDIAY", name: "Daniel Chen", tag: "Cover gap",
+    { id: "003Kh00001uijWDIAY", name: "Daniel Chen", tag: "Eye test overdue",
       account: {
-        since: "Member since 2019", tier: "Bupa Member",
+        since: "Bupa Health member since 2019", tier: "Bupa Health member",
         policies: [
-          { kind: "Hospital", label: "Bronze Hospital", ref: "BUPA-5520133",
-            renews: "02 Nov", renewsInDays: 14, premium: "$78 / mo", status: "Active" },
-          { kind: "Extras", label: "Starter Extras", ref: "BUPA-5520134",
-            renews: "02 Nov", renewsInDays: 14, premium: "$22 / mo", status: "Dental limit low" }
+          { kind: "Optical", label: "Comprehensive eye test", ref: "Bupa Optical",
+            premium: "Last test 2+ years ago", status: "Overdue" },
+          { kind: "Allied health", label: "Physio program", ref: "Members First provider",
+            premium: "3 of 6 sessions used", status: "Active" }
         ]
       } },
-    { id: "003Kh00001uijWEIAY", name: "Rebecca Hall", tag: "At-risk renewal",
+    { id: "003Kh00001uijWEIAY", name: "Rebecca Hall", tag: "Care plan lapsed",
       account: {
-        since: "Member since 2016", tier: "Gold Member",
+        since: "Bupa Health member since 2016", tier: "Bupa Health member",
         policies: [
-          { kind: "Hospital", label: "Gold Hospital", ref: "BUPA-2210874",
-            renews: "21 Oct", renewsInDays: 2, premium: "$168 / mo", status: "Renewal due" },
-          { kind: "Extras", label: "Top Extras", ref: "BUPA-2210875",
-            renews: "21 Oct", renewsInDays: 2, premium: "$61 / mo", status: "Renewal due" }
+          { kind: "Care plan", label: "Weight & wellbeing plan", ref: "Bupa Health Coaching",
+            renews: "paused", renewsInDays: 2, premium: "Next step not booked", status: "Review due" }
         ]
       } },
-    { id: "003Kh00001uijWFIAY", name: "Anita Kapoor", tag: "Loyalty",
+    { id: "003Kh00001uijWFIAY", name: "Anita Kapoor", tag: "Preventive",
       account: {
-        since: "Member since 2012", tier: "Gold Member · 10+ yrs",
+        since: "Bupa Health member since 2012", tier: "Bupa Health member · 10+ yrs",
         policies: [
-          { kind: "Hospital", label: "Gold Hospital (Family)", ref: "BUPA-1904560",
-            renews: "25 Nov", renewsInDays: 37, premium: "$214 / mo", status: "Active" },
-          { kind: "Extras", label: "Top Extras (Family)", ref: "BUPA-1904561",
-            renews: "25 Nov", renewsInDays: 37, premium: "$88 / mo", status: "Active" },
-          { kind: "Ambulance", label: "Ambulance Cover", ref: "BUPA-1904562",
-            renews: "25 Nov", renewsInDays: 37, premium: "$6 / mo", status: "Active" }
+          { kind: "Wellbeing", label: "Bupa wellbeing program", ref: "Health Coaching",
+            premium: "Enrolled", status: "Active" },
+          { kind: "Health check", label: "Telehealth wellbeing check", ref: "Blua digital health",
+            premium: "Available now", status: "Not yet booked" },
+          { kind: "Skin check", label: "Preventive skin check", ref: "Members First provider",
+            premium: "Annual", status: "Up to date" }
         ]
       } }
   ];
@@ -84,12 +85,12 @@
   // hero every visitor sees, no account chrome. Picking a customer swaps this
   // for the DH-arbitrated, SP-served personal offer (the inbound-parity beat).
   const GENERIC_OFFER = {
-    eyebrow: "Bupa health insurance",
-    heading: "Health cover that looks after you.",
-    body: "Welcome to Bupa. Explore hospital &amp; extras cover — <strong>sign in</strong> and your offer re-shapes to your membership.",
-    cta: "Find a cover",
+    eyebrow: "Bupa Health Services",
+    heading: "Care that comes to you.",
+    body: "Welcome to Bupa. Dental, optical, allied health and wellbeing — <strong>sign in</strong> and your next best care step re-shapes to you.",
+    cta: "Explore services",
     url: "#",
-    img: "https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?w=1000&q=80&auto=format&fit=crop"
+    img: "https://images.unsplash.com/photo-1631815588090-d4bfec5b1ccb?w=1000&q=80&auto=format&fit=crop"
   };
 
   // Per-persona local offer shown in the logged-in hero when the live SP serve
@@ -99,30 +100,30 @@
   // fallback only fills the gap so the hero never shows an empty "no-decision"
   // state in front of a customer. Keyed by Contact Id.
   const FALLBACK_OFFER = {
-    "003Kh00001uijWCIAY": { // Hannah — Add Extras Cover
+    "003Kh00001uijWCIAY": { // Hannah — Dental check-up (BUP_EXTRAS)
       eyebrow: "Recommended for you",
-      heading: "Add Extras and claim on dental, optical & physio",
-      body: "Add <strong>Extras cover</strong> to your Bupa membership and start claiming on <strong>dental, optical and physio</strong>, with lower or no gaps at Members First providers.",
-      cta: "Add Extras cover", url: "#",
+      heading: "Book your dental check-up and clean",
+      body: "You are due for a routine check-up and clean at <strong>Bupa Dental</strong>. Book with a Members First clinic near you and claim on the spot, often with nothing to pay.",
+      cta: "Book my dental visit", url: "#",
       img: "https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=1000&q=80&auto=format&fit=crop" },
-    "003Kh00001uijWDIAY": { // Daniel — Combine Hospital + Extras
+    "003Kh00001uijWDIAY": { // Daniel — Eye test (BUP_COMBINE)
       eyebrow: "Recommended for you",
-      heading: "Combine hospital and extras — and save",
-      body: "Bring your <strong>hospital and extras</strong> together on one Bupa membership for simpler cover, one payment and a <strong>combined-cover saving</strong>.",
-      cta: "See my combined cover", url: "#",
-      img: "https://images.unsplash.com/photo-1505751172876-fa1923c5c528?w=1000&q=80&auto=format&fit=crop" },
-    "003Kh00001uijWEIAY": { // Rebecca — Renewal Save (at-risk)
+      heading: "Time for your eye test at Bupa Optical",
+      body: "Your last eye test was more than two years ago. Book a comprehensive eye test at <strong>Bupa Optical</strong> and keep your vision on track.",
+      cta: "Book an eye test", url: "#",
+      img: "https://images.unsplash.com/photo-1512069772995-ec65ed45afd6?w=1000&q=80&auto=format&fit=crop" },
+    "003Kh00001uijWEIAY": { // Rebecca — Care continuity (BUP_SAVE / composition persona)
       eyebrow: "Recommended for you",
-      heading: "Before you switch funds — let us keep you covered",
-      body: "Your renewal is coming up. We can <strong>review your cover for better value</strong> and add a <strong>loyalty benefit</strong> so you keep the Bupa cover and Members First network you trust.",
-      cta: "Keep my cover", url: "#",
-      img: "https://images.unsplash.com/photo-1551076805-e1869033e561?w=1000&q=80&auto=format&fit=crop" },
-    "003Kh00001uijWFIAY": { // Anita — Loyalty Renewal Reward
+      heading: "Let us get your care back on track",
+      body: "You started a <strong>care plan</strong> with us but have not booked your next step. Let us find a time that works and keep your health moving forward.",
+      cta: "Book my next step", url: "#",
+      img: "https://images.unsplash.com/photo-1573497491208-6b1acb260507?w=1000&q=80&auto=format&fit=crop" },
+    "003Kh00001uijWFIAY": { // Anita — Wellbeing program (BUP_LOYALTY)
       eyebrow: "Recommended for you",
-      heading: "A loyalty reward on your renewal",
-      body: "Thank you for being with Bupa. We have applied a <strong>loyalty benefit</strong> to your next renewal — nothing for you to do.",
-      cta: "View my renewal", url: "#",
-      img: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=1000&q=80&auto=format&fit=crop" }
+      heading: "Join the Bupa wellbeing program",
+      body: "Your membership unlocks the <strong>Bupa wellbeing program</strong> — personalised coaching with movement, nutrition and sleep support to help you feel your best.",
+      cta: "Join the program", url: "#",
+      img: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=1000&q=80&auto=format&fit=crop" }
   };
 
   // The Bupa offer Ids on 4b (15-char prefixes). Used by HERO_SOURCE:"auto" to
@@ -227,28 +228,23 @@
     document.getElementById("acct-since").textContent = a.since || "Welcome back to myBupa";
     document.getElementById("acct-tier").textContent = a.tier || "Bupa Member";
 
-    // Render one card per policy. A policy renewing soon ("Renewal due" or
-    // within 7 days) is flagged so the retention beat lands in context.
+    // Render one card per care item. An item due soon ("due" / "overdue" /
+    // "review" or within 7 days) is flagged so the care-continuity beat lands
+    // in context.
     const grid = document.getElementById("acct-policies");
     grid.innerHTML = "";
     (a.policies || []).forEach(p => {
       const soon = (p.renewsInDays != null && p.renewsInDays <= 7) ||
-                   /renewal/i.test(p.status || "");
+                   /(due|overdue|review|paused|lapsed)/i.test(p.status || "");
       const el = document.createElement("div");
       el.className = "pcell policy" + (soon ? " low" : "");
       el.innerHTML = `
-        <span class="plabel">${p.kind || "Policy"}</span>
+        <span class="plabel">${p.kind || "Service"}</span>
         <span class="pval">${p.label || "—"}</span>
         <span class="pfine">${p.ref || ""}</span>
         <div class="policy-foot">
           <span class="prem">${p.premium || ""}</span>
-          <span class="renew${soon ? " due" : ""}">${
-            p.renews ? "Renews " + p.renews +
-              (p.renewsInDays != null
-                ? ` · in ${p.renewsInDays} day${p.renewsInDays === 1 ? "" : "s"}`
-                : "")
-            : (p.status || "")
-          }</span>
+          <span class="renew${soon ? " due" : ""}">${p.status || ""}</span>
         </div>`;
       grid.appendChild(el);
     });
