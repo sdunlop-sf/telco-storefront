@@ -25,46 +25,48 @@
   // knowledge — the decision for each is served live by SP. Swapping personas
   // per demo is a config concern, not a code concern; kept here for the demo
   // switcher convenience only.
-  // HEALTH SERVICES re-skin: the "account" is now a CARE PROFILE across Bupa's
-  // services arm (Bupa Dental, Bupa Optical, allied health, telehealth wellbeing)
-  // - not insurance policies. Each item is a service / appointment / care plan.
+  // FLG re-skin: the "account" is now a MEMBER PROFILE at Fitness First — the
+  // membership tier plus the goals / attendance / activity the engine reads to
+  // decide the next best interaction. Each item is a membership / goal / class.
   const PERSONAS = [
-    { id: "003Kh00001uijWCIAY", name: "Hannah Nguyen", tag: "Dental due",
+    { id: "003Kh00001uijWCIAY", name: "Hannah Nguyen", tag: "Engaged · AM trainer",
       account: {
-        since: "Bupa Health member since 2021", tier: "Bupa Health member",
+        since: "Fitness First member since 2022", tier: "Standard membership",
         policies: [
-          { kind: "Dental", label: "Check-up & clean", ref: "Bupa Dental · Members First",
-            renews: "soon", renewsInDays: 5, premium: "Last visit 8 months ago", status: "Due now" }
+          { kind: "Membership", label: "Standard · home club Bondi", ref: "Fitness First",
+            premium: "12 visits this month", status: "Active" },
+          { kind: "Goal", label: "Build core strength", ref: "Captured in app",
+            premium: "Trains weekday mornings", status: "On track" }
         ]
       } },
-    { id: "003Kh00001uijWDIAY", name: "Daniel Chen", tag: "Eye test overdue",
+    { id: "003Kh00001uijWDIAY", name: "Daniel Chen", tag: "Attendance dropping",
       account: {
-        since: "Bupa Health member since 2019", tier: "Bupa Health member",
+        since: "Fitness First member since 2020", tier: "Standard membership",
         policies: [
-          { kind: "Optical", label: "Comprehensive eye test", ref: "Bupa Optical",
-            premium: "Last test 2+ years ago", status: "Overdue" },
-          { kind: "Allied health", label: "Physio program", ref: "Members First provider",
-            premium: "3 of 6 sessions used", status: "Active" }
+          { kind: "Membership", label: "Standard · home club Carlton", ref: "Fitness First",
+            premium: "2 visits this month", status: "Slowing down" },
+          { kind: "Goal", label: "Stay consistent", ref: "Usual trainer: Jordan",
+            renewsInDays: 3, premium: "Last visit 12 days ago", status: "At risk" }
         ]
       } },
-    { id: "003Kh00001uijWEIAY", name: "Rebecca Hall", tag: "Care plan lapsed",
+    { id: "003Kh00001uijWEIAY", name: "Rebecca Hall", tag: "Lapsed member",
       account: {
-        since: "Bupa Health member since 2016", tier: "Bupa Health member",
+        since: "Fitness First member since 2018", tier: "Standard membership",
         policies: [
-          { kind: "Care plan", label: "Weight & wellbeing plan", ref: "Bupa Health Coaching",
-            renews: "paused", renewsInDays: 2, premium: "Next step not booked", status: "Review due" }
+          { kind: "Membership", label: "Standard · home club Chatswood", ref: "Fitness First",
+            renewsInDays: 2, premium: "No visits in 4 weeks", status: "Lapsed" }
         ]
       } },
-    { id: "003Kh00001uijWFIAY", name: "Anita Kapoor", tag: "Preventive",
+    { id: "003Kh00001uijWFIAY", name: "Anita Kapoor", tag: "Upgrade-ready",
       account: {
-        since: "Bupa Health member since 2012", tier: "Bupa Health member · 10+ yrs",
+        since: "Fitness First member since 2015", tier: "Standard membership · 9+ yrs",
         policies: [
-          { kind: "Wellbeing", label: "Bupa wellbeing program", ref: "Health Coaching",
-            premium: "Enrolled", status: "Active" },
-          { kind: "Health check", label: "Telehealth wellbeing check", ref: "Blua digital health",
-            premium: "Available now", status: "Not yet booked" },
-          { kind: "Skin check", label: "Preventive skin check", ref: "Members First provider",
-            premium: "Annual", status: "Up to date" }
+          { kind: "Membership", label: "Standard · home club Pitt St", ref: "Fitness First",
+            premium: "18 visits this month", status: "Active" },
+          { kind: "Goal", label: "Flexibility & recovery", ref: "Captured in app",
+            premium: "Tried Hot Yoga x3", status: "Studio-curious" },
+          { kind: "Studios", label: "Reform Pilates · Les Mills", ref: "Not on current tier",
+            premium: "Black Label only", status: "Locked" }
         ]
       } }
   ];
@@ -85,12 +87,12 @@
   // hero every visitor sees, no account chrome. Picking a customer swaps this
   // for the DH-arbitrated, SP-served personal offer (the inbound-parity beat).
   const GENERIC_OFFER = {
-    eyebrow: "Bupa Health Services",
-    heading: "Care that comes to you.",
-    body: "Welcome to Bupa. Dental, optical, allied health and wellbeing — <strong>sign in</strong> and your next best care step re-shapes to you.",
-    cta: "Explore services",
+    eyebrow: "Fitness First",
+    heading: "4 weeks free. No join fee.",
+    body: "Let's put fitness first. Premium clubs, Black Label studios and 24/7 access across the group — <strong>sign in</strong> and your next best move re-shapes to you.",
+    cta: "Start free",
     url: "#",
-    img: "https://images.unsplash.com/photo-1631815588090-d4bfec5b1ccb?w=1000&q=80&auto=format&fit=crop"
+    img: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1000&q=80&auto=format&fit=crop"
   };
 
   // Per-persona local offer shown in the logged-in hero when the live SP serve
@@ -100,55 +102,56 @@
   // fallback only fills the gap so the hero never shows an empty "no-decision"
   // state in front of a customer. Keyed by Contact Id.
   const FALLBACK_OFFER = {
-    // Per-persona health-services recommendation, rendered locally (HERO_SOURCE
+    // Per-persona Fitness First recommendation, rendered locally (HERO_SOURCE
     // "fallback") so the hero is guaranteed-clean and matches the email creative.
     // (SP's live serve reads from a stale DC item-graph snapshot; until that is
     // refreshed we render the correct creative here rather than serve a ghost.)
-    "003Kh00001uijWCIAY": { // Hannah — Dental check-up (BUP_EXTRAS)
+    "003Kh00001uijWCIAY": { // Hannah — Engagement / class prompt (FF_ENGAGE1)
       eyebrow: "Recommended for you",
-      heading: "Book your dental check-up and clean",
-      body: "You are due for a routine check-up and clean at <strong>Bupa Dental</strong>. Book with a Members First clinic near you and claim on the spot, often with nothing to pay.",
-      cta: "Book my dental visit", url: "#",
-      img: "https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=1000&q=80&auto=format&fit=crop" },
-    "003Kh00001uijWDIAY": { // Daniel — Eye test (BUP_COMBINE)
+      heading: "Your morning strength session: Reform Pilates",
+      body: "You train best on weekday mornings. A <strong>Reform Pilates</strong> class fits your strength goal and your usual time. Book a spot this week and keep the streak going.",
+      cta: "Book my class", url: "#",
+      img: "https://images.unsplash.com/photo-1518611012118-696072aa579a?w=1000&q=80&auto=format&fit=crop" },
+    "003Kh00001uijWDIAY": { // Daniel — Retention / trainer win-back (FF_RETURN1)
+      eyebrow: "A note from your trainer",
+      heading: "We've missed you at the club, Daniel",
+      body: "It's been a couple of weeks. Your trainer <strong>Jordan</strong> has a spot ready whenever you are — let's get one session back in the diary and pick up where you left off.",
+      cta: "Rebook with Jordan", url: "#",
+      img: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=1000&q=80&auto=format&fit=crop" },
+    "003Kh00001uijWEIAY": { // Rebecca — Retention / win-back (FF_RETURN1 / composition persona)
+      eyebrow: "A note from your trainer",
+      heading: "Let's get you back on track, Rebecca",
+      body: "It's been a few weeks since your last visit. No pressure, no judgement — just a <strong>fresh start</strong> whenever you're ready. We'll help you ease back in.",
+      cta: "Plan my return", url: "#",
+      img: "https://images.unsplash.com/photo-1549060279-7e168fcee0c2?w=1000&q=80&auto=format&fit=crop" },
+    "003Kh00001uijWFIAY": { // Anita — Upgrade / Black Label (FF_UPGRADE1)
       eyebrow: "Recommended for you",
-      heading: "Time for your eye test at Bupa Optical",
-      body: "Your last eye test was more than two years ago. Book a comprehensive eye test at <strong>Bupa Optical</strong> and keep your vision on track.",
-      cta: "Book an eye test", url: "#",
-      img: "https://images.unsplash.com/photo-1512069772995-ec65ed45afd6?w=1000&q=80&auto=format&fit=crop" },
-    "003Kh00001uijWEIAY": { // Rebecca — Care continuity (BUP_SAVE / composition persona)
-      eyebrow: "Recommended for you",
-      heading: "Let us get your care back on track",
-      body: "You started a <strong>care plan</strong> with us but have not booked your next step. Let us find a time that works and keep your health moving forward.",
-      cta: "Book my next step", url: "#",
-      img: "https://images.unsplash.com/photo-1573497491208-6b1acb260507?w=1000&q=80&auto=format&fit=crop" },
-    "003Kh00001uijWFIAY": { // Anita — Wellbeing program (BUP_LOYALTY)
-      eyebrow: "Recommended for you",
-      heading: "Join the Bupa wellbeing program",
-      body: "Your membership unlocks the <strong>Bupa wellbeing program</strong> — personalised coaching with movement, nutrition and sleep support to help you feel your best.",
-      cta: "Join the program", url: "#",
+      heading: "Unlock every studio with Black Label",
+      body: "You're loving Hot Yoga. <strong>Black Label</strong> opens Reform Pilates, Les Mills and Revive Recovery across every premium club — your recovery and flexibility goals, fully unlocked.",
+      cta: "Upgrade to Black Label", url: "#",
       img: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=1000&q=80&auto=format&fit=crop" }
   };
 
-  // The Bupa offer Ids on 4b (15-char prefixes). Used by HERO_SOURCE:"auto" to
-  // accept a live SP decision only when it serves a Bupa offer (so a stale
-  // non-Bupa serve is ignored and the local home offer shows instead).
-  const BUPA_OFFER_IDS = new Set([
-    "1XhKh000000PBQA", "1XhKh000000PBQB", "1XhKh000000PBQC", "1XhKh000000PBQD",
-    "1XhKh000000PBQE", "1XhKh000000PBQF", "1XhKh000000PBQG", "1XhKh000000PBQH"
+  // The Fitness First core offer Ids on 4b (15-char prefixes). Used by
+  // HERO_SOURCE:"auto" to accept a live SP decision only when it serves a known
+  // FLG offer (so a stale non-FLG serve is ignored and the local home offer
+  // shows instead). Core FF_ offers only — A2A offers (OFFFLG*) never serve here.
+  const FLG_OFFER_IDS = new Set([
+    "1XhKh000000PBQc", "1XhKh000000PBQd", "1XhKh000000PBQe",
+    "1XhKh000000PBQf", "1XhKh000000PBQg", "1XhKh000000PBQh"
   ]);
-  function isBupaItem(item) {
+  function isFLGItem(item) {
     const oid = pick(item, "OfferId__c", "offerId");
-    if (oid && BUPA_OFFER_IDS.has(String(oid).substring(0, 15))) return true;
+    if (oid && FLG_OFFER_IDS.has(String(oid).substring(0, 15))) return true;
     // Fallback discriminator when the graph does not expose OfferId: brand token.
     const txt = (pick(item, "TreatmentOutput__c", "treatmentOutput") || "") +
                 (pick(item, "OfferBody__c", "offerBody") || "");
-    return /bupa/i.test(txt);
+    return /fitness first/i.test(txt);
   }
 
   const CAT_LABEL = {
-    CAT_HOSPITAL: "Hospital", CAT_EXTRAS: "Extras",
-    CAT_CLAIMS: "Claims", CAT_BENEFITS: "Benefits"
+    CAT_FITNESSFIRST: "Fitness First", CAT_GOODLIFE: "Goodlife",
+    CAT_JETTS: "Jetts", CAT_ZAP: "Zap", CAT_BARRYS: "Barry's"
   };
 
   let state = { individualId: "", lastCategory: null, lastDecision: null };
@@ -229,8 +232,8 @@
 
     document.getElementById("acct-avatar").textContent = (persona.name || "s").trim()[0];
     document.getElementById("acct-name").textContent = (persona.name || "").split(" ")[0];
-    document.getElementById("acct-since").textContent = a.since || "Welcome back to myBupa";
-    document.getElementById("acct-tier").textContent = a.tier || "Bupa Member";
+    document.getElementById("acct-since").textContent = a.since || "Welcome back";
+    document.getElementById("acct-tier").textContent = a.tier || "Fitness First member";
 
     // Render one card per care item. An item due soon ("due" / "overdue" /
     // "review" or within 7 days) is flagged so the care-continuity beat lands
@@ -432,10 +435,10 @@
       .then((r) => r.json())
       .then((resp) => {
         const item = firstItem(resp);
-        // In "auto" only accept a live decision that serves a Bupa offer;
+        // In "auto" only accept a live decision that serves a known FLG offer;
         // otherwise fall through to the local home offer (ignores stale serves).
         const accept = item && (item.TreatmentOutput__c || item.OfferHeading__c || item.personalizationContentId)
-          && ((cfg.HERO_SOURCE || "live") !== "auto" || isBupaItem(item));
+          && ((cfg.HERO_SOURCE || "live") !== "auto" || isFLGItem(item));
         if (accept) {
           const prevOffer = state.lastDecision && state.lastDecision.offerId;
           const newOffer  = pick(item, "OfferId__c", "OfferTreatmentCode__c", "Id__c");

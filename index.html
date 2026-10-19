@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>myBupa — health insurance, hospital & extras</title>
+  <title>Fitness First — Let's put fitness first</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
-  <link rel="icon" type="image/png" href="assets/bupa-icon.png" />
-  <link rel="apple-touch-icon" href="assets/bupa-icon.png" />
+  <link rel="icon" type="image/png" href="assets/fitness-first-icon.png" />
+  <link rel="apple-touch-icon" href="assets/fitness-first-icon.png" />
 
   <!-- Data 360 Web & Mobile App connector beacon. Embedded as the first script
        per the connector Integration Guide so data collection initialises before
@@ -19,84 +19,110 @@
   <!-- config MUST load before app.js -->
   <script src="config.js"></script>
 </head>
-<body>
-  <div class="promo-strip">Combine hospital &amp; extras cover and save · Claim on the go with the myBupa app</div>
+<body class="ff">
+  <div class="stage">
 
-  <header class="site">
-    <a class="brand" href="#" aria-label="Bupa">
-      <img src="assets/bupa-logo.png" alt="Bupa" class="brand-logo" />
-    </a>
-    <nav>
-      <a href="#" data-cat="CAT_HOSPITAL">Hospital</a>
-      <a href="#" data-cat="CAT_EXTRAS">Extras</a>
-      <a href="#" data-cat="CAT_CLAIMS">Claims</a>
-      <a href="#" data-cat="CAT_BENEFITS">Benefits</a>
-    </nav>
-    <div class="account">
-      <span class="account-label">Signed in as</span>
-      <select id="who" aria-label="Signed-in member">
-        <option value="">Anonymous visitor</option>
-      </select>
-    </div>
-  </header>
+    <!-- The Fitness First member app, inside a phone device frame. -->
+    <div class="phone">
+      <div class="phone-shell">
+        <div class="phone-notch"></div>
+        <div class="phone-screen" id="phone-screen">
 
-  <main class="wrap">
-    <!-- Logged-in "myBupa" summary. Hidden until a member is selected;
-         populated per-persona from app.js (demo dressing, not SP data). -->
-    <section class="account-summary" id="account-summary" hidden>
-      <div class="greeting">
-        <div class="avatar" id="acct-avatar">b</div>
-        <div class="greeting-copy">
-          <div class="hello">Hi <b id="acct-name">there</b></div>
-          <div class="acct-sub" id="acct-since">Welcome back to myBupa</div>
+          <div class="promo-strip">4 WEEKS FREE &amp; NO JOIN FEE · Let's put fitness first</div>
+
+          <header class="site">
+            <a class="brand" href="#" aria-label="Fitness First">
+              <img src="assets/fitness-first-logo.png" alt="Fitness First" class="brand-logo" />
+            </a>
+            <button class="hamb" aria-label="Menu"><span></span><span></span><span></span></button>
+          </header>
+
+          <!-- Category chips. Browsing one fires a Product Browse event -> SP
+               re-shapes the hero in session. -->
+          <nav class="chips">
+            <a href="#" data-cat="CAT_FITNESSFIRST" class="chip">Fitness First</a>
+            <a href="#" data-cat="CAT_GOODLIFE" class="chip">Goodlife</a>
+            <a href="#" data-cat="CAT_JETTS" class="chip">Jetts</a>
+            <a href="#" data-cat="CAT_ZAP" class="chip">Zap</a>
+            <a href="#" data-cat="CAT_BARRYS" class="chip">Barry's</a>
+          </nav>
+
+          <main class="wrap">
+            <!-- Logged-in member summary. Hidden until a member is selected;
+                 populated per-persona from app.js (demo dressing, not SP data). -->
+            <section class="account-summary" id="account-summary" hidden>
+              <div class="greeting">
+                <div class="avatar" id="acct-avatar">f</div>
+                <div class="greeting-copy">
+                  <div class="hello">Hi <b id="acct-name">there</b></div>
+                  <div class="acct-sub" id="acct-since">Welcome back</div>
+                </div>
+                <span class="tier-chip" id="acct-tier">Fitness First member</span>
+              </div>
+              <!-- Membership / goal cards injected by renderAccount() -->
+              <div class="policy-grid" id="acct-policies"></div>
+            </section>
+
+            <!-- The personalization slot. SP (via DH's arbitrated decision) fills this. -->
+            <section class="foryou" id="foryou">
+              <div class="copy">
+                <div class="eyebrow">Recommended for you</div>
+                <h2 id="offer-heading">Loading your offer…</h2>
+                <p id="offer-body"></p>
+                <div class="cta-row">
+                  <a class="cta" id="offer-cta" href="#">View offer</a>
+                  <span class="src">decision: <b id="offer-source">—</b> · offer <b id="offer-code">—</b></span>
+                </div>
+              </div>
+              <div class="art" id="offer-art"></div>
+            </section>
+
+            <div class="section-head">
+              <h3 class="section">Explore the group</h3>
+              <span class="hint">Tap a brand — your offer re-shapes in real time</span>
+            </div>
+            <div class="grid" id="catalog"></div>
+
+            <section class="valueprops">
+              <div class="vp"><div class="vp-ico">💪</div><div><b>Black Label studios</b><span>Reform Pilates, Les Mills, Revive Recovery</span></div></div>
+              <div class="vp"><div class="vp-ico">🕛</div><div><b>Train your way</b><span>24/7 access across the group</span></div></div>
+              <div class="vp"><div class="vp-ico">📈</div><div><b>Goals that stick</b><span>Evolt 360 scans and coaching built in</span></div></div>
+            </section>
+          </main>
+
+          <footer class="site-foot">
+            <div data-brand>Fitness First</div>
+            <span>Part of Fitness Lifestyle Group</span>
+            <span class="fine">Demo app · personalization by Salesforce</span>
+          </footer>
+
+        </div><!-- /phone-screen -->
+      </div><!-- /phone-shell -->
+    </div><!-- /phone -->
+
+    <!-- Presenter dock: demo controls + raw decision. Lives OUTSIDE the phone so
+         the device stays a clean member view while you narrate the decision. -->
+    <aside class="dock">
+      <div class="dock-card">
+        <div class="dock-label">Demo control</div>
+        <div class="account">
+          <span class="account-label">Signed in as</span>
+          <select id="who" aria-label="Signed-in member">
+            <option value="">Anonymous visitor</option>
+          </select>
         </div>
-        <span class="tier-chip" id="acct-tier">Bupa Member</span>
       </div>
-      <!-- Cover cards injected by renderAccount() -->
-      <div class="policy-grid" id="acct-policies"></div>
-    </section>
 
-    <!-- The personalization slot. SP (via DH's arbitrated decision) fills this. -->
-    <section class="foryou" id="foryou">
-      <div class="copy">
-        <div class="eyebrow">Recommended for you</div>
-        <h2 id="offer-heading">Loading your offer…</h2>
-        <p id="offer-body"></p>
-        <div class="cta-row">
-          <a class="cta" id="offer-cta" href="#">View offer</a>
-          <span class="src">decision: <b id="offer-source">—</b> · offer <b id="offer-code">—</b></span>
-        </div>
-      </div>
-      <div class="art" id="offer-art"></div>
-    </section>
+      <section class="inspector">
+        <header>
+          <b>Decisioning inspector</b>
+          <span class="pill" id="mode-pill">—</span>
+        </header>
+        <pre id="decision-json">{}</pre>
+      </section>
+    </aside>
 
-    <div class="section-head">
-      <h3 class="section">Boost your cover with Bupa</h3>
-      <span class="hint">Explore a product — your offer re-shapes in real time</span>
-    </div>
-    <div class="grid" id="catalog"></div>
-
-    <section class="valueprops">
-      <div class="vp"><div class="vp-ico">🏥</div><div><b>Members First network</b><span>Lower or no gaps at recognised providers</span></div></div>
-      <div class="vp"><div class="vp-ico">📱</div><div><b>Claim on the myBupa app</b><span>Swipe your card or snap a receipt</span></div></div>
-      <div class="vp"><div class="vp-ico">💙</div><div><b>Health &amp; wellbeing support</b><span>Preventive checks, programs and perks</span></div></div>
-    </section>
-
-    <!-- Demo-only: shows the raw personalization decision so you can narrate it. -->
-    <section class="inspector">
-      <header>
-        <b>Decisioning inspector</b>
-        <span class="pill" id="mode-pill">—</span>
-      </header>
-      <pre id="decision-json">{}</pre>
-    </section>
-  </main>
-
-  <footer class="site-foot">
-    <div data-brand>Bupa</div>
-    <span>Hospital · Extras · Claims · Benefits</span>
-    <span class="fine">Demo portal · personalization by Salesforce</span>
-  </footer>
+  </div><!-- /stage -->
 
   <script src="app.js"></script>
 </body>
