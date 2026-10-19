@@ -100,30 +100,36 @@
   // fallback only fills the gap so the hero never shows an empty "no-decision"
   // state in front of a customer. Keyed by Contact Id.
   const FALLBACK_OFFER = {
-    "003Kh00001uijWCIAY": { // Hannah — Dental check-up (BUP_EXTRAS)
-      eyebrow: "Recommended for you",
-      heading: "Book your dental check-up and clean",
-      body: "You are due for a routine check-up and clean at <strong>Bupa Dental</strong>. Book with a Members First clinic near you and claim on the spot, often with nothing to pay.",
-      cta: "Book my dental visit", url: "#",
-      img: "https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=1000&q=80&auto=format&fit=crop" },
-    "003Kh00001uijWDIAY": { // Daniel — Eye test (BUP_COMBINE)
-      eyebrow: "Recommended for you",
-      heading: "Time for your eye test at Bupa Optical",
-      body: "Your last eye test was more than two years ago. Book a comprehensive eye test at <strong>Bupa Optical</strong> and keep your vision on track.",
-      cta: "Book an eye test", url: "#",
-      img: "https://images.unsplash.com/photo-1512069772995-ec65ed45afd6?w=1000&q=80&auto=format&fit=crop" },
-    "003Kh00001uijWEIAY": { // Rebecca — Care continuity (BUP_SAVE / composition persona)
-      eyebrow: "Recommended for you",
-      heading: "Let us get your care back on track",
-      body: "You started a <strong>care plan</strong> with us but have not booked your next step. Let us find a time that works and keep your health moving forward.",
-      cta: "Book my next step", url: "#",
-      img: "https://images.unsplash.com/photo-1573497491208-6b1acb260507?w=1000&q=80&auto=format&fit=crop" },
-    "003Kh00001uijWFIAY": { // Anita — Wellbeing program (BUP_LOYALTY)
-      eyebrow: "Recommended for you",
-      heading: "Join the Bupa wellbeing program",
-      body: "Your membership unlocks the <strong>Bupa wellbeing program</strong> — personalised coaching with movement, nutrition and sleep support to help you feel your best.",
-      cta: "Join the program", url: "#",
-      img: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=1000&q=80&auto=format&fit=crop" }
+    // NOTE: these are the PRE-decision "before" states — a neutral, evergreen
+    // myBupa welcome, deliberately NOT the personalised offer. That way, when
+    // you fire the outbound decision, SP serves the real creative and the hero
+    // visibly FLIPS from this generic welcome to the exact offer in the email —
+    // which is the whole point of the outbound/inbound parity beat. (If this
+    // already showed the dental card, firing would change nothing on screen.)
+    "003Kh00001uijWCIAY": { // Hannah
+      eyebrow: "myBupa",
+      heading: "Welcome back, Hannah",
+      body: "Your <strong>Bupa health services</strong>, all in one place. Manage your care, book a visit and explore your member benefits.",
+      cta: "Explore my benefits", url: "#",
+      img: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=1000&q=80&auto=format&fit=crop" },
+    "003Kh00001uijWDIAY": { // Daniel
+      eyebrow: "myBupa",
+      heading: "Welcome back, Daniel",
+      body: "Your <strong>Bupa health services</strong>, all in one place. Manage your care, book a visit and explore your member benefits.",
+      cta: "Explore my benefits", url: "#",
+      img: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=1000&q=80&auto=format&fit=crop" },
+    "003Kh00001uijWEIAY": { // Rebecca
+      eyebrow: "myBupa",
+      heading: "Welcome back, Rebecca",
+      body: "Your <strong>Bupa health services</strong>, all in one place. Manage your care, book a visit and explore your member benefits.",
+      cta: "Explore my benefits", url: "#",
+      img: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=1000&q=80&auto=format&fit=crop" },
+    "003Kh00001uijWFIAY": { // Anita
+      eyebrow: "myBupa",
+      heading: "Welcome back, Anita",
+      body: "Your <strong>Bupa health services</strong>, all in one place. Manage your care, book a visit and explore your member benefits.",
+      cta: "Explore my benefits", url: "#",
+      img: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=1000&q=80&auto=format&fit=crop" }
   };
 
   // The Bupa offer Ids on 4b (15-char prefixes). Used by HERO_SOURCE:"auto" to
