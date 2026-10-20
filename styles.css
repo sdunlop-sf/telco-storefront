@@ -1,17 +1,17 @@
 :root {
-  --ink: #1a1a1a;          /* Fitness First near-black text */
+  --ink: #010c66;          /* NRMA navy text */
   --muted: #6b6b6b;
   --line: #e6e6e6;
-  --brand: #e4002b;        /* Fitness First red */
-  --brand-2: #b80023;      /* deeper red */
-  --brand-ink: #1a1a1a;    /* black */
-  --accent: #e4002b;       /* red CTA */
-  --accent-2: #000000;     /* black (secondary accent) */
-  --tint: #ffe9ed;         /* light red tint (chips / hovers) */
-  --tint-line: #f3c3cc;    /* red-grey border */
-  --bg: #f5f5f5;           /* warm white */
+  --brand: #005aff;        /* NRMA club blue */
+  --brand-2: #0040c0;      /* deeper blue */
+  --brand-ink: #010c66;    /* navy */
+  --accent: #005aff;       /* blue CTA */
+  --accent-2: #010c66;     /* navy (secondary accent) */
+  --tint: #e5efff;         /* light blue tint (chips / hovers) */
+  --tint-line: #bcd4ff;    /* blue-grey border */
+  --bg: #f5f7fa;           /* cool white */
   --card: #ffffff;
-  --ink-soft: #2b2b2b;
+  --ink-soft: #1b254d;
 }
 * { box-sizing: border-box; }
 html, body { margin: 0; }
@@ -30,9 +30,9 @@ body {
  * ───────────────────────────────────────────────────────────────────── */
 body.ff {
   background:
-    radial-gradient(1200px 600px at 15% -10%, rgba(228,0,43,.22), transparent 60%),
-    radial-gradient(1000px 500px at 110% 20%, rgba(228,0,43,.14), transparent 55%),
-    #0d0d0d;
+    radial-gradient(1200px 600px at 15% -10%, rgba(0,90,255,.26), transparent 60%),
+    radial-gradient(1000px 500px at 110% 20%, rgba(1,12,102,.30), transparent 55%),
+    #040726;
   min-height: 100vh;
 }
 .stage {
@@ -159,7 +159,7 @@ nav.chips .chip.active { background: var(--brand); color: #fff; border-color: va
 .foryou {
   position: relative; border-radius: 20px; overflow: hidden; margin-bottom: 22px;
   display: grid; grid-template-columns: 1fr; min-height: 300px;
-  background: linear-gradient(150deg, #000 0%, #1a1a1a 45%, var(--brand) 160%);
+  background: linear-gradient(150deg, #010c66 0%, #06155c 45%, var(--brand) 160%);
   box-shadow: 0 20px 50px -24px rgba(0,0,0,.6);
 }
 .foryou .art {

@@ -25,48 +25,48 @@
   // knowledge — the decision for each is served live by SP. Swapping personas
   // per demo is a config concern, not a code concern; kept here for the demo
   // switcher convenience only.
-  // FLG re-skin: the "account" is now a MEMBER PROFILE at Fitness First — the
-  // membership tier plus the goals / attendance / activity the engine reads to
-  // decide the next best interaction. Each item is a membership / goal / class.
+  // NRMA re-skin: the "account" is now a MEMBER PROFILE at My NRMA — the
+  // roadside tier plus the vehicle / driving profile the engine reads to decide
+  // the next best interaction. Each item is a membership / vehicle / cover line.
   const PERSONAS = [
-    { id: "003Kh00001uijWCIAY", name: "Hannah Nguyen", tag: "Engaged · AM trainer",
+    { id: "003Kh00001uijWCIAY", name: "Sarah Mitchell", tag: "EV-curious · city + trips",
       account: {
-        since: "Fitness First member since 2022", tier: "Standard membership",
+        since: "My NRMA member since 2019", tier: "Everyday Care roadside",
         policies: [
-          { kind: "Membership", label: "Standard · home club Bondi", ref: "Fitness First",
-            premium: "12 visits this month", status: "Active" },
-          { kind: "Goal", label: "Build core strength", ref: "Captured in app",
-            premium: "Trains weekday mornings", status: "On track" }
+          { kind: "Roadside", label: "Everyday Care · NSW", ref: "My NRMA",
+            premium: "Member since 2019", status: "Active" },
+          { kind: "Vehicle", label: "2021 Mazda CX-5", ref: "Considering an EV",
+            premium: "~12,000 km / yr", status: "EV-curious" }
         ]
       } },
-    { id: "003Kh00001uijWDIAY", name: "Daniel Chen", tag: "Attendance dropping",
+    { id: "003Kh00001uijWDIAY", name: "Daniel Okafor", tag: "Renewal approaching",
       account: {
-        since: "Fitness First member since 2020", tier: "Standard membership",
+        since: "My NRMA member since 2020", tier: "Everyday Care roadside",
         policies: [
-          { kind: "Membership", label: "Standard · home club Carlton", ref: "Fitness First",
-            premium: "2 visits this month", status: "Slowing down" },
-          { kind: "Goal", label: "Stay consistent", ref: "Usual trainer: Jordan",
-            renewsInDays: 3, premium: "Last visit 12 days ago", status: "At risk" }
+          { kind: "Roadside", label: "Everyday Care · VIC", ref: "My NRMA",
+            renewsInDays: 3, premium: "Renews in 3 days", status: "Due to renew" },
+          { kind: "Vehicle", label: "2016 Toyota Corolla", ref: "Daily commuter",
+            premium: "2 call-outs this year", status: "Active" }
         ]
       } },
-    { id: "003Kh00001uijWEIAY", name: "Rebecca Hall", tag: "Lapsed member",
+    { id: "003Kh00001uijWEIAY", name: "Priya Sharma", tag: "Lapsed member",
       account: {
-        since: "Fitness First member since 2018", tier: "Standard membership",
+        since: "My NRMA member since 2016", tier: "Everyday Care roadside",
         policies: [
-          { kind: "Membership", label: "Standard · home club Chatswood", ref: "Fitness First",
-            renewsInDays: 2, premium: "No visits in 4 weeks", status: "Lapsed" }
+          { kind: "Roadside", label: "Everyday Care · QLD", ref: "My NRMA",
+            renewsInDays: 2, premium: "No cover for 4 weeks", status: "Lapsed" }
         ]
       } },
-    { id: "003Kh00001uijWFIAY", name: "Anita Kapoor", tag: "Upgrade-ready",
+    { id: "003Kh00001uijWFIAY", name: "Tom Bennett", tag: "Upgrade-ready · tows",
       account: {
-        since: "Fitness First member since 2015", tier: "Standard membership · 9+ yrs",
+        since: "My NRMA member since 2014", tier: "Everyday Care · 10+ yrs",
         policies: [
-          { kind: "Membership", label: "Standard · home club Pitt St", ref: "Fitness First",
-            premium: "18 visits this month", status: "Active" },
-          { kind: "Goal", label: "Flexibility & recovery", ref: "Captured in app",
-            premium: "Tried Hot Yoga x3", status: "Studio-curious" },
-          { kind: "Studios", label: "Reform Pilates · Les Mills", ref: "Not on current tier",
-            premium: "Black Label only", status: "Locked" }
+          { kind: "Roadside", label: "Everyday Care · NSW", ref: "My NRMA",
+            premium: "7 call-outs this year", status: "Active" },
+          { kind: "Vehicle", label: "2022 Ford Ranger + caravan", ref: "Tows regularly",
+            premium: "Long-distance trips", status: "Needs more cover" },
+          { kind: "Cover", label: "Caravan & trailer towing", ref: "Not on current tier",
+            premium: "Ultimate Care only", status: "Locked" }
         ]
       } }
   ];
@@ -87,71 +87,72 @@
   // hero every visitor sees, no account chrome. Picking a customer swaps this
   // for the DH-arbitrated, SP-served personal offer (the inbound-parity beat).
   const GENERIC_OFFER = {
-    eyebrow: "Fitness First",
-    heading: "4 weeks free. No join fee.",
-    body: "Let's put fitness first. Premium clubs, Black Label studios and 24/7 access across the group — <strong>sign in</strong> and your next best move re-shapes to you.",
-    cta: "Start free",
+    eyebrow: "My NRMA",
+    heading: "Roadside help whenever you need it.",
+    body: "Breakdown cover, flat batteries, towing, trip planning and EV support right across the country — <strong>sign in</strong> and your next best move re-shapes to you.",
+    cta: "Join today",
     url: "#",
-    img: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1000&q=80&auto=format&fit=crop"
+    img: "https://images.unsplash.com/photo-1560958089-b8a1929cea89?w=1000&q=80&auto=format&fit=crop"
   };
 
   // Per-persona local offer shown in the logged-in hero when the live SP serve
   // has not resolved yet (fresh identity, item graph mid-refresh, propagation
   // lag). Mirrors each persona's HOME decision so the logged-in page is always a
-  // complete Bupa mock-up. A live SP decision ALWAYS overrides this — the
+  // complete My NRMA mock-up. A live SP decision ALWAYS overrides this — the
   // fallback only fills the gap so the hero never shows an empty "no-decision"
-  // state in front of a customer. Keyed by Contact Id.
+  // state in front of a customer. Keyed by Contact Id. Mirrors each persona's
+  // HOME decision so the logged-in page is always a complete My NRMA mock-up.
   const FALLBACK_OFFER = {
-    // Per-persona Fitness First recommendation, rendered locally (HERO_SOURCE
+    // Per-persona My NRMA recommendation, rendered locally (HERO_SOURCE
     // "fallback") so the hero is guaranteed-clean and matches the email creative.
     // (SP's live serve reads from a stale DC item-graph snapshot; until that is
     // refreshed we render the correct creative here rather than serve a ghost.)
-    "003Kh00001uijWCIAY": { // Hannah — Engagement / class prompt (FF_ENGAGE1)
+    "003Kh00001uijWCIAY": { // Sarah — Engagement / EV Ready Check (NR_ENGAGE1)
       eyebrow: "Recommended for you",
-      heading: "Your morning strength session: Reform Pilates",
-      body: "You train best on weekday mornings. A <strong>Reform Pilates</strong> class fits your strength goal and your usual time. Book a spot this week and keep the streak going.",
-      cta: "Book my class", url: "#",
-      img: "https://images.unsplash.com/photo-1518611012118-696072aa579a?w=1000&q=80&auto=format&fit=crop" },
-    "003Kh00001uijWDIAY": { // Daniel — Retention / trainer win-back (FF_RETURN1)
-      eyebrow: "A note from your trainer",
-      heading: "We've missed you at the club, Daniel",
-      body: "It's been a couple of weeks. Your trainer <strong>Jordan</strong> has a spot ready whenever you are — let's get one session back in the diary and pick up where you left off.",
-      cta: "Rebook with Jordan", url: "#",
-      img: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=1000&q=80&auto=format&fit=crop" },
-    "003Kh00001uijWEIAY": { // Rebecca — Retention / win-back (FF_RETURN1 / composition persona)
-      eyebrow: "A note from your trainer",
-      heading: "Let's get you back on track, Rebecca",
-      body: "It's been a few weeks since your last visit. No pressure, no judgement — just a <strong>fresh start</strong> whenever you're ready. We'll help you ease back in.",
-      cta: "Plan my return", url: "#",
-      img: "https://images.unsplash.com/photo-1549060279-7e168fcee0c2?w=1000&q=80&auto=format&fit=crop" },
-    "003Kh00001uijWFIAY": { // Anita — Upgrade / Black Label (FF_UPGRADE1)
+      heading: "Your EV Ready Check is ready to book",
+      body: "You're thinking about going electric, and your driving fits an EV well. Our free <strong>EV Ready Check</strong> covers home charging, your usual trips and the right roadside cover. Book a time that suits you.",
+      cta: "Book my EV Ready Check", url: "#",
+      img: "https://images.unsplash.com/photo-1593941707882-a5bba14938c7?w=1000&q=80&auto=format&fit=crop" },
+    "003Kh00001uijWDIAY": { // Daniel — Retention / Stay Covered (NR_RETURN1)
+      eyebrow: "A note from your NRMA team",
+      heading: "Let's keep you covered, Daniel",
+      body: "Your membership is coming up for renewal and we don't want you caught without cover. <strong>Renew in a couple of minutes</strong> so you're never stranded on the road.",
+      cta: "Renew my cover", url: "#",
+      img: "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?w=1000&q=80&auto=format&fit=crop" },
+    "003Kh00001uijWEIAY": { // Priya — Retention / win-back (NR_RETURN1 / composition persona)
+      eyebrow: "A note from your NRMA team",
+      heading: "Let's get you back on the road, Priya",
+      body: "It's been a few weeks without cover. No pressure — just a <strong>fresh start</strong> whenever you're ready, so help is one call away again.",
+      cta: "Reactivate my cover", url: "#",
+      img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1000&q=80&auto=format&fit=crop" },
+    "003Kh00001uijWFIAY": { // Tom — Upgrade / Complete Care (NR_UPGRADE1)
       eyebrow: "Recommended for you",
-      heading: "Unlock every studio with Black Label",
-      body: "You're loving Hot Yoga. <strong>Black Label</strong> opens Reform Pilates, Les Mills and Revive Recovery across every premium club — your recovery and flexibility goals, fully unlocked.",
-      cta: "Upgrade to Black Label", url: "#",
-      img: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=1000&q=80&auto=format&fit=crop" }
+      heading: "Step up to Complete Care",
+      body: "You tow and travel beyond the city. <strong>Complete Care</strong> adds more call-outs, longer towing and battery support — a lot more confidence on every trip.",
+      cta: "Upgrade to Complete Care", url: "#",
+      img: "https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?w=1000&q=80&auto=format&fit=crop" }
   };
 
-  // The Fitness First core offer Ids on 4b (15-char prefixes). Used by
-  // HERO_SOURCE:"auto" to accept a live SP decision only when it serves a known
-  // FLG offer (so a stale non-FLG serve is ignored and the local home offer
-  // shows instead). Core FF_ offers only — A2A offers (OFFFLG*) never serve here.
-  const FLG_OFFER_IDS = new Set([
-    "1XhKh000000PBQc", "1XhKh000000PBQd", "1XhKh000000PBQe",
-    "1XhKh000000PBQf", "1XhKh000000PBQg", "1XhKh000000PBQh"
-  ]);
-  function isFLGItem(item) {
+  // Accept a live SP decision only when it serves a known NRMA offer, so a
+  // stale non-NRMA serve is ignored and the local home offer shows instead.
+  // Offer Ids are regenerated on every rebuild, so acceptance keys on the NRMA
+  // BRAND TOKEN carried in the hydrated treatment (the card chip / footer / SMS
+  // all say "My NRMA" / mynrma.com.au). Core NR_ offers only — A2A offers
+  // (OFFNRMA*) never serve here. Add 15-char Id prefixes to NRMA_OFFER_IDS after
+  // a build if you want an exact-Id guard as well.
+  const NRMA_OFFER_IDS = new Set([]);
+  function isNRMAItem(item) {
     const oid = pick(item, "OfferId__c", "offerId");
-    if (oid && FLG_OFFER_IDS.has(String(oid).substring(0, 15))) return true;
-    // Fallback discriminator when the graph does not expose OfferId: brand token.
+    if (oid && NRMA_OFFER_IDS.has(String(oid).substring(0, 15))) return true;
+    // Brand-token discriminator (works regardless of offer-Id churn).
     const txt = (pick(item, "TreatmentOutput__c", "treatmentOutput") || "") +
                 (pick(item, "OfferBody__c", "offerBody") || "");
-    return /fitness first/i.test(txt);
+    return /nrma|mynrma/i.test(txt);
   }
 
   const CAT_LABEL = {
-    CAT_FITNESSFIRST: "Fitness First", CAT_GOODLIFE: "Goodlife",
-    CAT_JETTS: "Jetts", CAT_ZAP: "Zap", CAT_BARRYS: "Barry's"
+    CAT_ROADSIDE: "My NRMA Roadside", CAT_INSURANCE: "NRMA Insurance",
+    CAT_ENERGY: "NRMA Energy", CAT_PARKS: "NRMA Parks + Resorts", CAT_THRIFTY: "Thrifty"
   };
 
   let state = { individualId: "", lastCategory: null, lastDecision: null };
@@ -221,7 +222,7 @@
       JSON.stringify(state.lastDecision, null, 2);
   }
 
-  // Populate the logged-in "myBupa" summary from the selected persona.
+  // Populate the logged-in "My NRMA" member summary from the selected persona.
   // Demo dressing only — this is NOT SP/decision data; it just makes the offer
   // land inside a believable account context. Hidden when anonymous.
   function renderAccount(persona) {
@@ -233,7 +234,7 @@
     document.getElementById("acct-avatar").textContent = (persona.name || "s").trim()[0];
     document.getElementById("acct-name").textContent = (persona.name || "").split(" ")[0];
     document.getElementById("acct-since").textContent = a.since || "Welcome back";
-    document.getElementById("acct-tier").textContent = a.tier || "Fitness First member";
+    document.getElementById("acct-tier").textContent = a.tier || "My NRMA member";
 
     // Render one card per care item. An item due soon ("due" / "overdue" /
     // "review" or within 7 days) is flagged so the care-continuity beat lands
@@ -313,9 +314,9 @@
     return true;
   }
 
-  // Render the generic, un-personalised Bupa hero for an anonymous visitor.
+  // Render the generic, un-personalised My NRMA hero for an anonymous visitor.
   // Paints the native hero fields directly (synthetic content, not an SP call),
-  // hides the myBupa account chrome, and restores the native hero if a
+  // hides the My NRMA account chrome, and restores the native hero if a
   // drop-in treatment card was previously injected (persona -> anonymous).
   function renderGeneric() {
     renderAccount(null); // no account chrome when anonymous
@@ -407,7 +408,7 @@
     if (!id) return renderGeneric(); // anonymous visitor -> un-personalised brand hero
 
     // Mock-up mode: skip SP entirely and render the local home offer. The
-    // logged-in page is a complete FLG visual with no Data Cloud dependency.
+    // logged-in page is a complete My NRMA visual with no Data Cloud dependency.
     if ((cfg.HERO_SOURCE || "live") === "fallback") {
       if (renderFallback(id, "home offer · local mock-up")) return;
     }
@@ -435,10 +436,10 @@
       .then((r) => r.json())
       .then((resp) => {
         const item = firstItem(resp);
-        // In "auto" only accept a live decision that serves a known FLG offer;
+        // In "auto" only accept a live decision that serves a known NRMA offer;
         // otherwise fall through to the local home offer (ignores stale serves).
         const accept = item && (item.TreatmentOutput__c || item.OfferHeading__c || item.personalizationContentId)
-          && ((cfg.HERO_SOURCE || "live") !== "auto" || isFLGItem(item));
+          && ((cfg.HERO_SOURCE || "live") !== "auto" || isNRMAItem(item));
         if (accept) {
           const prevOffer = state.lastDecision && state.lastDecision.offerId;
           const newOffer  = pick(item, "OfferId__c", "OfferTreatmentCode__c", "Id__c");
@@ -559,7 +560,7 @@
       state.individualId = sel.value;
       state.lastCategory = null;
       highlight(null);
-      renderAccount(PERSONAS.find(p => p.id === sel.value)); // log in / out of myBupa
+      renderAccount(PERSONAS.find(p => p.id === sel.value)); // log in / out of My NRMA
       setIdentity(state.individualId);
       requestDecision(); // fresh arrival = serve the DH decision for this person
       startPolling();    // watch for live re-decisions on this identity
@@ -617,7 +618,7 @@
   // Which identity the storefront opens on (the parity beat starts logged in).
   //   ?who=<first name | contact id>  -> that persona
   //   ?who=anon | anonymous           -> anonymous / generic (no login)
-  //   (no param)                      -> Hannah (Extras-ready) by default
+  //   (no param)                      -> Sarah (EV-curious) by default
   // On refresh the same identity is kept, so "fire decisions -> refresh" shows
   // the newly-served offer against a stable logged-in customer.
   function resolveOpeningPersona() {
@@ -630,7 +631,7 @@
         p.name.toLowerCase().includes(who));
       if (m) return m;
     }
-    return PERSONAS.find(p => p.name.toLowerCase().startsWith("hannah")) || PERSONAS[0] || null;
+    return PERSONAS.find(p => p.name.toLowerCase().startsWith("sarah")) || PERSONAS[0] || null;
   }
 
   /* ---------- boot ---------- */
@@ -645,9 +646,9 @@
       renderItem(MOCK_ITEM, "MOCK · local sample");
     } else {
       pill.textContent = "LIVE · Salesforce Personalization"; pill.className = "pill live";
-      // Open LOGGED IN (default: Hannah) so the parity beat starts in a real
-      // myBupa account and the served offer updates on refresh as decisions
-      // fire. ?who=anon opens anonymous/generic instead.
+      // Open LOGGED IN (default: Sarah) so the parity beat starts in a real
+      // My NRMA member account and the served offer updates on refresh as
+      // decisions fire. ?who=anon opens anonymous/generic instead.
       const opening = resolveOpeningPersona();
       if (opening) {
         document.getElementById("who").value = opening.id;

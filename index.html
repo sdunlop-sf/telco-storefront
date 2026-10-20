@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Fitness First — Let's put fitness first</title>
+  <title>My NRMA — Help is never far away</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
-  <link rel="icon" type="image/png" href="assets/fitness-first-icon.png" />
-  <link rel="apple-touch-icon" href="assets/fitness-first-icon.png" />
+  <link rel="icon" type="image/png" href="assets/nrma-icon.png" />
+  <link rel="apple-touch-icon" href="assets/nrma-icon.png" />
 
   <!-- Data 360 Web & Mobile App connector beacon. Embedded as the first script
        per the connector Integration Guide so data collection initialises before
@@ -22,17 +22,17 @@
 <body class="ff">
   <div class="stage">
 
-    <!-- The Fitness First member app, inside a phone device frame. -->
+    <!-- The My NRMA member app, inside a phone device frame. -->
     <div class="phone">
       <div class="phone-shell">
         <div class="phone-notch"></div>
         <div class="phone-screen" id="phone-screen">
 
-          <div class="promo-strip">4 WEEKS FREE &amp; NO JOIN FEE · Let's put fitness first</div>
+          <div class="promo-strip">24/7 ROADSIDE ASSISTANCE · Help is never far away</div>
 
           <header class="site">
-            <a class="brand" href="#" aria-label="Fitness First">
-              <img src="assets/fitness-first-logo.png" alt="Fitness First" class="brand-logo" />
+            <a class="brand" href="#" aria-label="My NRMA">
+              <img src="assets/nrma-logo.png" alt="My NRMA" class="brand-logo" />
             </a>
             <button class="hamb" aria-label="Menu"><span></span><span></span><span></span></button>
           </header>
@@ -40,11 +40,11 @@
           <!-- Category chips. Browsing one fires a Product Browse event -> SP
                re-shapes the hero in session. -->
           <nav class="chips">
-            <a href="#" data-cat="CAT_FITNESSFIRST" class="chip">Fitness First</a>
-            <a href="#" data-cat="CAT_GOODLIFE" class="chip">Goodlife</a>
-            <a href="#" data-cat="CAT_JETTS" class="chip">Jetts</a>
-            <a href="#" data-cat="CAT_ZAP" class="chip">Zap</a>
-            <a href="#" data-cat="CAT_BARRYS" class="chip">Barry's</a>
+            <a href="#" data-cat="CAT_ROADSIDE" class="chip">Roadside</a>
+            <a href="#" data-cat="CAT_INSURANCE" class="chip">Insurance</a>
+            <a href="#" data-cat="CAT_ENERGY" class="chip">Energy</a>
+            <a href="#" data-cat="CAT_PARKS" class="chip">Parks + Resorts</a>
+            <a href="#" data-cat="CAT_THRIFTY" class="chip">Thrifty</a>
           </nav>
 
           <main class="wrap">
@@ -52,12 +52,12 @@
                  populated per-persona from app.js (demo dressing, not SP data). -->
             <section class="account-summary" id="account-summary" hidden>
               <div class="greeting">
-                <div class="avatar" id="acct-avatar">f</div>
+                <div class="avatar" id="acct-avatar">n</div>
                 <div class="greeting-copy">
                   <div class="hello">Hi <b id="acct-name">there</b></div>
                   <div class="acct-sub" id="acct-since">Welcome back</div>
                 </div>
-                <span class="tier-chip" id="acct-tier">Fitness First member</span>
+                <span class="tier-chip" id="acct-tier">My NRMA member</span>
               </div>
               <!-- Membership / goal cards injected by renderAccount() -->
               <div class="policy-grid" id="acct-policies"></div>
@@ -78,21 +78,21 @@
             </section>
 
             <div class="section-head">
-              <h3 class="section">Explore the group</h3>
-              <span class="hint">Tap a brand — your offer re-shapes in real time</span>
+              <h3 class="section">Explore My NRMA</h3>
+              <span class="hint">Tap a service — your offer re-shapes in real time</span>
             </div>
             <div class="grid" id="catalog"></div>
 
             <section class="valueprops">
-              <div class="vp"><div class="vp-ico">💪</div><div><b>Black Label studios</b><span>Reform Pilates, Les Mills, Revive Recovery</span></div></div>
-              <div class="vp"><div class="vp-ico">🕛</div><div><b>Train your way</b><span>24/7 access across the group</span></div></div>
-              <div class="vp"><div class="vp-ico">📈</div><div><b>Goals that stick</b><span>Evolt 360 scans and coaching built in</span></div></div>
+              <div class="vp"><div class="vp-ico">🚗</div><div><b>Roadside you can rely on</b><span>Breakdowns, flat batteries, towing</span></div></div>
+              <div class="vp"><div class="vp-ico">⚡</div><div><b>EV ready</b><span>Home charging, EV cover, trip planning</span></div></div>
+              <div class="vp"><div class="vp-ico">🗺️</div><div><b>More than roadside</b><span>Insurance, energy, parks and car hire</span></div></div>
             </section>
           </main>
 
           <footer class="site-foot">
-            <div data-brand>Fitness First</div>
-            <span>Part of Fitness Lifestyle Group</span>
+            <div data-brand>My NRMA</div>
+            <span>Part of the NRMA Group</span>
             <span class="fine">Demo app · personalization by Salesforce</span>
           </footer>
 
