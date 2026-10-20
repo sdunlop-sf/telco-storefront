@@ -25,48 +25,49 @@
   // knowledge — the decision for each is served live by SP. Swapping personas
   // per demo is a config concern, not a code concern; kept here for the demo
   // switcher convenience only.
-  // NRMA re-skin: the "account" is now a MEMBER PROFILE at My NRMA — the
-  // roadside tier plus the vehicle / driving profile the engine reads to decide
-  // the next best interaction. Each item is a membership / vehicle / cover line.
+  // Covera re-skin: the "account" is now a CUSTOMER PROFILE at Covera — the
+  // policies held (home / contents / motor) plus the life-stage signals the
+  // engine reads to decide the next best interaction. Each item is a policy /
+  // cover line.
   const PERSONAS = [
-    { id: "003Kh00001uijWCIAY", name: "Sarah Mitchell", tag: "EV-curious · city + trips",
+    { id: "003Kh00001uijWCIAY", name: "Sarah Mitchell", tag: "Homeowner · recently renovated",
       account: {
-        since: "My NRMA member since 2019", tier: "Everyday Care roadside",
+        since: "Covera customer since 2019", tier: "Home & Motor customer",
         policies: [
-          { kind: "Roadside", label: "Everyday Care · NSW", ref: "My NRMA",
-            premium: "Member since 2019", status: "Active" },
-          { kind: "Vehicle", label: "2021 Mazda CX-5", ref: "Considering an EV",
-            premium: "~12,000 km / yr", status: "EV-curious" }
+          { kind: "Home", label: "Home & Contents · NSW", ref: "Covera",
+            premium: "Sum insured $680k", status: "Check recommended" },
+          { kind: "Motor", label: "2021 Mazda CX-5", ref: "Comprehensive",
+            premium: "$1,180 / yr", status: "Active" }
         ]
       } },
     { id: "003Kh00001uijWDIAY", name: "Daniel Okafor", tag: "Renewal approaching",
       account: {
-        since: "My NRMA member since 2020", tier: "Everyday Care roadside",
+        since: "Covera customer since 2020", tier: "Home & Motor customer",
         policies: [
-          { kind: "Roadside", label: "Everyday Care · VIC", ref: "My NRMA",
+          { kind: "Home", label: "Home & Contents · VIC", ref: "Covera",
             renewsInDays: 3, premium: "Renews in 3 days", status: "Due to renew" },
-          { kind: "Vehicle", label: "2016 Toyota Corolla", ref: "Daily commuter",
-            premium: "2 call-outs this year", status: "Active" }
+          { kind: "Motor", label: "2016 Toyota Corolla", ref: "Comprehensive",
+            premium: "Renews in 3 days", status: "Due to renew" }
         ]
       } },
-    { id: "003Kh00001uijWEIAY", name: "Priya Sharma", tag: "Lapsed member",
+    { id: "003Kh00001uijWEIAY", name: "Priya Sharma", tag: "Lapsed policy",
       account: {
-        since: "My NRMA member since 2016", tier: "Everyday Care roadside",
+        since: "Covera customer since 2016", tier: "Former customer",
         policies: [
-          { kind: "Roadside", label: "Everyday Care · QLD", ref: "My NRMA",
-            renewsInDays: 2, premium: "No cover for 4 weeks", status: "Lapsed" }
+          { kind: "Home", label: "Home & Contents · QLD", ref: "Covera",
+            renewsInDays: 2, premium: "Lapsed 4 weeks ago", status: "Lapsed" }
         ]
       } },
-    { id: "003Kh00001uijWFIAY", name: "Tom Bennett", tag: "Upgrade-ready · tows",
+    { id: "003Kh00001uijWFIAY", name: "Tom Bennett", tag: "Motor-only · bundle-ready",
       account: {
-        since: "My NRMA member since 2014", tier: "Everyday Care · 10+ yrs",
+        since: "Covera customer since 2014", tier: "Motor-only customer",
         policies: [
-          { kind: "Roadside", label: "Everyday Care · NSW", ref: "My NRMA",
-            premium: "7 call-outs this year", status: "Active" },
-          { kind: "Vehicle", label: "2022 Ford Ranger + caravan", ref: "Tows regularly",
-            premium: "Long-distance trips", status: "Needs more cover" },
-          { kind: "Cover", label: "Caravan & trailer towing", ref: "Not on current tier",
-            premium: "Ultimate Care only", status: "Locked" }
+          { kind: "Motor", label: "2022 Ford Ranger", ref: "Comprehensive",
+            premium: "$1,540 / yr", status: "Active" },
+          { kind: "Home", label: "Home & Contents", ref: "Insured elsewhere",
+            premium: "Not with Covera", status: "Bundle opportunity" },
+          { kind: "Bundle", label: "Multi-policy discount", ref: "Not applied",
+            premium: "Combine to save", status: "Available" }
         ]
       } }
   ];
@@ -87,72 +88,72 @@
   // hero every visitor sees, no account chrome. Picking a customer swaps this
   // for the DH-arbitrated, SP-served personal offer (the inbound-parity beat).
   const GENERIC_OFFER = {
-    eyebrow: "My NRMA",
-    heading: "Roadside help whenever you need it.",
-    body: "Breakdown cover, flat batteries, towing, trip planning and EV support right across the country — <strong>sign in</strong> and your next best move re-shapes to you.",
-    cta: "Join today",
+    eyebrow: "Covera",
+    heading: "Cover for the things that matter most.",
+    body: "Home, contents and car insurance built around your life — <strong>sign in</strong> and your next best move re-shapes to you.",
+    cta: "Get a quote",
     url: "#",
-    img: "https://images.unsplash.com/photo-1560958089-b8a1929cea89?w=1000&q=80&auto=format&fit=crop"
+    img: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=1000&q=80&auto=format&fit=crop"
   };
 
   // Per-persona local offer shown in the logged-in hero when the live SP serve
   // has not resolved yet (fresh identity, item graph mid-refresh, propagation
   // lag). Mirrors each persona's HOME decision so the logged-in page is always a
-  // complete My NRMA mock-up. A live SP decision ALWAYS overrides this — the
+  // complete Covera mock-up. A live SP decision ALWAYS overrides this — the
   // fallback only fills the gap so the hero never shows an empty "no-decision"
   // state in front of a customer. Keyed by Contact Id. Mirrors each persona's
-  // HOME decision so the logged-in page is always a complete My NRMA mock-up.
+  // HOME decision so the logged-in page is always a complete Covera mock-up.
   const FALLBACK_OFFER = {
-    // Per-persona My NRMA recommendation, rendered locally (HERO_SOURCE
+    // Per-persona Covera recommendation, rendered locally (HERO_SOURCE
     // "fallback") so the hero is guaranteed-clean and matches the email creative.
     // (SP's live serve reads from a stale DC item-graph snapshot; until that is
     // refreshed we render the correct creative here rather than serve a ghost.)
-    "003Kh00001uijWCIAY": { // Sarah — Engagement / EV Ready Check (NR_ENGAGE1)
+    "003Kh00001uijWCIAY": { // Sarah — Engagement / Home Cover Health Check (CV_ENGAGE1)
       eyebrow: "Recommended for you",
-      heading: "Your EV Ready Check is ready to book",
-      body: "You're thinking about going electric, and your driving fits an EV well. Our free <strong>EV Ready Check</strong> covers home charging, your usual trips and the right roadside cover. Book a time that suits you.",
-      cta: "Book my EV Ready Check", url: "#",
-      img: "https://images.unsplash.com/photo-1593941707882-a5bba14938c7?w=1000&q=80&auto=format&fit=crop" },
-    "003Kh00001uijWDIAY": { // Daniel — Retention / Stay Covered (NR_RETURN1)
-      eyebrow: "A note from your NRMA team",
-      heading: "Let's keep you covered, Daniel",
-      body: "Your membership is coming up for renewal and we don't want you caught without cover. <strong>Renew in a couple of minutes</strong> so you're never stranded on the road.",
+      heading: "Is your home covered for today's rebuild cost?",
+      body: "Building and contents costs have climbed, and many homes are now insured for less than it would cost to rebuild. Our free <strong>Home Cover Health Check</strong> reviews your sum insured and contents so you're not caught short. Book a time that suits you.",
+      cta: "Book my cover check", url: "#",
+      img: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=1000&q=80&auto=format&fit=crop" },
+    "003Kh00001uijWDIAY": { // Daniel — Retention / Stay Protected (CV_RETURN1)
+      eyebrow: "A note from your Covera team",
+      heading: "Let's keep you protected, Daniel",
+      body: "Your policy is coming up for renewal and we don't want you left without cover. <strong>Renew in a couple of minutes</strong> so there's no gap in your protection.",
       cta: "Renew my cover", url: "#",
-      img: "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?w=1000&q=80&auto=format&fit=crop" },
-    "003Kh00001uijWEIAY": { // Priya — Retention / win-back (NR_RETURN1 / composition persona)
-      eyebrow: "A note from your NRMA team",
-      heading: "Let's get you back on the road, Priya",
-      body: "It's been a few weeks without cover. No pressure — just a <strong>fresh start</strong> whenever you're ready, so help is one call away again.",
+      img: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=1000&q=80&auto=format&fit=crop" },
+    "003Kh00001uijWEIAY": { // Priya — Retention / win-back (CV_RETURN1 / composition persona)
+      eyebrow: "A note from your Covera team",
+      heading: "Let's get you protected again, Priya",
+      body: "It's been a few weeks since your cover lapsed. No pressure — just a <strong>fresh start</strong> whenever you're ready, so your home is looked after again.",
       cta: "Reactivate my cover", url: "#",
-      img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1000&q=80&auto=format&fit=crop" },
-    "003Kh00001uijWFIAY": { // Tom — Upgrade / Complete Care (NR_UPGRADE1)
+      img: "https://images.unsplash.com/photo-1558036117-15d82a90b9b1?w=1000&q=80&auto=format&fit=crop" },
+    "003Kh00001uijWFIAY": { // Tom — Upgrade / Home + Motor Bundle (CV_UPGRADE1)
       eyebrow: "Recommended for you",
-      heading: "Step up to Complete Care",
-      body: "You tow and travel beyond the city. <strong>Complete Care</strong> adds more call-outs, longer towing and battery support — a lot more confidence on every trip.",
-      cta: "Upgrade to Complete Care", url: "#",
-      img: "https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?w=1000&q=80&auto=format&fit=crop" }
+      heading: "Bring your home and car together and save",
+      body: "You're already with us for your car. Add your home and <strong>unlock a multi-policy discount</strong>, one renewal date and one place to manage everything.",
+      cta: "See my bundle saving", url: "#",
+      img: "https://images.unsplash.com/photo-1605276374104-dee2a0ed3cd6?w=1000&q=80&auto=format&fit=crop" }
   };
 
-  // Accept a live SP decision only when it serves a known NRMA offer, so a
-  // stale non-NRMA serve is ignored and the local home offer shows instead.
-  // Offer Ids are regenerated on every rebuild, so acceptance keys on the NRMA
+  // Accept a live SP decision only when it serves a known Covera offer, so a
+  // stale non-Covera serve is ignored and the local home offer shows instead.
+  // Offer Ids are regenerated on every rebuild, so acceptance keys on the COVERA
   // BRAND TOKEN carried in the hydrated treatment (the card chip / footer / SMS
-  // all say "My NRMA" / mynrma.com.au). Core NR_ offers only — A2A offers
-  // (OFFNRMA*) never serve here. Add 15-char Id prefixes to NRMA_OFFER_IDS after
-  // a build if you want an exact-Id guard as well.
-  const NRMA_OFFER_IDS = new Set([]);
-  function isNRMAItem(item) {
+  // all say "Covera" / covera.com.au). Core CV_ offers only — A2A offers
+  // (OFFCOVERA*) never serve here. Add 15-char Id prefixes to COVERA_OFFER_IDS
+  // after a build if you want an exact-Id guard as well.
+  const COVERA_OFFER_IDS = new Set([]);
+  function isCoveraItem(item) {
     const oid = pick(item, "OfferId__c", "offerId");
-    if (oid && NRMA_OFFER_IDS.has(String(oid).substring(0, 15))) return true;
+    if (oid && COVERA_OFFER_IDS.has(String(oid).substring(0, 15))) return true;
     // Brand-token discriminator (works regardless of offer-Id churn).
     const txt = (pick(item, "TreatmentOutput__c", "treatmentOutput") || "") +
                 (pick(item, "OfferBody__c", "offerBody") || "");
-    return /nrma|mynrma/i.test(txt);
+    return /covera/i.test(txt);
   }
 
   const CAT_LABEL = {
-    CAT_ROADSIDE: "My NRMA Roadside", CAT_INSURANCE: "NRMA Insurance",
-    CAT_ENERGY: "NRMA Energy", CAT_PARKS: "NRMA Parks + Resorts", CAT_THRIFTY: "Thrifty"
+    CAT_HOME: "Home Insurance", CAT_CONTENTS: "Contents Insurance",
+    CAT_MOTOR: "Car Insurance", CAT_LANDLORD: "Landlord Insurance", CAT_TRAVEL: "Travel Insurance"
   };
 
   let state = { individualId: "", lastCategory: null, lastDecision: null };
@@ -222,7 +223,7 @@
       JSON.stringify(state.lastDecision, null, 2);
   }
 
-  // Populate the logged-in "My NRMA" member summary from the selected persona.
+  // Populate the logged-in "Covera" customer summary from the selected persona.
   // Demo dressing only — this is NOT SP/decision data; it just makes the offer
   // land inside a believable account context. Hidden when anonymous.
   function renderAccount(persona) {
@@ -234,7 +235,7 @@
     document.getElementById("acct-avatar").textContent = (persona.name || "s").trim()[0];
     document.getElementById("acct-name").textContent = (persona.name || "").split(" ")[0];
     document.getElementById("acct-since").textContent = a.since || "Welcome back";
-    document.getElementById("acct-tier").textContent = a.tier || "My NRMA member";
+    document.getElementById("acct-tier").textContent = a.tier || "Covera customer";
 
     // Render one card per care item. An item due soon ("due" / "overdue" /
     // "review" or within 7 days) is flagged so the care-continuity beat lands
@@ -314,9 +315,9 @@
     return true;
   }
 
-  // Render the generic, un-personalised My NRMA hero for an anonymous visitor.
+  // Render the generic, un-personalised Covera hero for an anonymous visitor.
   // Paints the native hero fields directly (synthetic content, not an SP call),
-  // hides the My NRMA account chrome, and restores the native hero if a
+  // hides the Covera account chrome, and restores the native hero if a
   // drop-in treatment card was previously injected (persona -> anonymous).
   function renderGeneric() {
     renderAccount(null); // no account chrome when anonymous
@@ -408,7 +409,7 @@
     if (!id) return renderGeneric(); // anonymous visitor -> un-personalised brand hero
 
     // Mock-up mode: skip SP entirely and render the local home offer. The
-    // logged-in page is a complete My NRMA visual with no Data Cloud dependency.
+    // logged-in page is a complete Covera visual with no Data Cloud dependency.
     if ((cfg.HERO_SOURCE || "live") === "fallback") {
       if (renderFallback(id, "home offer · local mock-up")) return;
     }
@@ -436,10 +437,10 @@
       .then((r) => r.json())
       .then((resp) => {
         const item = firstItem(resp);
-        // In "auto" only accept a live decision that serves a known NRMA offer;
+        // In "auto" only accept a live decision that serves a known Covera offer;
         // otherwise fall through to the local home offer (ignores stale serves).
         const accept = item && (item.TreatmentOutput__c || item.OfferHeading__c || item.personalizationContentId)
-          && ((cfg.HERO_SOURCE || "live") !== "auto" || isNRMAItem(item));
+          && ((cfg.HERO_SOURCE || "live") !== "auto" || isCoveraItem(item));
         if (accept) {
           const prevOffer = state.lastDecision && state.lastDecision.offerId;
           const newOffer  = pick(item, "OfferId__c", "OfferTreatmentCode__c", "Id__c");
@@ -560,7 +561,7 @@
       state.individualId = sel.value;
       state.lastCategory = null;
       highlight(null);
-      renderAccount(PERSONAS.find(p => p.id === sel.value)); // log in / out of My NRMA
+      renderAccount(PERSONAS.find(p => p.id === sel.value)); // log in / out of Covera
       setIdentity(state.individualId);
       requestDecision(); // fresh arrival = serve the DH decision for this person
       startPolling();    // watch for live re-decisions on this identity
@@ -618,7 +619,7 @@
   // Which identity the storefront opens on (the parity beat starts logged in).
   //   ?who=<first name | contact id>  -> that persona
   //   ?who=anon | anonymous           -> anonymous / generic (no login)
-  //   (no param)                      -> Sarah (EV-curious) by default
+  //   (no param)                      -> Sarah (homeowner) by default
   // On refresh the same identity is kept, so "fire decisions -> refresh" shows
   // the newly-served offer against a stable logged-in customer.
   function resolveOpeningPersona() {
@@ -647,7 +648,7 @@
     } else {
       pill.textContent = "LIVE · Salesforce Personalization"; pill.className = "pill live";
       // Open LOGGED IN (default: Sarah) so the parity beat starts in a real
-      // My NRMA member account and the served offer updates on refresh as
+      // Covera customer account and the served offer updates on refresh as
       // decisions fire. ?who=anon opens anonymous/generic instead.
       const opening = resolveOpeningPersona();
       if (opening) {
