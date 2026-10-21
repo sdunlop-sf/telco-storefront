@@ -25,48 +25,48 @@
   // knowledge — the decision for each is served live by SP. Swapping personas
   // per demo is a config concern, not a code concern; kept here for the demo
   // switcher convenience only.
-  // Covera re-skin: the "account" is now a CUSTOMER PROFILE at Covera — the
-  // policies held (home / contents / motor) plus the life-stage signals the
-  // engine reads to decide the next best interaction. Each item is a policy /
-  // cover line.
+  // Medibank re-skin: the "account" is now a MEMBER PROFILE at Medibank — the
+  // health covers held (hospital / extras / combined) plus the life-stage signals
+  // the engine reads to decide the next best interaction. Each item is a cover
+  // line.
   const PERSONAS = [
-    { id: "003Kh00001uijWCIAY", name: "Sarah Mitchell", tag: "Homeowner · recently renovated",
+    { id: "003Kh00001uijWCIAY", name: "Sarah Mitchell", tag: "Combined member · extras under-used",
       account: {
-        since: "Covera customer since 2019", tier: "Home & Motor customer",
+        since: "Medibank member since 2019", tier: "Combined Hospital & Extras",
         policies: [
-          { kind: "Home", label: "Home & Contents · NSW", ref: "Covera",
-            premium: "Sum insured $680k", status: "Check recommended" },
-          { kind: "Motor", label: "2021 Mazda CX-5", ref: "Comprehensive",
-            premium: "$1,180 / yr", status: "Active" }
+          { kind: "Hospital", label: "Silver Hospital · NSW", ref: "Medibank",
+            premium: "$198 / mth", status: "Active" },
+          { kind: "Extras", label: "Top Extras", ref: "Dental · optical · physio",
+            premium: "$620 unclaimed", status: "Limits reset soon" }
         ]
       } },
     { id: "003Kh00001uijWDIAY", name: "Daniel Okafor", tag: "Renewal approaching",
       account: {
-        since: "Covera customer since 2020", tier: "Home & Motor customer",
+        since: "Medibank member since 2020", tier: "Combined Hospital & Extras",
         policies: [
-          { kind: "Home", label: "Home & Contents · VIC", ref: "Covera",
+          { kind: "Hospital", label: "Bronze Hospital · VIC", ref: "Medibank",
             renewsInDays: 3, premium: "Renews in 3 days", status: "Due to renew" },
-          { kind: "Motor", label: "2016 Toyota Corolla", ref: "Comprehensive",
+          { kind: "Extras", label: "Mid Extras", ref: "Dental · optical",
             premium: "Renews in 3 days", status: "Due to renew" }
         ]
       } },
-    { id: "003Kh00001uijWEIAY", name: "Priya Sharma", tag: "Lapsed policy",
+    { id: "003Kh00001uijWEIAY", name: "Priya Sharma", tag: "Lapsed cover",
       account: {
-        since: "Covera customer since 2016", tier: "Former customer",
+        since: "Medibank member since 2016", tier: "Former member",
         policies: [
-          { kind: "Home", label: "Home & Contents · QLD", ref: "Covera",
+          { kind: "Combined", label: "Hospital & Extras · QLD", ref: "Medibank",
             renewsInDays: 2, premium: "Lapsed 4 weeks ago", status: "Lapsed" }
         ]
       } },
-    { id: "003Kh00001uijWFIAY", name: "Tom Bennett", tag: "Motor-only · bundle-ready",
+    { id: "003Kh00001uijWFIAY", name: "Tom Bennett", tag: "Hospital-only · extras-ready",
       account: {
-        since: "Covera customer since 2014", tier: "Motor-only customer",
+        since: "Medibank member since 2014", tier: "Hospital-only member",
         policies: [
-          { kind: "Motor", label: "2022 Ford Ranger", ref: "Comprehensive",
-            premium: "$1,540 / yr", status: "Active" },
-          { kind: "Home", label: "Home & Contents", ref: "Insured elsewhere",
-            premium: "Not with Covera", status: "Bundle opportunity" },
-          { kind: "Bundle", label: "Multi-policy discount", ref: "Not applied",
+          { kind: "Hospital", label: "Silver Plus Hospital", ref: "Medibank",
+            premium: "$176 / mth", status: "Active" },
+          { kind: "Extras", label: "Extras cover", ref: "Not held",
+            premium: "Not with Medibank", status: "Extras opportunity" },
+          { kind: "Bundle", label: "Package discount", ref: "Not applied",
             premium: "Combine to save", status: "Available" }
         ]
       } }
@@ -88,72 +88,71 @@
   // hero every visitor sees, no account chrome. Picking a customer swaps this
   // for the DH-arbitrated, SP-served personal offer (the inbound-parity beat).
   const GENERIC_OFFER = {
-    eyebrow: "Covera",
-    heading: "Cover for the things that matter most.",
-    body: "Home, contents and car insurance built around your life — <strong>sign in</strong> and your next best move re-shapes to you.",
+    eyebrow: "Medibank",
+    heading: "Cover for a healthier you.",
+    body: "Hospital, extras and combined health cover built around your life — <strong>sign in</strong> and your next best move re-shapes to you.",
     cta: "Get a quote",
     url: "#",
-    img: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=1000&q=80&auto=format&fit=crop"
+    img: "https://images.unsplash.com/photo-1518611012118-696072aa579a?w=1000&q=80&auto=format&fit=crop"
   };
 
   // Per-persona local offer shown in the logged-in hero when the live SP serve
   // has not resolved yet (fresh identity, item graph mid-refresh, propagation
-  // lag). Mirrors each persona's HOME decision so the logged-in page is always a
-  // complete Covera mock-up. A live SP decision ALWAYS overrides this — the
+  // lag). Mirrors each persona's lead decision so the logged-in page is always a
+  // complete Medibank mock-up. A live SP decision ALWAYS overrides this — the
   // fallback only fills the gap so the hero never shows an empty "no-decision"
-  // state in front of a customer. Keyed by Contact Id. Mirrors each persona's
-  // HOME decision so the logged-in page is always a complete Covera mock-up.
+  // state in front of a member. Keyed by Contact Id.
   const FALLBACK_OFFER = {
-    // Per-persona Covera recommendation, rendered locally (HERO_SOURCE
+    // Per-persona Medibank recommendation, rendered locally (HERO_SOURCE
     // "fallback") so the hero is guaranteed-clean and matches the email creative.
     // (SP's live serve reads from a stale DC item-graph snapshot; until that is
     // refreshed we render the correct creative here rather than serve a ghost.)
-    "003Kh00001uijWCIAY": { // Sarah — Engagement / Home Cover Health Check (CV_ENGAGE1)
+    "003Kh00001uijWCIAY": { // Sarah — Engagement / Extras Health Check (MB_ENGAGE1)
       eyebrow: "Recommended for you",
-      heading: "Is your home covered for today's rebuild cost?",
-      body: "Building and contents costs have climbed, and many homes are now insured for less than it would cost to rebuild. Our free <strong>Home Cover Health Check</strong> reviews your sum insured and contents so you're not caught short. Book a time that suits you.",
-      cta: "Book my cover check", url: "#",
-      img: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=1000&q=80&auto=format&fit=crop" },
-    "003Kh00001uijWDIAY": { // Daniel — Retention / Stay Protected (CV_RETURN1)
-      eyebrow: "A note from your Covera team",
-      heading: "Let's keep you protected, Daniel",
-      body: "Your policy is coming up for renewal and we don't want you left without cover. <strong>Renew in a couple of minutes</strong> so there's no gap in your protection.",
+      heading: "Have you used your extras before they reset?",
+      body: "Your dental, optical and physio limits reset at the end of the year and unused benefits don't carry over. Our free <strong>Extras Health Check</strong> shows what you have left to claim so you get the full value of your cover. Book a time that suits you.",
+      cta: "Check my extras", url: "#",
+      img: "https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=1000&q=80&auto=format&fit=crop" },
+    "003Kh00001uijWDIAY": { // Daniel — Retention / Stay Covered (MB_RETURN1)
+      eyebrow: "A note from your Medibank team",
+      heading: "Let's keep you covered, Daniel",
+      body: "Your cover is coming up for renewal and we don't want you left without it. <strong>Renew in a couple of minutes</strong> so there's no gap in your cover and no waiting periods to serve again.",
       cta: "Renew my cover", url: "#",
-      img: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=1000&q=80&auto=format&fit=crop" },
-    "003Kh00001uijWEIAY": { // Priya — Retention / win-back (CV_RETURN1 / composition persona)
-      eyebrow: "A note from your Covera team",
-      heading: "Let's get you protected again, Priya",
-      body: "It's been a few weeks since your cover lapsed. No pressure — just a <strong>fresh start</strong> whenever you're ready, so your home is looked after again.",
+      img: "https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?w=1000&q=80&auto=format&fit=crop" },
+    "003Kh00001uijWEIAY": { // Priya — Retention / win-back (MB_RETURN1 / composition persona)
+      eyebrow: "A note from your Medibank team",
+      heading: "Let's get you covered again, Priya",
+      body: "It's been a few weeks since your cover lapsed. No pressure — just a <strong>fresh start</strong> whenever you're ready, so your health is looked after again.",
       cta: "Reactivate my cover", url: "#",
-      img: "https://images.unsplash.com/photo-1558036117-15d82a90b9b1?w=1000&q=80&auto=format&fit=crop" },
-    "003Kh00001uijWFIAY": { // Tom — Upgrade / Home + Motor Bundle (CV_UPGRADE1)
+      img: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=1000&q=80&auto=format&fit=crop" },
+    "003Kh00001uijWFIAY": { // Tom — Upgrade / Add Extras (MB_UPGRADE1)
       eyebrow: "Recommended for you",
-      heading: "Bring your home and car together and save",
-      body: "You're already with us for your car. Add your home and <strong>unlock a multi-policy discount</strong>, one renewal date and one place to manage everything.",
-      cta: "See my bundle saving", url: "#",
-      img: "https://images.unsplash.com/photo-1605276374104-dee2a0ed3cd6?w=1000&q=80&auto=format&fit=crop" }
+      heading: "Add extras and get more from your cover",
+      body: "You're already with us for hospital. Add extras and you're covered for the everyday things that add up — <strong>dental, optical, physio and more</strong> — all on the one membership.",
+      cta: "See my extras options", url: "#",
+      img: "https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?w=1000&q=80&auto=format&fit=crop" }
   };
 
-  // Accept a live SP decision only when it serves a known Covera offer, so a
-  // stale non-Covera serve is ignored and the local home offer shows instead.
-  // Offer Ids are regenerated on every rebuild, so acceptance keys on the COVERA
+  // Accept a live SP decision only when it serves a known Medibank offer, so a
+  // stale non-Medibank serve is ignored and the local offer shows instead.
+  // Offer Ids are regenerated on every rebuild, so acceptance keys on the MEDIBANK
   // BRAND TOKEN carried in the hydrated treatment (the card chip / footer / SMS
-  // all say "Covera" / covera.com.au). Core CV_ offers only — A2A offers
-  // (OFFCOVERA*) never serve here. Add 15-char Id prefixes to COVERA_OFFER_IDS
+  // all say "Medibank" / medibank.com.au). Core MB_ offers only — A2A offers
+  // (OFFMEDIBANK*) never serve here. Add 15-char Id prefixes to MEDIBANK_OFFER_IDS
   // after a build if you want an exact-Id guard as well.
-  const COVERA_OFFER_IDS = new Set([]);
-  function isCoveraItem(item) {
+  const MEDIBANK_OFFER_IDS = new Set([]);
+  function isMedibankItem(item) {
     const oid = pick(item, "OfferId__c", "offerId");
-    if (oid && COVERA_OFFER_IDS.has(String(oid).substring(0, 15))) return true;
+    if (oid && MEDIBANK_OFFER_IDS.has(String(oid).substring(0, 15))) return true;
     // Brand-token discriminator (works regardless of offer-Id churn).
     const txt = (pick(item, "TreatmentOutput__c", "treatmentOutput") || "") +
                 (pick(item, "OfferBody__c", "offerBody") || "");
-    return /covera/i.test(txt);
+    return /medibank/i.test(txt);
   }
 
   const CAT_LABEL = {
-    CAT_HOME: "Home Insurance", CAT_CONTENTS: "Contents Insurance",
-    CAT_MOTOR: "Car Insurance", CAT_LANDLORD: "Landlord Insurance", CAT_TRAVEL: "Travel Insurance"
+    CAT_HOSPITAL: "Hospital Cover", CAT_EXTRAS: "Extras Cover",
+    CAT_COMBINED: "Combined Cover", CAT_AMBULANCE: "Ambulance Cover", CAT_OVERSEAS: "Overseas Cover"
   };
 
   let state = { individualId: "", lastCategory: null, lastDecision: null };
@@ -223,7 +222,7 @@
       JSON.stringify(state.lastDecision, null, 2);
   }
 
-  // Populate the logged-in "Covera" customer summary from the selected persona.
+  // Populate the logged-in "Medibank" member summary from the selected persona.
   // Demo dressing only — this is NOT SP/decision data; it just makes the offer
   // land inside a believable account context. Hidden when anonymous.
   function renderAccount(persona) {
@@ -235,7 +234,7 @@
     document.getElementById("acct-avatar").textContent = (persona.name || "s").trim()[0];
     document.getElementById("acct-name").textContent = (persona.name || "").split(" ")[0];
     document.getElementById("acct-since").textContent = a.since || "Welcome back";
-    document.getElementById("acct-tier").textContent = a.tier || "Covera customer";
+    document.getElementById("acct-tier").textContent = a.tier || "Medibank member";
 
     // Render one card per care item. An item due soon ("due" / "overdue" /
     // "review" or within 7 days) is flagged so the care-continuity beat lands
@@ -315,9 +314,9 @@
     return true;
   }
 
-  // Render the generic, un-personalised Covera hero for an anonymous visitor.
+  // Render the generic, un-personalised Medibank hero for an anonymous visitor.
   // Paints the native hero fields directly (synthetic content, not an SP call),
-  // hides the Covera account chrome, and restores the native hero if a
+  // hides the Medibank account chrome, and restores the native hero if a
   // drop-in treatment card was previously injected (persona -> anonymous).
   function renderGeneric() {
     renderAccount(null); // no account chrome when anonymous
@@ -409,7 +408,7 @@
     if (!id) return renderGeneric(); // anonymous visitor -> un-personalised brand hero
 
     // Mock-up mode: skip SP entirely and render the local home offer. The
-    // logged-in page is a complete Covera visual with no Data Cloud dependency.
+    // logged-in page is a complete Medibank visual with no Data Cloud dependency.
     if ((cfg.HERO_SOURCE || "live") === "fallback") {
       if (renderFallback(id, "home offer · local mock-up")) return;
     }
@@ -437,10 +436,10 @@
       .then((r) => r.json())
       .then((resp) => {
         const item = firstItem(resp);
-        // In "auto" only accept a live decision that serves a known Covera offer;
+        // In "auto" only accept a live decision that serves a known Medibank offer;
         // otherwise fall through to the local home offer (ignores stale serves).
         const accept = item && (item.TreatmentOutput__c || item.OfferHeading__c || item.personalizationContentId)
-          && ((cfg.HERO_SOURCE || "live") !== "auto" || isCoveraItem(item));
+          && ((cfg.HERO_SOURCE || "live") !== "auto" || isMedibankItem(item));
         if (accept) {
           const prevOffer = state.lastDecision && state.lastDecision.offerId;
           const newOffer  = pick(item, "OfferId__c", "OfferTreatmentCode__c", "Id__c");
@@ -488,7 +487,7 @@
     const sec = document.getElementById("foryou");
     if (!sec) return;
     sec.style.transition = "box-shadow .25s ease";
-    sec.style.boxShadow = "0 0 0 3px rgba(10,102,194,.9)";
+    sec.style.boxShadow = "0 0 0 3px rgba(214,0,28,.9)";
     setTimeout(() => { sec.style.boxShadow = "none"; }, 900);
   }
 
@@ -561,7 +560,7 @@
       state.individualId = sel.value;
       state.lastCategory = null;
       highlight(null);
-      renderAccount(PERSONAS.find(p => p.id === sel.value)); // log in / out of Covera
+      renderAccount(PERSONAS.find(p => p.id === sel.value)); // log in / out of Medibank
       setIdentity(state.individualId);
       requestDecision(); // fresh arrival = serve the DH decision for this person
       startPolling();    // watch for live re-decisions on this identity
@@ -648,7 +647,7 @@
     } else {
       pill.textContent = "LIVE · Salesforce Personalization"; pill.className = "pill live";
       // Open LOGGED IN (default: Sarah) so the parity beat starts in a real
-      // Covera customer account and the served offer updates on refresh as
+      // Medibank member account and the served offer updates on refresh as
       // decisions fire. ?who=anon opens anonymous/generic instead.
       const opening = resolveOpeningPersona();
       if (opening) {

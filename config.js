@@ -1,5 +1,6 @@
 /* ─────────────────────────────────────────────────────────────────────────
- * Covera app — demo config (Covera general insurer: home, contents, motor).
+ * Medibank app — demo config (Medibank private health insurer: hospital,
+ * extras, combined; ambulance, overseas, Live Better).
  *
  * This is the ONE file you edit to flip the app from local mock to live SP.
  * MOCK_MODE false loads the Data 360 Web SDK beacon and lets Salesforce
@@ -9,7 +10,7 @@ window.DEMO_CONFIG = {
   MOCK_MODE: false,
 
   // Shown in the header / footer. Pure cosmetics.
-  BRAND: "Covera",
+  BRAND: "Medibank",
 
   // Beacon from the 4b Website/App connector (harness shared across demos).
   BEACON_URL: "https://cdn.c360a.salesforce.com/beacon/c360a/5e39738b-7dd0-46b3-b82d-10a7983da2fd/scripts/c360a.min.js",
@@ -33,46 +34,46 @@ window.DEMO_CONFIG = {
 
   // Where the logged-in "For you" hero sources its offer:
   //   "fallback" -> ALWAYS render the local per-persona home offer (app.js
-  //                 FALLBACK_OFFER). Guaranteed-clean Covera mock-up, no
+  //                 FALLBACK_OFFER). Guaranteed-clean Medibank mock-up, no
   //                 Data Cloud dependency.
   //   "auto"     -> prefer the live SP decision, but only accept it when the
-  //                 served offer is a known Covera offer (brand token); else
+  //                 served offer is a known Medibank offer (brand token); else
   //                 show the local one. Safe (never serves a ghost) AND live.
-  //   "live"     -> trust whatever SP serves, no Covera guard.
+  //   "live"     -> trust whatever SP serves, no Medibank guard.
   HERO_SOURCE: "auto",
 
   // How the "For you" slot renders the SP decision: "treatment" drops the
   // hydrated card in whole; "fields" paints the native hero from fields.
   RENDER_MODE: "fields",
 
-  // Catalogue = Covera's consumer insurance lines. One insurer, many covers —
-  // home, contents, motor plus landlord and travel. Browsing a cover sends a
-  // Product Browse engagement event (SP re-shapes in session).
+  // Catalogue = Medibank's consumer health cover lines. One fund, many covers —
+  // hospital, extras and combined plus ambulance and overseas. Browsing a cover
+  // sends a Product Browse engagement event (SP re-shapes in session).
   CATALOG: {
-    home: {
-      id: "PROD_HOME", category: "CAT_HOME", label: "Home Insurance",
-      sub: "Building + rebuild cover", price: "get a quote",
-      img: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=600&q=80&auto=format&fit=crop"
+    hospital: {
+      id: "PROD_HOSPITAL", category: "CAT_HOSPITAL", label: "Hospital Cover",
+      sub: "Private room + choice of doctor", price: "get a quote",
+      img: "https://images.unsplash.com/photo-1551190822-a9333d879b1f?w=600&q=80&auto=format&fit=crop"
     },
-    contents: {
-      id: "PROD_CONTENTS", category: "CAT_CONTENTS", label: "Contents Insurance",
-      sub: "Belongings + valuables", price: "get a quote",
-      img: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=600&q=80&auto=format&fit=crop"
+    extras: {
+      id: "PROD_EXTRAS", category: "CAT_EXTRAS", label: "Extras Cover",
+      sub: "Dental + optical + physio", price: "get a quote",
+      img: "https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=600&q=80&auto=format&fit=crop"
     },
-    motor: {
-      id: "PROD_MOTOR", category: "CAT_MOTOR", label: "Car Insurance",
-      sub: "Comprehensive + third party", price: "get a quote",
-      img: "https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=600&q=80&auto=format&fit=crop"
+    combined: {
+      id: "PROD_COMBINED", category: "CAT_COMBINED", label: "Combined Cover",
+      sub: "Hospital + extras in one", price: "get a quote",
+      img: "https://images.unsplash.com/photo-1476703993599-0035a21b17a9?w=600&q=80&auto=format&fit=crop"
     },
-    landlord: {
-      id: "PROD_LANDLORD", category: "CAT_LANDLORD", label: "Landlord Insurance",
-      sub: "Rental property + loss of rent", price: "get a quote",
-      img: "https://images.unsplash.com/photo-1605276374104-dee2a0ed3cd6?w=600&q=80&auto=format&fit=crop"
+    ambulance: {
+      id: "PROD_AMBULANCE", category: "CAT_AMBULANCE", label: "Ambulance Cover",
+      sub: "Emergency transport cover", price: "get a quote",
+      img: "https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?w=600&q=80&auto=format&fit=crop"
     },
-    travel: {
-      id: "PROD_TRAVEL", category: "CAT_TRAVEL", label: "Travel Insurance",
-      sub: "Domestic + international", price: "get a quote",
-      img: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=600&q=80&auto=format&fit=crop"
+    overseas: {
+      id: "PROD_OVERSEAS", category: "CAT_OVERSEAS", label: "Overseas Cover",
+      sub: "Visitors + students (OVHC / OSHC)", price: "get a quote",
+      img: "https://images.unsplash.com/photo-1488085061387-422e29b40080?w=600&q=80&auto=format&fit=crop"
     }
   }
 };

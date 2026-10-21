@@ -1,17 +1,18 @@
 :root {
-  --ink: #0a2540;          /* Covera slate navy text */
+  --ink: #111826;          /* Medibank navy text */
   --muted: #6b6b6b;
   --line: #e6e6e6;
-  --brand: #12a594;        /* Covera teal */
-  --brand-2: #0e7d72;      /* deeper teal */
-  --brand-ink: #0a2540;    /* slate navy */
-  --accent: #12a594;       /* teal CTA */
-  --accent-2: #0a2540;     /* slate navy (secondary accent) */
-  --tint: #d9f3ef;         /* light teal tint (chips / hovers) */
-  --tint-line: #9fded6;    /* teal-grey border */
-  --bg: #f4f8f8;           /* cool white */
+  --brand: #d6001c;        /* Medibank red */
+  --brand-2: #b00017;      /* deeper red */
+  --brand-ink: #111826;    /* navy */
+  --accent: #d6001c;       /* red CTA */
+  --accent-2: #111826;     /* navy (secondary accent) */
+  --accent-blue: #0078b8;  /* Medibank blue accent (the dotless i) */
+  --tint: #ffe9ec;         /* light red tint (chips / hovers) */
+  --tint-line: #f4b8c0;    /* soft red border */
+  --bg: #f6f7f9;           /* cool white */
   --card: #ffffff;
-  --ink-soft: #1d3a52;
+  --ink-soft: #2a3342;
 }
 * { box-sizing: border-box; }
 html, body { margin: 0; }
@@ -30,9 +31,9 @@ body {
  * ───────────────────────────────────────────────────────────────────── */
 body.ff {
   background:
-    radial-gradient(1200px 600px at 15% -10%, rgba(18,165,148,.26), transparent 60%),
-    radial-gradient(1000px 500px at 110% 20%, rgba(10,37,64,.34), transparent 55%),
-    #04121a;
+    radial-gradient(1200px 600px at 15% -10%, rgba(214,0,28,.24), transparent 60%),
+    radial-gradient(1000px 500px at 110% 20%, rgba(17,24,38,.42), transparent 55%),
+    #0a0e16;
   min-height: 100vh;
 }
 .stage {
@@ -74,16 +75,16 @@ body.ff {
   padding-top: 40px; /* clear the notch */
 }
 
-/* header */
+/* header — Medibank uses a red wordmark on a white bar */
 header.site {
   display: flex; align-items: center; gap: 14px;
-  padding: 13px 18px; background: var(--ink); border-bottom: 2px solid var(--brand);
+  padding: 13px 18px; background: #ffffff; border-bottom: 2px solid var(--brand);
   position: sticky; top: 0; z-index: 20;
 }
 .brand { display: flex; align-items: center; gap: 9px; text-decoration: none; margin-right: auto; }
-.brand-logo { height: 26px; width: auto; display: block; }
+.brand-logo { height: 28px; width: auto; display: block; }
 .hamb { background: none; border: 0; display: flex; flex-direction: column; gap: 4px; cursor: pointer; padding: 4px; }
-.hamb span { width: 20px; height: 2px; background: #fff; border-radius: 2px; display: block; }
+.hamb span { width: 20px; height: 2px; background: var(--ink); border-radius: 2px; display: block; }
 
 /* category chips (horizontal scroll strip) */
 nav.chips {
@@ -154,14 +155,14 @@ nav.chips .chip.active { background: var(--brand); color: #fff; border-color: va
 .recharge {
   align-self: flex-start; margin-top: 4px; font-size: 12.5px; font-weight: 800;
   color: #fff; background: var(--accent); text-decoration: none;
-  padding: 7px 14px; border-radius: 8px; box-shadow: 0 6px 16px -8px rgba(18,165,148,.5);
+  padding: 7px 14px; border-radius: 8px; box-shadow: 0 6px 16px -8px rgba(214,0,28,.5);
 }
 
 /* personalization slot */
 .foryou {
   position: relative; border-radius: 20px; overflow: hidden; margin-bottom: 22px;
   display: grid; grid-template-columns: 1fr; min-height: 300px;
-  background: linear-gradient(150deg, #0a2540 0%, #0c2e3a 45%, var(--brand) 160%);
+  background: linear-gradient(150deg, #111826 0%, #1a2436 45%, var(--brand) 165%);
   box-shadow: 0 20px 50px -24px rgba(0,0,0,.6);
 }
 .foryou .art {
@@ -180,7 +181,7 @@ nav.chips .chip.active { background: var(--brand); color: #fff; border-color: va
 .foryou .cta {
   background: var(--brand); color: #fff; border: 0;
   padding: 13px 26px; border-radius: 10px; font-weight: 800; font-size: 14px;
-  cursor: pointer; text-decoration: none; box-shadow: 0 10px 24px -10px rgba(18,165,148,.55);
+  cursor: pointer; text-decoration: none; box-shadow: 0 10px 24px -10px rgba(214,0,28,.55);
   transition: transform .1s; text-transform: uppercase; letter-spacing: .4px;
 }
 .foryou .cta:hover { transform: translateY(-1px); }
