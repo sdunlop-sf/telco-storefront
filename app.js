@@ -30,7 +30,7 @@
   // the engine reads to decide the next best interaction. Each item is a cover
   // line.
   const PERSONAS = [
-    { id: "003Kh00001uijWCIAY", name: "Sarah Mitchell", tag: "Combined member · extras under-used",
+    { id: "003Kh00001uijWCIAY", name: "Hannah Nguyen", tag: "Combined member · extras under-used",
       account: {
         since: "Medibank member since 2019", tier: "Combined Hospital & Extras",
         policies: [
@@ -631,7 +631,7 @@
         p.name.toLowerCase().includes(who));
       if (m) return m;
     }
-    return PERSONAS.find(p => p.name.toLowerCase().startsWith("sarah")) || PERSONAS[0] || null;
+    return PERSONAS.find(p => p.name.toLowerCase().startsWith("hannah")) || PERSONAS[0] || null;
   }
 
   /* ---------- boot ---------- */
