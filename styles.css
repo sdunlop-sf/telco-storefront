@@ -1,15 +1,15 @@
 :root {
-  --ink: #111826;          /* Medibank navy text */
+  --ink: #10211e;          /* Suncorp deep-green ink */
   --muted: #6b6b6b;
   --line: #e6e6e6;
-  --brand: #d6001c;        /* Medibank red */
-  --brand-2: #b00017;      /* deeper red */
-  --brand-ink: #111826;    /* navy */
-  --accent: #d6001c;       /* red CTA */
-  --accent-2: #111826;     /* navy (secondary accent) */
-  --accent-blue: #0078b8;  /* Medibank blue accent (the dotless i) */
-  --tint: #ffe9ec;         /* light red tint (chips / hovers) */
-  --tint-line: #f4b8c0;    /* soft red border */
+  --brand: #004A42;        /* Suncorp teal-green */
+  --brand-2: #003a33;      /* deeper green */
+  --brand-ink: #10211e;    /* green ink */
+  --accent: #004A42;       /* green CTA (legible against white text) */
+  --accent-2: #10211e;     /* green ink (secondary accent) */
+  --accent-blue: #F8C800;  /* Suncorp golden-sun accent */
+  --tint: #e3f0ed;         /* light green tint (chips / hovers) */
+  --tint-line: #b9d8d1;    /* soft green border */
   --bg: #f6f7f9;           /* cool white */
   --card: #ffffff;
   --ink-soft: #2a3342;
@@ -25,15 +25,15 @@ body {
 
 /* ─────────────────────────────────────────────────────────────────────
  * STAGE + PHONE DEVICE FRAME
- * The whole member app renders inside a phone. The presenter dock sits
+ * The whole customer app renders inside a phone. The presenter dock sits
  * beside it. All in-app layout is scoped to .phone-screen (NOT a viewport
  * media query) because the narrow screen lives inside a wide desktop stage.
  * ───────────────────────────────────────────────────────────────────── */
 body.ff {
   background:
-    radial-gradient(1200px 600px at 15% -10%, rgba(214,0,28,.24), transparent 60%),
-    radial-gradient(1000px 500px at 110% 20%, rgba(17,24,38,.42), transparent 55%),
-    #0a0e16;
+    radial-gradient(1200px 600px at 15% -10%, rgba(0,74,66,.42), transparent 60%),
+    radial-gradient(1000px 500px at 110% 20%, rgba(248,200,0,.18), transparent 55%),
+    #05120f;
   min-height: 100vh;
 }
 .stage {
@@ -75,7 +75,7 @@ body.ff {
   padding-top: 40px; /* clear the notch */
 }
 
-/* header — Medibank uses a red wordmark on a white bar */
+/* header — Suncorp uses a teal-green wordmark on a white bar */
 header.site {
   display: flex; align-items: center; gap: 14px;
   padding: 13px 18px; background: #ffffff; border-bottom: 2px solid var(--brand);
@@ -110,7 +110,7 @@ nav.chips .chip.active { background: var(--brand); color: #fff; border-color: va
 
 .wrap { padding: 18px 16px 30px; }
 
-/* logged-in member summary */
+/* logged-in customer summary */
 .account-summary {
   background: var(--card); border: 1px solid var(--line); border-radius: 16px;
   padding: 16px 16px 17px; margin-bottom: 14px;
@@ -136,7 +136,7 @@ nav.chips .chip.active { background: var(--brand); color: #fff; border-color: va
   white-space: nowrap;
 }
 
-/* member / goal cards */
+/* policy / goal cards */
 .policy-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
 .pcell { display: flex; flex-direction: column; gap: 3px; }
 .plabel { font-size: 10px; letter-spacing: .6px; text-transform: uppercase; color: var(--muted); font-weight: 800; }
@@ -147,7 +147,7 @@ nav.chips .chip.active { background: var(--brand); color: #fff; border-color: va
   border-radius: 11px; background: #fff; gap: 4px;
   box-shadow: 0 6px 18px -14px rgba(0,0,0,.4);
 }
-.pcell.policy.low { border-color: var(--tint-line); background: #fff6f7; }
+.pcell.policy.low { border-color: var(--tint-line); background: #f1f8f6; }
 .policy-foot { display: flex; align-items: center; justify-content: space-between; margin-top: 8px; gap: 10px; }
 .prem { font-size: 13px; font-weight: 800; color: var(--ink); }
 .renew { font-size: 11.5px; font-weight: 700; color: var(--muted); }
@@ -155,14 +155,14 @@ nav.chips .chip.active { background: var(--brand); color: #fff; border-color: va
 .recharge {
   align-self: flex-start; margin-top: 4px; font-size: 12.5px; font-weight: 800;
   color: #fff; background: var(--accent); text-decoration: none;
-  padding: 7px 14px; border-radius: 8px; box-shadow: 0 6px 16px -8px rgba(214,0,28,.5);
+  padding: 7px 14px; border-radius: 8px; box-shadow: 0 6px 16px -8px rgba(0,74,66,.5);
 }
 
 /* personalization slot */
 .foryou {
   position: relative; border-radius: 20px; overflow: hidden; margin-bottom: 22px;
   display: grid; grid-template-columns: 1fr; min-height: 300px;
-  background: linear-gradient(150deg, #111826 0%, #1a2436 45%, var(--brand) 165%);
+  background: linear-gradient(150deg, #06231f 0%, #0a3a33 45%, var(--brand) 165%);
   box-shadow: 0 20px 50px -24px rgba(0,0,0,.6);
 }
 .foryou .art {
@@ -173,7 +173,7 @@ nav.chips .chip.active { background: var(--brand); color: #fff; border-color: va
 .foryou .copy { padding: 24px 24px 28px; display: flex; flex-direction: column; justify-content: center; color: #fff; z-index: 2; }
 .foryou .eyebrow {
   font-size: 10.5px; letter-spacing: 2.5px; text-transform: uppercase;
-  color: var(--brand); font-weight: 800; margin-bottom: 11px;
+  color: var(--accent-blue); font-weight: 800; margin-bottom: 11px;
 }
 .foryou h2 { font-size: 25px; margin: 0 0 11px; line-height: 1.1; font-weight: 800; letter-spacing: -.5px; color: #fff; }
 .foryou p { color: #e6e6e6; font-size: 14.5px; line-height: 1.5; margin: 0 0 20px; }
@@ -181,7 +181,7 @@ nav.chips .chip.active { background: var(--brand); color: #fff; border-color: va
 .foryou .cta {
   background: var(--brand); color: #fff; border: 0;
   padding: 13px 26px; border-radius: 10px; font-weight: 800; font-size: 14px;
-  cursor: pointer; text-decoration: none; box-shadow: 0 10px 24px -10px rgba(214,0,28,.55);
+  cursor: pointer; text-decoration: none; box-shadow: 0 10px 24px -10px rgba(0,74,66,.55);
   transition: transform .1s; text-transform: uppercase; letter-spacing: .4px;
 }
 .foryou .cta:hover { transform: translateY(-1px); }
@@ -236,20 +236,20 @@ h3.section { font-size: 18px; font-weight: 800; letter-spacing: -.3px; margin: 0
  * ───────────────────────────────────────────────────────────────────── */
 .dock { flex: 1; min-width: 300px; max-width: 420px; display: flex; flex-direction: column; gap: 18px; position: sticky; top: 46px; }
 .dock-card { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.1); border-radius: 14px; padding: 16px 18px; }
-.dock-label { font-size: 10.5px; letter-spacing: 1.4px; text-transform: uppercase; color: var(--brand); font-weight: 800; margin-bottom: 10px; }
+.dock-label { font-size: 10.5px; letter-spacing: 1.4px; text-transform: uppercase; color: var(--accent-blue); font-weight: 800; margin-bottom: 10px; }
 .dock .account { flex-direction: column; align-items: stretch; gap: 7px; }
 .dock .account-label { color: #9a9a9a; font-size: 11px; }
 
 /* decision inspector */
 .inspector {
-  background: #0b0b0f; color: #e6c3cb; border-radius: 14px;
+  background: #0b0f0e; color: #c3e6dc; border-radius: 14px;
   font-family: 'SF Mono', ui-monospace, Menlo, monospace; font-size: 12px;
-  border: 1px solid #241820;
+  border: 1px solid #18241f;
 }
-.inspector header { display: flex; justify-content: space-between; align-items: center; padding: 13px 18px; border-bottom: 1px solid #241820; }
-.inspector header b { color: var(--brand); font-family: 'Inter', sans-serif; letter-spacing: .3px; }
+.inspector header { display: flex; justify-content: space-between; align-items: center; padding: 13px 18px; border-bottom: 1px solid #18241f; }
+.inspector header b { color: var(--accent-blue); font-family: 'Inter', sans-serif; letter-spacing: .3px; }
 .inspector pre { margin: 0; padding: 18px; overflow: auto; max-height: 420px; color: #d8d8d8; }
-.pill { font-size: 11px; padding: 3px 10px; border-radius: 20px; background: #2a1217; color: #ff6b86; font-family: 'Inter', sans-serif; font-weight: 700; letter-spacing: .3px; }
+.pill { font-size: 11px; padding: 3px 10px; border-radius: 20px; background: #12221e; color: #5fd3a3; font-family: 'Inter', sans-serif; font-weight: 700; letter-spacing: .3px; }
 .pill.mock { background: #3a2a12; color: #f0b47a; }
 .pill.live { background: #0d3a2a; color: #5fd3a3; }
 

@@ -25,48 +25,48 @@
   // knowledge — the decision for each is served live by SP. Swapping personas
   // per demo is a config concern, not a code concern; kept here for the demo
   // switcher convenience only.
-  // Medibank re-skin: the "account" is now a MEMBER PROFILE at Medibank — the
-  // health covers held (hospital / extras / combined) plus the life-stage signals
-  // the engine reads to decide the next best interaction. Each item is a cover
-  // line.
+  // Suncorp re-skin: the "account" is now a CUSTOMER PROFILE at Suncorp — the
+  // general-insurance policies held (home / contents / car / CTP) plus the
+  // life-stage signals the engine reads to decide the next best interaction.
+  // Each item is a policy line.
   const PERSONAS = [
-    { id: "003Kh00001uijWCIAY", name: "Hannah Nguyen", tag: "Combined member · extras under-used",
+    { id: "003Kh00001uijWCIAY", name: "Hannah Nguyen", tag: "Home + car · contents under-insured",
       account: {
-        since: "Medibank member since 2019", tier: "Combined Hospital & Extras",
+        since: "Suncorp customer since 2019", tier: "Home & Motor",
         policies: [
-          { kind: "Hospital", label: "Silver Hospital · NSW", ref: "Medibank",
-            premium: "$198 / mth", status: "Active" },
-          { kind: "Extras", label: "Top Extras", ref: "Dental · optical · physio",
-            premium: "$620 unclaimed", status: "Limits reset soon" }
+          { kind: "Home", label: "Building & Contents · NSW", ref: "Suncorp",
+            premium: "$1,840 / yr", status: "Active" },
+          { kind: "Car", label: "Comprehensive · NSW", ref: "Suncorp",
+            premium: "Contents sum insured low", status: "Review suggested" }
         ]
       } },
     { id: "003Kh00001uijWDIAY", name: "Daniel Okafor", tag: "Renewal approaching",
       account: {
-        since: "Medibank member since 2020", tier: "Combined Hospital & Extras",
+        since: "Suncorp customer since 2020", tier: "Home & Motor",
         policies: [
-          { kind: "Hospital", label: "Bronze Hospital · VIC", ref: "Medibank",
+          { kind: "Home", label: "Home Building · VIC", ref: "Suncorp",
             renewsInDays: 3, premium: "Renews in 3 days", status: "Due to renew" },
-          { kind: "Extras", label: "Mid Extras", ref: "Dental · optical",
-            premium: "Renews in 3 days", status: "Due to renew" }
+          { kind: "Car", label: "Comprehensive · VIC", ref: "Suncorp",
+            renewsInDays: 3, premium: "Renews in 3 days", status: "Due to renew" }
         ]
       } },
     { id: "003Kh00001uijWEIAY", name: "Priya Sharma", tag: "Lapsed cover",
       account: {
-        since: "Medibank member since 2016", tier: "Former member",
+        since: "Suncorp customer since 2016", tier: "Former customer",
         policies: [
-          { kind: "Combined", label: "Hospital & Extras · QLD", ref: "Medibank",
+          { kind: "Home", label: "Home & Contents · QLD", ref: "Suncorp",
             renewsInDays: 2, premium: "Lapsed 4 weeks ago", status: "Lapsed" }
         ]
       } },
-    { id: "003Kh00001uijWFIAY", name: "Tom Bennett", tag: "Hospital-only · extras-ready",
+    { id: "003Kh00001uijWFIAY", name: "Tom Bennett", tag: "Home-only · bundle-ready",
       account: {
-        since: "Medibank member since 2014", tier: "Hospital-only member",
+        since: "Suncorp customer since 2014", tier: "Home-only customer",
         policies: [
-          { kind: "Hospital", label: "Silver Plus Hospital", ref: "Medibank",
-            premium: "$176 / mth", status: "Active" },
-          { kind: "Extras", label: "Extras cover", ref: "Not held",
-            premium: "Not with Medibank", status: "Extras opportunity" },
-          { kind: "Bundle", label: "Package discount", ref: "Not applied",
+          { kind: "Home", label: "Home Building & Contents", ref: "Suncorp",
+            premium: "$1,560 / yr", status: "Active" },
+          { kind: "Car", label: "Car cover", ref: "Not held",
+            premium: "Not with Suncorp", status: "Cross-sell opportunity" },
+          { kind: "Bundle", label: "Multi-policy discount", ref: "Not applied",
             premium: "Combine to save", status: "Available" }
         ]
       } }
@@ -88,71 +88,71 @@
   // hero every visitor sees, no account chrome. Picking a customer swaps this
   // for the DH-arbitrated, SP-served personal offer (the inbound-parity beat).
   const GENERIC_OFFER = {
-    eyebrow: "Medibank",
-    heading: "Cover for a healthier you.",
-    body: "Hospital, extras and combined health cover built around your life — <strong>sign in</strong> and your next best move re-shapes to you.",
+    eyebrow: "Suncorp",
+    heading: "With you through every side of Australia.",
+    body: "Home, contents and car insurance built around your life — <strong>sign in</strong> and your next best move re-shapes to you.",
     cta: "Get a quote",
     url: "#",
-    img: "https://images.unsplash.com/photo-1518611012118-696072aa579a?w=1000&q=80&auto=format&fit=crop"
+    img: "https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=1000&q=80&auto=format&fit=crop"
   };
 
   // Per-persona local offer shown in the logged-in hero when the live SP serve
   // has not resolved yet (fresh identity, item graph mid-refresh, propagation
   // lag). Mirrors each persona's lead decision so the logged-in page is always a
-  // complete Medibank mock-up. A live SP decision ALWAYS overrides this — the
+  // complete Suncorp mock-up. A live SP decision ALWAYS overrides this — the
   // fallback only fills the gap so the hero never shows an empty "no-decision"
-  // state in front of a member. Keyed by Contact Id.
+  // state in front of a customer. Keyed by Contact Id.
   const FALLBACK_OFFER = {
-    // Per-persona Medibank recommendation, rendered locally (HERO_SOURCE
+    // Per-persona Suncorp recommendation, rendered locally (HERO_SOURCE
     // "fallback") so the hero is guaranteed-clean and matches the email creative.
     // (SP's live serve reads from a stale DC item-graph snapshot; until that is
     // refreshed we render the correct creative here rather than serve a ghost.)
-    "003Kh00001uijWCIAY": { // Sarah — Engagement / Extras Health Check (MB_ENGAGE1)
+    "003Kh00001uijWCIAY": { // Hannah — Engagement / Home Cover Check-Up (SUN_ENGAGE1)
       eyebrow: "Recommended for you",
-      heading: "Have you used your extras before they reset?",
-      body: "Your dental, optical and physio limits reset at the end of the year and unused benefits don't carry over. Our free <strong>Extras Health Check</strong> shows what you have left to claim so you get the full value of your cover. Book a time that suits you.",
-      cta: "Check my extras", url: "#",
-      img: "https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=1000&q=80&auto=format&fit=crop" },
-    "003Kh00001uijWDIAY": { // Daniel — Retention / Stay Covered (MB_RETURN1)
-      eyebrow: "A note from your Medibank team",
-      heading: "Let's keep you covered, Daniel",
-      body: "Your cover is coming up for renewal and we don't want you left without it. <strong>Renew in a couple of minutes</strong> so there's no gap in your cover and no waiting periods to serve again.",
+      heading: "Is your home and contents still covered for what it's worth?",
+      body: "Building costs have climbed, and a sum insured set a few years ago can leave you short at claim time. Our free <strong>Home Cover Check-Up</strong> reviews your home and contents cover so you're protected for what it would really cost to rebuild and replace. Book a time that suits you.",
+      cta: "Check my cover", url: "#",
+      img: "https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=1000&q=80&auto=format&fit=crop" },
+    "003Kh00001uijWDIAY": { // Daniel — Retention / Stay Protected (SUN_RETURN1)
+      eyebrow: "A note from your Suncorp team",
+      heading: "Let's keep you protected, Daniel",
+      body: "Your policy is coming up for renewal and we don't want you left without cover. <strong>Renew in a couple of minutes</strong> so there's no gap in your protection if something happens.",
       cta: "Renew my cover", url: "#",
-      img: "https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?w=1000&q=80&auto=format&fit=crop" },
-    "003Kh00001uijWEIAY": { // Priya — Retention / win-back (MB_RETURN1 / composition persona)
-      eyebrow: "A note from your Medibank team",
+      img: "https://images.unsplash.com/photo-1560520031-3a4dc4e9de0c?w=1000&q=80&auto=format&fit=crop" },
+    "003Kh00001uijWEIAY": { // Priya — Retention / win-back (SUN_RETURN1 / composition persona)
+      eyebrow: "A note from your Suncorp team",
       heading: "Let's get you covered again, Priya",
-      body: "It's been a few weeks since your cover lapsed. No pressure — just a <strong>fresh start</strong> whenever you're ready, so your health is looked after again.",
+      body: "It's been a few weeks since your cover lapsed. No pressure — just a <strong>fresh start</strong> whenever you're ready, so your home and car are looked after again.",
       cta: "Reactivate my cover", url: "#",
-      img: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=1000&q=80&auto=format&fit=crop" },
-    "003Kh00001uijWFIAY": { // Tom — Upgrade / Add Extras (MB_UPGRADE1)
+      img: "https://images.unsplash.com/photo-1558036117-15d82a90b9b1?w=1000&q=80&auto=format&fit=crop" },
+    "003Kh00001uijWFIAY": { // Tom — Upgrade / Bundle Car + Home (SUN_UPGRADE2)
       eyebrow: "Recommended for you",
-      heading: "Add extras and get more from your cover",
-      body: "You're already with us for hospital. Add extras and you're covered for the everyday things that add up — <strong>dental, optical, physio and more</strong> — all on the one membership.",
-      cta: "See my extras options", url: "#",
-      img: "https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?w=1000&q=80&auto=format&fit=crop" }
+      heading: "Bundle your car with your home and save",
+      body: "You're already with us for home. Add your car and combine the two for a <strong>multi-policy discount</strong> — more of your world protected, on one simpler renewal.",
+      cta: "See my bundle", url: "#",
+      img: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=1000&q=80&auto=format&fit=crop" }
   };
 
-  // Accept a live SP decision only when it serves a known Medibank offer, so a
-  // stale non-Medibank serve is ignored and the local offer shows instead.
-  // Offer Ids are regenerated on every rebuild, so acceptance keys on the MEDIBANK
+  // Accept a live SP decision only when it serves a known Suncorp offer, so a
+  // stale non-Suncorp serve is ignored and the local offer shows instead.
+  // Offer Ids are regenerated on every rebuild, so acceptance keys on the SUNCORP
   // BRAND TOKEN carried in the hydrated treatment (the card chip / footer / SMS
-  // all say "Medibank" / medibank.com.au). Core MB_ offers only — A2A offers
-  // (OFFMEDIBANK*) never serve here. Add 15-char Id prefixes to MEDIBANK_OFFER_IDS
+  // all say "Suncorp" / suncorp.com.au). Core SUN_ offers only — A2A offers
+  // (OFFSUNCORP*) never serve here. Add 15-char Id prefixes to SUNCORP_OFFER_IDS
   // after a build if you want an exact-Id guard as well.
-  const MEDIBANK_OFFER_IDS = new Set([]);
-  function isMedibankItem(item) {
+  const SUNCORP_OFFER_IDS = new Set([]);
+  function isSuncorpItem(item) {
     const oid = pick(item, "OfferId__c", "offerId");
-    if (oid && MEDIBANK_OFFER_IDS.has(String(oid).substring(0, 15))) return true;
+    if (oid && SUNCORP_OFFER_IDS.has(String(oid).substring(0, 15))) return true;
     // Brand-token discriminator (works regardless of offer-Id churn).
     const txt = (pick(item, "TreatmentOutput__c", "treatmentOutput") || "") +
                 (pick(item, "OfferBody__c", "offerBody") || "");
-    return /medibank/i.test(txt);
+    return /suncorp/i.test(txt);
   }
 
   const CAT_LABEL = {
-    CAT_HOSPITAL: "Hospital Cover", CAT_EXTRAS: "Extras Cover",
-    CAT_COMBINED: "Combined Cover", CAT_AMBULANCE: "Ambulance Cover", CAT_OVERSEAS: "Overseas Cover"
+    CAT_HOME: "Home Insurance", CAT_CONTENTS: "Contents Insurance",
+    CAT_CAR: "Car Insurance", CAT_CTP: "CTP Insurance", CAT_TRAVEL: "Travel Insurance"
   };
 
   let state = { individualId: "", lastCategory: null, lastDecision: null };
@@ -222,7 +222,7 @@
       JSON.stringify(state.lastDecision, null, 2);
   }
 
-  // Populate the logged-in "Medibank" member summary from the selected persona.
+  // Populate the logged-in "Suncorp" customer summary from the selected persona.
   // Demo dressing only — this is NOT SP/decision data; it just makes the offer
   // land inside a believable account context. Hidden when anonymous.
   function renderAccount(persona) {
@@ -234,7 +234,7 @@
     document.getElementById("acct-avatar").textContent = (persona.name || "s").trim()[0];
     document.getElementById("acct-name").textContent = (persona.name || "").split(" ")[0];
     document.getElementById("acct-since").textContent = a.since || "Welcome back";
-    document.getElementById("acct-tier").textContent = a.tier || "Medibank member";
+    document.getElementById("acct-tier").textContent = a.tier || "Suncorp customer";
 
     // Render one card per care item. An item due soon ("due" / "overdue" /
     // "review" or within 7 days) is flagged so the care-continuity beat lands
@@ -314,9 +314,9 @@
     return true;
   }
 
-  // Render the generic, un-personalised Medibank hero for an anonymous visitor.
+  // Render the generic, un-personalised Suncorp hero for an anonymous visitor.
   // Paints the native hero fields directly (synthetic content, not an SP call),
-  // hides the Medibank account chrome, and restores the native hero if a
+  // hides the Suncorp account chrome, and restores the native hero if a
   // drop-in treatment card was previously injected (persona -> anonymous).
   function renderGeneric() {
     renderAccount(null); // no account chrome when anonymous
@@ -408,7 +408,7 @@
     if (!id) return renderGeneric(); // anonymous visitor -> un-personalised brand hero
 
     // Mock-up mode: skip SP entirely and render the local home offer. The
-    // logged-in page is a complete Medibank visual with no Data Cloud dependency.
+    // logged-in page is a complete Suncorp visual with no Data Cloud dependency.
     if ((cfg.HERO_SOURCE || "live") === "fallback") {
       if (renderFallback(id, "home offer · local mock-up")) return;
     }
@@ -436,10 +436,10 @@
       .then((r) => r.json())
       .then((resp) => {
         const item = firstItem(resp);
-        // In "auto" only accept a live decision that serves a known Medibank offer;
+        // In "auto" only accept a live decision that serves a known Suncorp offer;
         // otherwise fall through to the local home offer (ignores stale serves).
         const accept = item && (item.TreatmentOutput__c || item.OfferHeading__c || item.personalizationContentId)
-          && ((cfg.HERO_SOURCE || "live") !== "auto" || isMedibankItem(item));
+          && ((cfg.HERO_SOURCE || "live") !== "auto" || isSuncorpItem(item));
         if (accept) {
           const prevOffer = state.lastDecision && state.lastDecision.offerId;
           const newOffer  = pick(item, "OfferId__c", "OfferTreatmentCode__c", "Id__c");
@@ -487,7 +487,7 @@
     const sec = document.getElementById("foryou");
     if (!sec) return;
     sec.style.transition = "box-shadow .25s ease";
-    sec.style.boxShadow = "0 0 0 3px rgba(214,0,28,.9)";
+    sec.style.boxShadow = "0 0 0 3px rgba(0,74,66,.9)";
     setTimeout(() => { sec.style.boxShadow = "none"; }, 900);
   }
 
@@ -560,7 +560,7 @@
       state.individualId = sel.value;
       state.lastCategory = null;
       highlight(null);
-      renderAccount(PERSONAS.find(p => p.id === sel.value)); // log in / out of Medibank
+      renderAccount(PERSONAS.find(p => p.id === sel.value)); // log in / out of Suncorp
       setIdentity(state.individualId);
       requestDecision(); // fresh arrival = serve the DH decision for this person
       startPolling();    // watch for live re-decisions on this identity
@@ -618,7 +618,7 @@
   // Which identity the storefront opens on (the parity beat starts logged in).
   //   ?who=<first name | contact id>  -> that persona
   //   ?who=anon | anonymous           -> anonymous / generic (no login)
-  //   (no param)                      -> Sarah (homeowner) by default
+  //   (no param)                      -> Hannah (home + car) by default
   // On refresh the same identity is kept, so "fire decisions -> refresh" shows
   // the newly-served offer against a stable logged-in customer.
   function resolveOpeningPersona() {
@@ -646,8 +646,8 @@
       renderItem(MOCK_ITEM, "MOCK · local sample");
     } else {
       pill.textContent = "LIVE · Salesforce Personalization"; pill.className = "pill live";
-      // Open LOGGED IN (default: Sarah) so the parity beat starts in a real
-      // Medibank member account and the served offer updates on refresh as
+      // Open LOGGED IN (default: Hannah) so the parity beat starts in a real
+      // Suncorp customer account and the served offer updates on refresh as
       // decisions fire. ?who=anon opens anonymous/generic instead.
       const opening = resolveOpeningPersona();
       if (opening) {

@@ -1,6 +1,6 @@
 /* ─────────────────────────────────────────────────────────────────────────
- * Medibank app — demo config (Medibank private health insurer: hospital,
- * extras, combined; ambulance, overseas, Live Better).
+ * Suncorp app — demo config (Suncorp general insurer: home, contents, car,
+ * CTP, plus roadside assist and multi-policy bundles).
  *
  * This is the ONE file you edit to flip the app from local mock to live SP.
  * MOCK_MODE false loads the Data 360 Web SDK beacon and lets Salesforce
@@ -10,7 +10,7 @@ window.DEMO_CONFIG = {
   MOCK_MODE: false,
 
   // Shown in the header / footer. Pure cosmetics.
-  BRAND: "Medibank",
+  BRAND: "Suncorp",
 
   // Beacon from the 4b Website/App connector (harness shared across demos).
   BEACON_URL: "https://cdn.c360a.salesforce.com/beacon/c360a/5e39738b-7dd0-46b3-b82d-10a7983da2fd/scripts/c360a.min.js",
@@ -34,45 +34,45 @@ window.DEMO_CONFIG = {
 
   // Where the logged-in "For you" hero sources its offer:
   //   "fallback" -> ALWAYS render the local per-persona home offer (app.js
-  //                 FALLBACK_OFFER). Guaranteed-clean Medibank mock-up, no
+  //                 FALLBACK_OFFER). Guaranteed-clean Suncorp mock-up, no
   //                 Data Cloud dependency.
   //   "auto"     -> prefer the live SP decision, but only accept it when the
-  //                 served offer is a known Medibank offer (brand token); else
+  //                 served offer is a known Suncorp offer (brand token); else
   //                 show the local one. Safe (never serves a ghost) AND live.
-  //   "live"     -> trust whatever SP serves, no Medibank guard.
+  //   "live"     -> trust whatever SP serves, no Suncorp guard.
   HERO_SOURCE: "auto",
 
   // How the "For you" slot renders the SP decision: "treatment" drops the
   // hydrated card in whole; "fields" paints the native hero from fields.
   RENDER_MODE: "fields",
 
-  // Catalogue = Medibank's consumer health cover lines. One fund, many covers —
-  // hospital, extras and combined plus ambulance and overseas. Browsing a cover
-  // sends a Product Browse engagement event (SP re-shapes in session).
+  // Catalogue = Suncorp's general-insurance lines. One insurer, many policies —
+  // home, contents, car and CTP plus travel. Browsing a line sends a Product
+  // Browse engagement event (SP re-shapes in session).
   CATALOG: {
-    hospital: {
-      id: "PROD_HOSPITAL", category: "CAT_HOSPITAL", label: "Hospital Cover",
-      sub: "Private room + choice of doctor", price: "get a quote",
-      img: "https://images.unsplash.com/photo-1551190822-a9333d879b1f?w=600&q=80&auto=format&fit=crop"
+    home: {
+      id: "PROD_HOME", category: "CAT_HOME", label: "Home Insurance",
+      sub: "Building + contents cover", price: "get a quote",
+      img: "https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=600&q=80&auto=format&fit=crop"
     },
-    extras: {
-      id: "PROD_EXTRAS", category: "CAT_EXTRAS", label: "Extras Cover",
-      sub: "Dental + optical + physio", price: "get a quote",
-      img: "https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=600&q=80&auto=format&fit=crop"
+    contents: {
+      id: "PROD_CONTENTS", category: "CAT_CONTENTS", label: "Contents Insurance",
+      sub: "Your belongings, protected", price: "get a quote",
+      img: "https://images.unsplash.com/photo-1484154218962-a197022b5858?w=600&q=80&auto=format&fit=crop"
     },
-    combined: {
-      id: "PROD_COMBINED", category: "CAT_COMBINED", label: "Combined Cover",
-      sub: "Hospital + extras in one", price: "get a quote",
-      img: "https://images.unsplash.com/photo-1476703993599-0035a21b17a9?w=600&q=80&auto=format&fit=crop"
+    car: {
+      id: "PROD_CAR", category: "CAT_CAR", label: "Car Insurance",
+      sub: "Comprehensive + roadside", price: "get a quote",
+      img: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=600&q=80&auto=format&fit=crop"
     },
-    ambulance: {
-      id: "PROD_AMBULANCE", category: "CAT_AMBULANCE", label: "Ambulance Cover",
-      sub: "Emergency transport cover", price: "get a quote",
-      img: "https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?w=600&q=80&auto=format&fit=crop"
+    ctp: {
+      id: "PROD_CTP", category: "CAT_CTP", label: "CTP Insurance",
+      sub: "Compulsory third party (QLD)", price: "get a quote",
+      img: "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?w=600&q=80&auto=format&fit=crop"
     },
-    overseas: {
-      id: "PROD_OVERSEAS", category: "CAT_OVERSEAS", label: "Overseas Cover",
-      sub: "Visitors + students (OVHC / OSHC)", price: "get a quote",
+    travel: {
+      id: "PROD_TRAVEL", category: "CAT_TRAVEL", label: "Travel Insurance",
+      sub: "Domestic + international trips", price: "get a quote",
       img: "https://images.unsplash.com/photo-1488085061387-422e29b40080?w=600&q=80&auto=format&fit=crop"
     }
   }
