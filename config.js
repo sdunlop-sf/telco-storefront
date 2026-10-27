@@ -1,6 +1,6 @@
 /* ─────────────────────────────────────────────────────────────────────────
- * Suncorp app — demo config (Suncorp general insurer: home, contents, car,
- * CTP, plus roadside assist and multi-policy bundles).
+ * My NRMA app — demo config (NRMA loyalty: fuel savings, EV charging, NRMA
+ * Parks, dining rewards and travel benefits, served into the member app).
  *
  * This is the ONE file you edit to flip the app from local mock to live SP.
  * MOCK_MODE false loads the Data 360 Web SDK beacon and lets Salesforce
@@ -10,7 +10,7 @@ window.DEMO_CONFIG = {
   MOCK_MODE: false,
 
   // Shown in the header / footer. Pure cosmetics.
-  BRAND: "Suncorp",
+  BRAND: "NRMA",
 
   // Beacon from the 4b Website/App connector (harness shared across demos).
   BEACON_URL: "https://cdn.c360a.salesforce.com/beacon/c360a/5e39738b-7dd0-46b3-b82d-10a7983da2fd/scripts/c360a.min.js",
@@ -34,45 +34,45 @@ window.DEMO_CONFIG = {
 
   // Where the logged-in "For you" hero sources its offer:
   //   "fallback" -> ALWAYS render the local per-persona home offer (app.js
-  //                 FALLBACK_OFFER). Guaranteed-clean Suncorp mock-up, no
+  //                 FALLBACK_OFFER). Guaranteed-clean My NRMA mock-up, no
   //                 Data Cloud dependency.
   //   "auto"     -> prefer the live SP decision, but only accept it when the
-  //                 served offer is a known Suncorp offer (brand token); else
+  //                 served offer is a known NRMA offer (brand token); else
   //                 show the local one. Safe (never serves a ghost) AND live.
-  //   "live"     -> trust whatever SP serves, no Suncorp guard.
+  //   "live"     -> trust whatever SP serves, no NRMA guard.
   HERO_SOURCE: "auto",
 
   // How the "For you" slot renders the SP decision: "treatment" drops the
   // hydrated card in whole; "fields" paints the native hero from fields.
   RENDER_MODE: "fields",
 
-  // Catalogue = Suncorp's general-insurance lines. One insurer, many policies —
-  // home, contents, car and CTP plus travel. Browsing a line sends a Product
-  // Browse engagement event (SP re-shapes in session).
+  // Catalogue = NRMA member reward lines. One membership, many benefits —
+  // fuel, EV charging, NRMA Parks, dining and travel. Browsing a line sends a
+  // Product Browse engagement event (SP re-shapes in session).
   CATALOG: {
-    home: {
-      id: "PROD_HOME", category: "CAT_HOME", label: "Home Insurance",
-      sub: "Building + contents cover", price: "get a quote",
-      img: "https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=600&q=80&auto=format&fit=crop"
+    fuel: {
+      id: "PROD_FUEL", category: "CAT_FUEL", label: "Fuel Price Finder + Ampol",
+      sub: "Live fuel prices + Ampol", price: "Up to 13c/L off",
+      img: "https://images.unsplash.com/photo-1545459720-aac8509eb02c?w=600&q=80&auto=format&fit=crop"
     },
-    contents: {
-      id: "PROD_CONTENTS", category: "CAT_CONTENTS", label: "Contents Insurance",
-      sub: "Your belongings, protected", price: "get a quote",
-      img: "https://images.unsplash.com/photo-1484154218962-a197022b5858?w=600&q=80&auto=format&fit=crop"
+    ev: {
+      id: "PROD_EV", category: "CAT_EV", label: "EV Charging — Chargefox",
+      sub: "Fast-charging along your route", price: "10% off charging",
+      img: "https://images.unsplash.com/photo-1593941707882-a5bba14938c7?w=600&q=80&auto=format&fit=crop"
     },
-    car: {
-      id: "PROD_CAR", category: "CAT_CAR", label: "Car Insurance",
-      sub: "Comprehensive + roadside", price: "get a quote",
-      img: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=600&q=80&auto=format&fit=crop"
+    parks: {
+      id: "PROD_PARKS", category: "CAT_PARKS", label: "NRMA Parks",
+      sub: "Parks and Resorts, member rates", price: "Stay 4, pay 3",
+      img: "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=600&q=80&auto=format&fit=crop"
     },
-    ctp: {
-      id: "PROD_CTP", category: "CAT_CTP", label: "CTP Insurance",
-      sub: "Compulsory third party (QLD)", price: "get a quote",
-      img: "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?w=600&q=80&auto=format&fit=crop"
+    dining: {
+      id: "PROD_DINING", category: "CAT_DINING", label: "Dining Rewards",
+      sub: "Cafés and restaurants", price: "Up to 25% off",
+      img: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80&auto=format&fit=crop"
     },
     travel: {
-      id: "PROD_TRAVEL", category: "CAT_TRAVEL", label: "Travel Insurance",
-      sub: "Domestic + international trips", price: "get a quote",
+      id: "PROD_TRAVEL", category: "CAT_TRAVEL", label: "Travel — SIXT & Insurance",
+      sub: "Car hire + travel insurance", price: "20% off SIXT",
       img: "https://images.unsplash.com/photo-1488085061387-422e29b40080?w=600&q=80&auto=format&fit=crop"
     }
   }

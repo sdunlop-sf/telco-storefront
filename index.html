@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Suncorp — With you through every side of Australia</title>
+  <title>My NRMA — rewards that move with you</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
-  <link rel="icon" type="image/png" href="assets/suncorp-icon.png" />
-  <link rel="apple-touch-icon" href="assets/suncorp-icon.png" />
+  <link rel="icon" type="image/png" href="assets/nrma-icon.png" />
+  <link rel="apple-touch-icon" href="assets/nrma-icon.png" />
 
   <!-- Data 360 Web & Mobile App connector beacon. Embedded as the first script
        per the connector Integration Guide so data collection initialises before
@@ -22,17 +22,17 @@
 <body class="ff">
   <div class="stage">
 
-    <!-- The Suncorp customer app, inside a phone device frame. -->
+    <!-- The My NRMA customer app, inside a phone device frame. -->
     <div class="phone">
       <div class="phone-shell">
         <div class="phone-notch"></div>
         <div class="phone-screen" id="phone-screen">
 
-          <div class="promo-strip">HOME · CONTENTS · CAR · CTP · With you through every side of Australia</div>
+          <div class="promo-strip">FUEL · EV CHARGING · PARKS · DINING · TRAVEL · Rewards that move with you</div>
 
           <header class="site">
-            <a class="brand" href="#" aria-label="Suncorp">
-              <img src="assets/suncorp-logo.png" alt="Suncorp" class="brand-logo" />
+            <a class="brand" href="#" aria-label="NRMA">
+              <img src="assets/nrma-logo.png" alt="NRMA" class="brand-logo" />
             </a>
             <button class="hamb" aria-label="Menu"><span></span><span></span><span></span></button>
           </header>
@@ -40,10 +40,10 @@
           <!-- Category chips. Browsing one fires a Product Browse event -> SP
                re-shapes the hero in session. -->
           <nav class="chips">
-            <a href="#" data-cat="CAT_HOME" class="chip">Home</a>
-            <a href="#" data-cat="CAT_CONTENTS" class="chip">Contents</a>
-            <a href="#" data-cat="CAT_CAR" class="chip">Car</a>
-            <a href="#" data-cat="CAT_CTP" class="chip">CTP</a>
+            <a href="#" data-cat="CAT_FUEL" class="chip">Fuel</a>
+            <a href="#" data-cat="CAT_EV" class="chip">EV Charging</a>
+            <a href="#" data-cat="CAT_PARKS" class="chip">Parks</a>
+            <a href="#" data-cat="CAT_DINING" class="chip">Dining</a>
             <a href="#" data-cat="CAT_TRAVEL" class="chip">Travel</a>
           </nav>
 
@@ -56,7 +56,7 @@
                 <div class="greeting-copy">
                   <div class="hello">Hi <b id="acct-name">there</b></div>
                   <div class="acct-sub" id="acct-since">Welcome back</div>
-                  <span class="tier-chip" id="acct-tier">Suncorp customer</span>
+                  <span class="tier-chip" id="acct-tier">NRMA member</span>
                 </div>
               </div>
               <!-- Policy / goal cards injected by renderAccount() -->
@@ -78,21 +78,21 @@
             </section>
 
             <div class="section-head">
-              <h3 class="section">Explore Suncorp</h3>
-              <span class="hint">Tap a cover — your offer re-shapes in real time</span>
+              <h3 class="section">Explore My NRMA Rewards</h3>
+              <span class="hint">Tap a reward — your offer re-shapes in real time</span>
             </div>
             <div class="grid" id="catalog"></div>
 
             <section class="valueprops">
-              <div class="vp"><div class="vp-ico">🏠</div><div><b>Home and contents, covered</b><span>Protect your building and belongings against the unexpected</span></div></div>
-              <div class="vp"><div class="vp-ico">🚗</div><div><b>Car cover that fits</b><span>Comprehensive protection with roadside assist when you need it</span></div></div>
-              <div class="vp"><div class="vp-ico">💛</div><div><b>Multi-policy savings</b><span>Bundle car and home for a discount and one simpler renewal</span></div></div>
+              <div class="vp"><div class="vp-ico">⛽</div><div><b>Fuel savings with Ampol</b><span>Live fuel prices in the app, stack up to 13c/L off at Ampol</span></div></div>
+              <div class="vp"><div class="vp-ico">🏕️</div><div><b>NRMA Parks — stay 4, pay 3</b><span>Member rates across NRMA Parks and Resorts on your next trip</span></div></div>
+              <div class="vp"><div class="vp-ico">🔌</div><div><b>EV charging with Chargefox</b><span>10% off fast-charging along your route as you drive electric</span></div></div>
             </section>
           </main>
 
           <footer class="site-foot">
-            <div data-brand>Suncorp</div>
-            <span>With you through every side of Australia</span>
+            <div data-brand>NRMA</div>
+            <span>Rewards that move with you</span>
             <span class="fine">Demo app · personalization by Salesforce</span>
           </footer>
 

@@ -25,49 +25,28 @@
   // knowledge — the decision for each is served live by SP. Swapping personas
   // per demo is a config concern, not a code concern; kept here for the demo
   // switcher convenience only.
-  // Suncorp re-skin: the "account" is now a CUSTOMER PROFILE at Suncorp — the
-  // general-insurance policies held (home / contents / car / CTP) plus the
-  // life-stage signals the engine reads to decide the next best interaction.
-  // Each item is a policy line.
+  // NRMA re-skin: the "account" is now a MEMBER PROFILE at NRMA — the
+  // membership and vehicle/service context the engine reads to decide the next
+  // best reward. Each item is a membership / service line.
   const PERSONAS = [
-    { id: "003Kh00001uijWCIAY", name: "Hannah Nguyen", tag: "Home + car · contents under-insured",
+    { id: "003g700000nHecjAAC", name: "Sarah Mitchell", tag: "Platinum · road-tripper · renewal in 42 days",
       account: {
-        since: "Suncorp customer since 2019", tier: "Home & Motor",
+        since: "NRMA member since 2015", tier: "Platinum",
         policies: [
-          { kind: "Home", label: "Building & Contents · NSW", ref: "Suncorp",
-            premium: "$1,840 / yr", status: "Active" },
-          { kind: "Car", label: "Comprehensive · NSW", ref: "Suncorp",
-            premium: "Contents sum insured low", status: "Review suggested" }
+          { kind: "Membership", label: "Roadside — Premium Care · NSW", ref: "NRMA",
+            renewsInDays: 42, premium: "Renews in 42 days", status: "Active" },
+          { kind: "Roadside", label: "Flat battery — M4, recovered", ref: "NRMA Patrol",
+            premium: "Job closed today", status: "Review suggested" }
         ]
       } },
-    { id: "003Kh00001uijWDIAY", name: "Daniel Okafor", tag: "Renewal approaching",
+    { id: "003g700000nHeckAAC", name: "Marcus Hale", tag: "Gold · EV driver",
       account: {
-        since: "Suncorp customer since 2020", tier: "Home & Motor",
+        since: "NRMA member since 2019", tier: "Gold",
         policies: [
-          { kind: "Home", label: "Home Building · VIC", ref: "Suncorp",
-            renewsInDays: 3, premium: "Renews in 3 days", status: "Due to renew" },
-          { kind: "Car", label: "Comprehensive · VIC", ref: "Suncorp",
-            renewsInDays: 3, premium: "Renews in 3 days", status: "Due to renew" }
-        ]
-      } },
-    { id: "003Kh00001uijWEIAY", name: "Priya Sharma", tag: "Lapsed cover",
-      account: {
-        since: "Suncorp customer since 2016", tier: "Former customer",
-        policies: [
-          { kind: "Home", label: "Home & Contents · QLD", ref: "Suncorp",
-            renewsInDays: 2, premium: "Lapsed 4 weeks ago", status: "Lapsed" }
-        ]
-      } },
-    { id: "003Kh00001uijWFIAY", name: "Tom Bennett", tag: "Home-only · bundle-ready",
-      account: {
-        since: "Suncorp customer since 2014", tier: "Home-only customer",
-        policies: [
-          { kind: "Home", label: "Home Building & Contents", ref: "Suncorp",
-            premium: "$1,560 / yr", status: "Active" },
-          { kind: "Car", label: "Car cover", ref: "Not held",
-            premium: "Not with Suncorp", status: "Cross-sell opportunity" },
-          { kind: "Bundle", label: "Multi-policy discount", ref: "Not applied",
-            premium: "Combine to save", status: "Available" }
+          { kind: "Membership", label: "Roadside — Complete Care · NSW", ref: "NRMA",
+            premium: "Active", status: "Active" },
+          { kind: "Vehicle", label: "Electric vehicle · road trip", ref: "EV",
+            premium: "Relies on EV charging", status: "Review suggested" }
         ]
       } }
   ];
@@ -88,71 +67,58 @@
   // hero every visitor sees, no account chrome. Picking a customer swaps this
   // for the DH-arbitrated, SP-served personal offer (the inbound-parity beat).
   const GENERIC_OFFER = {
-    eyebrow: "Suncorp",
-    heading: "With you through every side of Australia.",
-    body: "Home, contents and car insurance built around your life — <strong>sign in</strong> and your next best move re-shapes to you.",
-    cta: "Get a quote",
+    eyebrow: "My NRMA",
+    heading: "Rewards that move with you.",
+    body: "Fuel savings, EV charging, parks, dining and travel — all in one membership. <strong>Sign in</strong> and your next best reward re-shapes to you.",
+    cta: "Explore rewards",
     url: "#",
-    img: "https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=1000&q=80&auto=format&fit=crop"
+    img: "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?w=1000&q=80&auto=format&fit=crop"
   };
 
   // Per-persona local offer shown in the logged-in hero when the live SP serve
   // has not resolved yet (fresh identity, item graph mid-refresh, propagation
   // lag). Mirrors each persona's lead decision so the logged-in page is always a
-  // complete Suncorp mock-up. A live SP decision ALWAYS overrides this — the
+  // complete My NRMA mock-up. A live SP decision ALWAYS overrides this — the
   // fallback only fills the gap so the hero never shows an empty "no-decision"
-  // state in front of a customer. Keyed by Contact Id.
+  // state in front of a member. Keyed by Contact Id.
   const FALLBACK_OFFER = {
-    // Per-persona Suncorp recommendation, rendered locally (HERO_SOURCE
+    // Per-persona NRMA recommendation, rendered locally (HERO_SOURCE
     // "fallback") so the hero is guaranteed-clean and matches the email creative.
     // (SP's live serve reads from a stale DC item-graph snapshot; until that is
     // refreshed we render the correct creative here rather than serve a ghost.)
-    "003Kh00001uijWCIAY": { // Hannah — Engagement / Home Cover Check-Up (SUN_ENGAGE1)
-      eyebrow: "Recommended for you",
-      heading: "Is your home and contents still covered for what it's worth?",
-      body: "Building costs have climbed, and a sum insured set a few years ago can leave you short at claim time. Our free <strong>Home Cover Check-Up</strong> reviews your home and contents cover so you're protected for what it would really cost to rebuild and replace. Book a time that suits you.",
-      cta: "Check my cover", url: "#",
-      img: "https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=1000&q=80&auto=format&fit=crop" },
-    "003Kh00001uijWDIAY": { // Daniel — Retention / Stay Protected (SUN_RETURN1)
-      eyebrow: "A note from your Suncorp team",
-      heading: "Let's keep you protected, Daniel",
-      body: "Your policy is coming up for renewal and we don't want you left without cover. <strong>Renew in a couple of minutes</strong> so there's no gap in your protection if something happens.",
-      cta: "Renew my cover", url: "#",
-      img: "https://images.unsplash.com/photo-1560520031-3a4dc4e9de0c?w=1000&q=80&auto=format&fit=crop" },
-    "003Kh00001uijWEIAY": { // Priya — Retention / win-back (SUN_RETURN1 / composition persona)
-      eyebrow: "A note from your Suncorp team",
-      heading: "Let's get you covered again, Priya",
-      body: "It's been a few weeks since your cover lapsed. No pressure — just a <strong>fresh start</strong> whenever you're ready, so your home and car are looked after again.",
-      cta: "Reactivate my cover", url: "#",
-      img: "https://images.unsplash.com/photo-1558036117-15d82a90b9b1?w=1000&q=80&auto=format&fit=crop" },
-    "003Kh00001uijWFIAY": { // Tom — Upgrade / Bundle Car + Home (SUN_UPGRADE2)
-      eyebrow: "Recommended for you",
-      heading: "Bundle your car with your home and save",
-      body: "You're already with us for home. Add your car and combine the two for a <strong>multi-policy discount</strong> — more of your world protected, on one simpler renewal.",
-      cta: "See my bundle", url: "#",
-      img: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=1000&q=80&auto=format&fit=crop" }
+    "003g700000nHecjAAC": { // Sarah — Rewards & Loyalty / Battery Check + Fuel Reward (NR_CARD_FUEL)
+      eyebrow: "A little something after today, Sarah",
+      heading: "Your battery check is on us — plus 10c/L for the drive home",
+      body: "We got you moving today. As a thank you, your next <strong>battery check is on us</strong>, and you can stack <strong>up to 10c/L off at Ampol</strong> on the drive home to Yamba. Live fuel prices are in the app so you can find the best stop on your route.",
+      cta: "View in My NRMA", url: "#",
+      img: "https://images.unsplash.com/photo-1545459720-aac8509eb02c?w=1000&q=80&auto=format&fit=crop" },
+    "003g700000nHeckAAC": { // Marcus — Rewards & Loyalty / same action, EV card (NR_CARD_EV)
+      eyebrow: "A little something after today, Marcus",
+      heading: "Driving electric? Get 10% off Chargefox EV fast-charging along your route",
+      body: "Glad we got you back on the road. Since you're driving electric, here's <strong>10% off Chargefox fast-charging</strong> — find and save on charging stops along the rest of your trip, right in the app.",
+      cta: "View in My NRMA", url: "#",
+      img: "https://images.unsplash.com/photo-1593941707882-a5bba14938c7?w=1000&q=80&auto=format&fit=crop" }
   };
 
-  // Accept a live SP decision only when it serves a known Suncorp offer, so a
-  // stale non-Suncorp serve is ignored and the local offer shows instead.
-  // Offer Ids are regenerated on every rebuild, so acceptance keys on the SUNCORP
-  // BRAND TOKEN carried in the hydrated treatment (the card chip / footer / SMS
-  // all say "Suncorp" / suncorp.com.au). Core SUN_ offers only — A2A offers
-  // (OFFSUNCORP*) never serve here. Add 15-char Id prefixes to SUNCORP_OFFER_IDS
-  // after a build if you want an exact-Id guard as well.
-  const SUNCORP_OFFER_IDS = new Set([]);
-  function isSuncorpItem(item) {
+  // Accept a live SP decision only when it serves a known NRMA offer, so a
+  // stale non-NRMA serve is ignored and the local offer shows instead.
+  // Offer Ids are regenerated on every rebuild, so acceptance keys on the NRMA
+  // BRAND TOKEN carried in the hydrated treatment (the card chip / footer all
+  // say "NRMA"). Add 15-char Id prefixes to NRMA_OFFER_IDS after a build if you
+  // want an exact-Id guard as well.
+  const NRMA_OFFER_IDS = new Set([]);
+  function isNrmaItem(item) {
     const oid = pick(item, "OfferId__c", "offerId");
-    if (oid && SUNCORP_OFFER_IDS.has(String(oid).substring(0, 15))) return true;
+    if (oid && NRMA_OFFER_IDS.has(String(oid).substring(0, 15))) return true;
     // Brand-token discriminator (works regardless of offer-Id churn).
     const txt = (pick(item, "TreatmentOutput__c", "treatmentOutput") || "") +
                 (pick(item, "OfferBody__c", "offerBody") || "");
-    return /suncorp/i.test(txt);
+    return /nrma/i.test(txt);
   }
 
   const CAT_LABEL = {
-    CAT_HOME: "Home Insurance", CAT_CONTENTS: "Contents Insurance",
-    CAT_CAR: "Car Insurance", CAT_CTP: "CTP Insurance", CAT_TRAVEL: "Travel Insurance"
+    CAT_FUEL: "Fuel Price Finder + Ampol", CAT_EV: "EV Charging — Chargefox",
+    CAT_PARKS: "NRMA Parks", CAT_DINING: "Dining Rewards", CAT_TRAVEL: "Travel — SIXT & Insurance"
   };
 
   let state = { individualId: "", lastCategory: null, lastDecision: null };
@@ -222,7 +188,7 @@
       JSON.stringify(state.lastDecision, null, 2);
   }
 
-  // Populate the logged-in "Suncorp" customer summary from the selected persona.
+  // Populate the logged-in My NRMA member summary from the selected persona.
   // Demo dressing only — this is NOT SP/decision data; it just makes the offer
   // land inside a believable account context. Hidden when anonymous.
   function renderAccount(persona) {
@@ -234,7 +200,7 @@
     document.getElementById("acct-avatar").textContent = (persona.name || "s").trim()[0];
     document.getElementById("acct-name").textContent = (persona.name || "").split(" ")[0];
     document.getElementById("acct-since").textContent = a.since || "Welcome back";
-    document.getElementById("acct-tier").textContent = a.tier || "Suncorp customer";
+    document.getElementById("acct-tier").textContent = a.tier || "NRMA member";
 
     // Render one card per care item. An item due soon ("due" / "overdue" /
     // "review" or within 7 days) is flagged so the care-continuity beat lands
@@ -314,9 +280,9 @@
     return true;
   }
 
-  // Render the generic, un-personalised Suncorp hero for an anonymous visitor.
+  // Render the generic, un-personalised NRMA hero for an anonymous visitor.
   // Paints the native hero fields directly (synthetic content, not an SP call),
-  // hides the Suncorp account chrome, and restores the native hero if a
+  // hides the member account chrome, and restores the native hero if a
   // drop-in treatment card was previously injected (persona -> anonymous).
   function renderGeneric() {
     renderAccount(null); // no account chrome when anonymous
@@ -408,7 +374,7 @@
     if (!id) return renderGeneric(); // anonymous visitor -> un-personalised brand hero
 
     // Mock-up mode: skip SP entirely and render the local home offer. The
-    // logged-in page is a complete Suncorp visual with no Data Cloud dependency.
+    // logged-in page is a complete My NRMA visual with no Data Cloud dependency.
     if ((cfg.HERO_SOURCE || "live") === "fallback") {
       if (renderFallback(id, "home offer · local mock-up")) return;
     }
@@ -436,10 +402,10 @@
       .then((r) => r.json())
       .then((resp) => {
         const item = firstItem(resp);
-        // In "auto" only accept a live decision that serves a known Suncorp offer;
+        // In "auto" only accept a live decision that serves a known NRMA offer;
         // otherwise fall through to the local home offer (ignores stale serves).
         const accept = item && (item.TreatmentOutput__c || item.OfferHeading__c || item.personalizationContentId)
-          && ((cfg.HERO_SOURCE || "live") !== "auto" || isSuncorpItem(item));
+          && ((cfg.HERO_SOURCE || "live") !== "auto" || isNrmaItem(item));
         if (accept) {
           const prevOffer = state.lastDecision && state.lastDecision.offerId;
           const newOffer  = pick(item, "OfferId__c", "OfferTreatmentCode__c", "Id__c");
@@ -560,7 +526,7 @@
       state.individualId = sel.value;
       state.lastCategory = null;
       highlight(null);
-      renderAccount(PERSONAS.find(p => p.id === sel.value)); // log in / out of Suncorp
+      renderAccount(PERSONAS.find(p => p.id === sel.value)); // log in / out of My NRMA
       setIdentity(state.individualId);
       requestDecision(); // fresh arrival = serve the DH decision for this person
       startPolling();    // watch for live re-decisions on this identity
@@ -618,9 +584,9 @@
   // Which identity the storefront opens on (the parity beat starts logged in).
   //   ?who=<first name | contact id>  -> that persona
   //   ?who=anon | anonymous           -> anonymous / generic (no login)
-  //   (no param)                      -> Hannah (home + car) by default
+  //   (no param)                      -> Sarah (Platinum road-tripper) by default
   // On refresh the same identity is kept, so "fire decisions -> refresh" shows
-  // the newly-served offer against a stable logged-in customer.
+  // the newly-served offer against a stable logged-in member.
   function resolveOpeningPersona() {
     const who = (new URLSearchParams(location.search).get("who") || "").trim().toLowerCase();
     if (who === "anon" || who === "anonymous") return null;
@@ -631,7 +597,7 @@
         p.name.toLowerCase().includes(who));
       if (m) return m;
     }
-    return PERSONAS.find(p => p.name.toLowerCase().startsWith("hannah")) || PERSONAS[0] || null;
+    return PERSONAS.find(p => p.name.toLowerCase().startsWith("sarah")) || PERSONAS[0] || null;
   }
 
   /* ---------- boot ---------- */
@@ -646,8 +612,8 @@
       renderItem(MOCK_ITEM, "MOCK · local sample");
     } else {
       pill.textContent = "LIVE · Salesforce Personalization"; pill.className = "pill live";
-      // Open LOGGED IN (default: Hannah) so the parity beat starts in a real
-      // Suncorp customer account and the served offer updates on refresh as
+      // Open LOGGED IN (default: Sarah) so the parity beat starts in a real
+      // My NRMA member account and the served offer updates on refresh as
       // decisions fire. ?who=anon opens anonymous/generic instead.
       const opening = resolveOpeningPersona();
       if (opening) {
