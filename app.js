@@ -32,6 +32,11 @@
     { id: "003g700000nHecjAAC", name: "Sarah Mitchell", tag: "Platinum · road-tripper · renewal in 42 days",
       account: {
         since: "NRMA member since 2015", tier: "Platinum",
+        stats: [
+          { value: "12,480", label: "Rewards points" },
+          { value: "Platinum", label: "Top 5% of members" },
+          { value: "42 days", label: "To renewal" }
+        ],
         policies: [
           { kind: "Membership", label: "Roadside — Premium Care · NSW", ref: "NRMA",
             renewsInDays: 42, premium: "Renews in 42 days", status: "Active" },
@@ -42,6 +47,11 @@
     { id: "003g700000nHeckAAC", name: "Marcus Hale", tag: "Gold · EV driver",
       account: {
         since: "NRMA member since 2019", tier: "Gold",
+        stats: [
+          { value: "6,920", label: "Rewards points" },
+          { value: "Gold", label: "EV driver" },
+          { value: "On a trip", label: "Charging en route" }
+        ],
         policies: [
           { kind: "Membership", label: "Roadside — Complete Care · NSW", ref: "NRMA",
             premium: "Active", status: "Active" },
@@ -201,6 +211,20 @@
     document.getElementById("acct-name").textContent = (persona.name || "").split(" ")[0];
     document.getElementById("acct-since").textContent = a.since || "Welcome back";
     document.getElementById("acct-tier").textContent = a.tier || "NRMA member";
+
+    // Signature stats row (points / standing / renewal) — mirrors the canonical
+    // story. Demo dressing; hidden if a persona defines no stats.
+    const statsEl = document.getElementById("acct-stats");
+    if (statsEl) {
+      statsEl.innerHTML = "";
+      (a.stats || []).forEach(s => {
+        const el = document.createElement("div");
+        el.className = "stat";
+        el.innerHTML = `<span class="sv">${s.value}</span><span class="sl">${s.label}</span>`;
+        statsEl.appendChild(el);
+      });
+      statsEl.style.display = (a.stats && a.stats.length) ? "" : "none";
+    }
 
     // Render one card per care item. An item due soon ("due" / "overdue" /
     // "review" or within 7 days) is flagged so the care-continuity beat lands
