@@ -53,12 +53,12 @@ window.DEMO_CONFIG = {
     fuel: {
       id: "PROD_FUEL", category: "CAT_FUEL", label: "Fuel Price Finder + Ampol",
       sub: "Live fuel prices + Ampol", price: "Up to 13c/L off",
-      img: "https://images.unsplash.com/photo-1545459720-aac8509eb02c?w=600&q=80&auto=format&fit=crop"
+      img: "https://images.unsplash.com/photo-1527018601619-a508a2be00cd?w=600&q=80&auto=format&fit=crop"
     },
     ev: {
       id: "PROD_EV", category: "CAT_EV", label: "EV Charging — Chargefox",
       sub: "Fast-charging along your route", price: "10% off charging",
-      img: "https://images.unsplash.com/photo-1617704548623-340376564e68?w=600&q=80&auto=format&fit=crop"
+      img: "https://images.unsplash.com/photo-1593941707882-a5bba14938c7?w=600&q=80&auto=format&fit=crop"
     },
     parks: {
       id: "PROD_PARKS", category: "CAT_PARKS", label: "NRMA Parks",

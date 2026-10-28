@@ -101,13 +101,13 @@
       heading: "Your battery check is on us — plus 10c/L for the drive home",
       body: "We got you moving today. As a thank you, your next <strong>battery check is on us</strong>, and you can stack <strong>up to 10c/L off at Ampol</strong> on the drive home to Yamba. Live fuel prices are in the app so you can find the best stop on your route.",
       cta: "View in My NRMA", url: "#",
-      img: "https://images.unsplash.com/photo-1545459720-aac8509eb02c?w=1000&q=80&auto=format&fit=crop" },
+      img: "https://images.unsplash.com/photo-1527018601619-a508a2be00cd?w=1000&q=80&auto=format&fit=crop" },
     "003g700000nHeckAAC": { // Marcus — Rewards & Loyalty / same action, EV card (NR_CARD_EV)
       eyebrow: "A little something after today, Marcus",
       heading: "Driving electric? Get 10% off Chargefox EV fast-charging along your route",
       body: "Glad we got you back on the road. Since you're driving electric, here's <strong>10% off Chargefox fast-charging</strong> — find and save on charging stops along the rest of your trip, right in the app.",
       cta: "View in My NRMA", url: "#",
-      img: "https://images.unsplash.com/photo-1617704548623-340376564e68?w=1000&q=80&auto=format&fit=crop" }
+      img: "https://images.unsplash.com/photo-1593941707882-a5bba14938c7?w=1000&q=80&auto=format&fit=crop" }
   };
 
   // Accept a live SP decision only when it serves a known NRMA offer, so a
