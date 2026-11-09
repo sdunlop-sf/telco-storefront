@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>My NRMA — rewards that move with you</title>
+  <title>Westpac — your money, your next step</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
-  <link rel="icon" type="image/png" href="assets/nrma-icon.png" />
-  <link rel="apple-touch-icon" href="assets/nrma-icon.png" />
+  <link rel="icon" type="image/png" href="assets/westpac-icon.png" />
+  <link rel="apple-touch-icon" href="assets/westpac-icon.png" />
 
   <!-- Data 360 Web & Mobile App connector beacon. Embedded as the first script
        per the connector Integration Guide so data collection initialises before
@@ -22,29 +22,31 @@
 <body class="ff">
   <div class="stage">
 
-    <!-- The My NRMA customer app, inside a phone device frame. -->
+    <!-- The Westpac customer app, inside a phone device frame. -->
     <div class="phone">
       <div class="phone-shell">
         <div class="phone-notch"></div>
         <div class="phone-screen" id="phone-screen">
 
-          <div class="promo-strip">FUEL · EV CHARGING · PARKS · DINING · TRAVEL · Rewards that move with you</div>
-
           <header class="site">
-            <a class="brand" href="#" aria-label="NRMA">
-              <img src="assets/nrma-logo.png" alt="NRMA" class="brand-logo" />
+            <a class="brand" href="#" aria-label="Westpac">
+              <img src="assets/westpac-logo.png" alt="" class="brand-logo" />
+              <span class="wordmark">Westpac</span>
             </a>
+            <button class="icon-btn" aria-label="Notifications">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 16V11a6 6 0 1 1 12 0v5l1.5 2h-15L6 16Z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg>
+            </button>
             <button class="hamb" aria-label="Menu"><span></span><span></span><span></span></button>
           </header>
 
           <!-- Category chips. Browsing one fires a Product Browse event -> SP
                re-shapes the hero in session. -->
           <nav class="chips">
-            <a href="#" data-cat="CAT_FUEL" class="chip">Fuel</a>
-            <a href="#" data-cat="CAT_EV" class="chip">EV Charging</a>
-            <a href="#" data-cat="CAT_PARKS" class="chip">Parks</a>
-            <a href="#" data-cat="CAT_DINING" class="chip">Dining</a>
-            <a href="#" data-cat="CAT_TRAVEL" class="chip">Travel</a>
+            <a href="#" data-cat="CAT_SAVINGS" class="chip">Savings</a>
+            <a href="#" data-cat="CAT_CARDS" class="chip">Cards</a>
+            <a href="#" data-cat="CAT_HOMELOANS" class="chip">Home loans</a>
+            <a href="#" data-cat="CAT_INSURANCE" class="chip">Insurance</a>
+            <a href="#" data-cat="CAT_HELP" class="chip">Support</a>
           </nav>
 
           <main class="wrap">
@@ -52,17 +54,16 @@
                  populated per-persona from app.js (demo dressing, not SP data). -->
             <section class="account-summary" id="account-summary" hidden>
               <div class="greeting">
-                <div class="avatar" id="acct-avatar">n</div>
+                <div class="avatar" id="acct-avatar">w</div>
                 <div class="greeting-copy">
-                  <div class="hello">Hi <b id="acct-name">there</b></div>
+                  <div class="hello">Good morning, <b id="acct-name">there</b></div>
                   <div class="acct-sub" id="acct-since">Welcome back</div>
-                  <span class="tier-chip" id="acct-tier">NRMA member</span>
+                  <span class="tier-chip" id="acct-tier">Westpac customer</span>
                 </div>
               </div>
-              <!-- Signature stats row (mirrors the canonical story: points /
-                   tier standing / renewal proximity). Injected by renderAccount(). -->
+              <!-- Balance tiles. Injected by renderAccount(). -->
               <div class="stats-row" id="acct-stats"></div>
-              <!-- Policy / goal cards injected by renderAccount() -->
+              <!-- Account / product cards injected by renderAccount() -->
               <div class="policy-grid" id="acct-policies"></div>
             </section>
 
@@ -70,34 +71,49 @@
             <section class="foryou" id="foryou">
               <div class="copy">
                 <div class="eyebrow">Recommended for you</div>
-                <h2 id="offer-heading">Loading your offer…</h2>
+                <h2 id="offer-heading">Loading your next step…</h2>
                 <p id="offer-body"></p>
                 <div class="cta-row">
-                  <a class="cta" id="offer-cta" href="#">View offer</a>
+                  <a class="cta" id="offer-cta" href="#">View</a>
                   <span class="src">decision: <b id="offer-source">—</b> · offer <b id="offer-code">—</b></span>
                 </div>
               </div>
               <div class="art" id="offer-art"></div>
             </section>
 
+            <!-- Recent activity. Injected per persona by renderAccount(). -->
+            <section class="activity" id="acct-activity" hidden>
+              <h4>Recent activity</h4>
+              <div id="activity-rows"></div>
+            </section>
+
             <div class="section-head">
-              <h3 class="section">Explore My NRMA Rewards</h3>
-              <span class="hint">Tap a reward — your offer re-shapes in real time</span>
+              <h3 class="section">Explore Westpac</h3>
+              <span class="hint">Tap a product — your next step re-shapes in real time</span>
             </div>
             <div class="grid" id="catalog"></div>
 
             <section class="valueprops">
-              <div class="vp"><div class="vp-ico">⛽</div><div><b>Fuel savings with Ampol</b><span>Live fuel prices in the app, stack up to 13c/L off at Ampol</span></div></div>
-              <div class="vp"><div class="vp-ico">🏕️</div><div><b>NRMA Parks — stay 4, pay 3</b><span>Member rates across NRMA Parks and Resorts on your next trip</span></div></div>
-              <div class="vp"><div class="vp-ico">🔌</div><div><b>EV charging with Chargefox</b><span>10% off fast-charging along your route as you drive electric</span></div></div>
+              <div class="vp"><div class="vp-ico">🔒</div><div><b>Security you can see</b><span>Real-time alerts and card controls in the app</span></div></div>
+              <div class="vp"><div class="vp-ico">🎯</div><div><b>Savings goals</b><span>Set a goal and track it from your home screen</span></div></div>
+              <div class="vp"><div class="vp-ico">🤝</div><div><b>Help when you need it</b><span>Talk to us early if money gets tight — we have options</span></div></div>
             </section>
           </main>
 
           <footer class="site-foot">
-            <div data-brand>NRMA</div>
-            <span>Rewards that move with you</span>
-            <span class="fine">Demo app · personalization by Salesforce</span>
+            <div data-brand>Westpac</div>
+            <span>Australia's first bank</span>
+            <span class="fine">Demo app · personalization by Salesforce · illustrative only</span>
           </footer>
+
+          <!-- Bottom tab bar (static demo chrome). -->
+          <nav class="tabbar" aria-label="App navigation">
+            <a class="tb on" href="#"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11 12 4l9 7v9H3z"/></svg><span>Home</span></a>
+            <a class="tb" href="#"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10"/></svg><span>Accounts</span></a>
+            <a class="tb" href="#"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h13M13 7l5 5-5 5"/></svg><span>Pay</span></a>
+            <a class="tb" href="#"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 10h18"/></svg><span>Cards</span></a>
+            <a class="tb" href="#"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 20c1.5-4 5-5 8-5s6.5 1 8 5"/></svg><span>Profile</span></a>
+          </nav>
 
         </div><!-- /phone-screen -->
       </div><!-- /phone-shell -->

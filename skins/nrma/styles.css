@@ -1,0 +1,382 @@
+:root {
+  /* My NRMA / Salesforce story palette (from demo-story-customer.html) */
+  --ink: #141627;          /* headings / primary ink */
+  --eyebrow: #4b46e0;      /* indigo eyebrow label */
+  --pillbg: #e7eefb;       /* soft blue pill background */
+  --pillink: #2434c4;      /* pill text */
+  --body: #474d5e;         /* body copy */
+  --bar: #2f6bff;          /* accent bar / divider */
+  --muted: #8a90a6;        /* secondary text */
+  --line: #e7e9f2;         /* hairline borders */
+  --white: #fff;
+  --navy: #0b0d1a;         /* deep stage / footer */
+  --accent: #2f6bff;       /* primary CTA / brand blue */
+  --blue: #1f2fb5;         /* deeper blue */
+  --card: #ffffff;
+  --bg: #f8f9ff;
+  /* type — story uses 'Avant Garde For Salesforce' (not web-hosted); fall back */
+  --fd: 'Salesforce Sans', system-ui, -apple-system, 'Segoe UI', 'Inter', sans-serif;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body {
+  font-family: var(--fd);
+  color: var(--ink);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+ * STAGE + PHONE DEVICE FRAME
+ * The customer app renders inside a phone; the presenter dock sits beside
+ * it. In-app layout is scoped to .phone-screen (not a viewport query)
+ * because the narrow screen lives inside a wide desktop stage.
+ * ───────────────────────────────────────────────────────────────────── */
+body.ff {
+  background:
+    radial-gradient(1200px 600px at 12% -10%, rgba(47,107,255,.40), transparent 60%),
+    radial-gradient(1000px 520px at 112% 10%, rgba(31,47,181,.38), transparent 55%),
+    var(--navy);
+  min-height: 100vh;
+}
+.stage {
+  display: flex; align-items: flex-start; justify-content: center; gap: 40px;
+  padding: 46px 32px 60px; max-width: 1180px; margin: 0 auto; flex-wrap: wrap;
+}
+
+.phone { flex: none; }
+.phone-shell {
+  width: max-content; padding: 13px; border-radius: 52px;
+  background: linear-gradient(160deg, #2a2a2a, #050505);
+  box-shadow:
+    0 40px 90px -30px rgba(0,0,0,.8),
+    0 0 0 2px #000,
+    inset 0 0 0 2px rgba(255,255,255,.04);
+  position: relative;
+}
+.phone-notch {
+  position: absolute; top: 20px; left: 50%; transform: translateX(-50%);
+  width: 31%; height: 24px; background: #000; border-radius: 16px; z-index: 40;
+}
+.phone-screen {
+  position: relative; border-radius: 40px; overflow: hidden auto;
+  aspect-ratio: 393 / 852;
+  height: min(852px, calc(100vh - 96px));
+  width: auto;
+  scrollbar-width: none;
+  background: linear-gradient(135deg, #f4f2fd 0%, #f8f9ff 42%, #ffffff 100%);
+}
+.phone-screen::-webkit-scrollbar { display: none; }
+
+/* promo strip */
+.promo-strip {
+  background: linear-gradient(90deg, var(--blue), var(--accent));
+  color: #fff; text-align: center; font-size: 11px; font-weight: 700;
+  padding: 8px 14px 7px; letter-spacing: .4px; text-transform: uppercase;
+  padding-top: 40px; /* clear the notch */
+}
+
+/* header — NRMA wordmark on a white bar with a blue underline */
+header.site {
+  display: flex; align-items: center; gap: 14px;
+  padding: 13px 18px; background: #ffffff; border-bottom: 2px solid var(--accent);
+  position: sticky; top: 0; z-index: 20;
+}
+.brand { display: flex; align-items: center; gap: 9px; text-decoration: none; margin-right: auto; }
+.brand-logo { height: 28px; width: auto; display: block; }
+.hamb { background: none; border: 0; display: flex; flex-direction: column; gap: 4px; cursor: pointer; padding: 4px; }
+.hamb span { width: 20px; height: 2px; background: var(--ink); border-radius: 2px; display: block; }
+
+/* category chips */
+nav.chips {
+  display: flex; gap: 7px; padding: 11px 16px; background: rgba(255,255,255,.75);
+  border-bottom: 1px solid var(--line); overflow-x: auto; white-space: nowrap;
+  position: sticky; top: 52px; z-index: 15; scrollbar-width: none;
+  backdrop-filter: blur(6px);
+}
+nav.chips::-webkit-scrollbar { display: none; }
+nav.chips .chip {
+  flex: none; color: var(--body); text-decoration: none; font-size: 12.5px; font-weight: 600;
+  padding: 7px 14px; border-radius: 20px; border: 1px solid var(--line); background: #fff;
+  transition: background .12s, color .12s, border-color .12s;
+}
+nav.chips .chip:hover { background: var(--pillbg); color: var(--pillink); border-color: var(--pillbg); }
+nav.chips .chip.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+.account { display: flex; align-items: center; gap: 9px; font-size: 13px; color: var(--muted); }
+.account-label { white-space: nowrap; }
+.account select {
+  padding: 9px 12px; border: 1px solid var(--line); border-radius: 10px; font-size: 13px;
+  font-weight: 600; color: var(--ink); background: #fff; cursor: pointer; width: 100%;
+}
+
+.wrap { padding: 18px 16px 30px; }
+
+/* logged-in member summary — greeting + stats */
+.account-summary {
+  background: linear-gradient(160deg, #eef1fc, #f7f9ff);
+  border: 1px solid var(--line); border-radius: 18px;
+  padding: 16px 16px 17px; margin-bottom: 16px;
+  box-shadow: 0 14px 34px -24px rgba(20,22,39,.4);
+}
+.account-summary[hidden] { display: none; }
+.greeting { display: flex; align-items: center; gap: 11px; margin-bottom: 14px; }
+.greeting-copy { min-width: 0; margin-right: auto; }
+.avatar {
+  width: 42px; height: 42px; border-radius: 50%; flex: none;
+  background: linear-gradient(135deg, var(--accent) 0%, var(--blue) 100%);
+  color: #fff; font-weight: 800; font-size: 19px; text-transform: uppercase;
+  display: flex; align-items: center; justify-content: center; letter-spacing: -1px;
+}
+.hello { font-size: 18px; font-weight: 700; letter-spacing: -.3px; color: var(--ink); }
+.hello b { color: var(--accent); font-weight: 800; }
+.acct-sub { font-size: 12px; color: var(--muted); margin-top: 1px; }
+.tier-chip {
+  display: inline-block; margin-top: 6px;
+  font-size: 9.5px; font-weight: 800; letter-spacing: .3px; text-transform: uppercase;
+  background: var(--pillbg); color: var(--pillink); padding: 5px 10px; border-radius: 20px;
+  white-space: nowrap;
+}
+
+/* stats row — three tiles */
+.stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px; margin-bottom: 14px; }
+.stat {
+  background: #fff; border: 1px solid var(--line); border-radius: 13px;
+  padding: 12px 11px; text-align: left;
+}
+.stat .sv { font-size: 17px; font-weight: 800; letter-spacing: -.4px; color: var(--ink); line-height: 1.1; }
+.stat .sl { font-size: 10px; color: var(--muted); margin-top: 5px; line-height: 1.3; font-weight: 600; }
+
+/* ─────────────────────────────────────────────────────────────────────
+ * POLICY / CARE TILES — the member's cover + recent roadside job.
+ * Clean white cards, blue category label, status pill. A tile flagged
+ * "soon" (.low) gets an amber status pill so the care-continuity beat reads.
+ * ───────────────────────────────────────────────────────────────────── */
+.policy-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+.pcell {
+  position: relative; display: flex; flex-direction: column;
+  background: #fff; border: 1px solid var(--line); border-radius: 14px;
+  padding: 13px 14px 12px; min-height: 104px;
+  box-shadow: 0 10px 26px -22px rgba(20,22,39,.4);
+}
+.pcell::before {
+  content: ""; position: absolute; left: 0; top: 12px; bottom: 12px;
+  width: 3px; border-radius: 0 3px 3px 0; background: var(--accent);
+}
+.pcell.low::before { background: #f0a515; }
+.plabel {
+  font-size: 9px; letter-spacing: 1.3px; text-transform: uppercase; font-weight: 800;
+  color: var(--eyebrow); margin-bottom: 6px;
+}
+.pval { font-size: 13.5px; font-weight: 800; letter-spacing: -.2px; color: var(--ink); line-height: 1.25; }
+.pfine { font-size: 11px; color: var(--muted); margin-top: 2px; font-weight: 600; }
+.policy-foot {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  margin-top: auto; padding-top: 11px;
+}
+.prem { font-size: 10.5px; color: var(--body); font-weight: 600; }
+.renew {
+  flex: none; font-size: 9px; font-weight: 800; letter-spacing: .4px; text-transform: uppercase;
+  color: var(--pillink); background: var(--pillbg); padding: 4px 9px; border-radius: 20px;
+  white-space: nowrap;
+}
+.renew.due { color: #8a5a00; background: #fdf0d2; }
+
+/* ─────────────────────────────────────────────────────────────────────
+ * "FOR YOU" HERO — the personalised, decisioned reward (primary card).
+ * Image banner on top, copy below. app.js paints #offer-art's background
+ * inline and fills #offer-heading / #offer-body / #offer-cta.
+ * ───────────────────────────────────────────────────────────────────── */
+.foryou {
+  position: relative; display: flex; flex-direction: column;
+  background: #fff; border: 1px solid #cdd9ff; border-radius: 20px;
+  overflow: hidden; margin-bottom: 22px;
+  box-shadow: 0 0 0 1px rgba(47,107,255,.10), 0 24px 54px -28px rgba(47,107,255,.7);
+}
+.foryou .art {
+  order: -1; height: 184px; flex: none;
+  background: #e8ecf7 center/cover no-repeat;
+  transition: background-image .3s ease;
+}
+/* "Picked for you" badge floated on the image */
+.foryou .art::after {
+  content: "Picked for you";
+  position: absolute; top: 13px; left: 13px;
+  background: rgba(11,13,26,.66); color: #fff;
+  font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 800;
+  padding: 6px 11px; border-radius: 20px; backdrop-filter: blur(5px);
+}
+.foryou .copy { padding: 17px 18px 19px; display: flex; flex-direction: column; }
+.foryou .eyebrow {
+  font-size: 10px; letter-spacing: 1.7px; text-transform: uppercase;
+  color: var(--eyebrow); font-weight: 800; margin-bottom: 8px;
+}
+#offer-heading {
+  font-size: 20px; line-height: 1.22; font-weight: 800; letter-spacing: -.45px;
+  color: var(--ink); margin: 0 0 9px;
+}
+#offer-body { color: var(--body); font-size: 13.5px; line-height: 1.5; margin: 0 0 16px; }
+#offer-body strong { color: var(--ink); font-weight: 800; }
+.cta-row { display: flex; align-items: center; gap: 13px; flex-wrap: wrap; }
+.cta {
+  background: linear-gradient(135deg, var(--accent), var(--blue));
+  color: #fff; text-decoration: none; font-weight: 800; font-size: 13.5px;
+  padding: 12px 24px; border-radius: 11px; letter-spacing: .2px;
+  box-shadow: 0 14px 28px -12px rgba(47,107,255,.7);
+  transition: transform .1s, box-shadow .1s;
+}
+.cta:hover { transform: translateY(-1px); box-shadow: 0 18px 34px -12px rgba(47,107,255,.75); }
+.src { font-size: 10.5px; color: var(--muted); line-height: 1.4; }
+.src b { color: var(--ink); font-weight: 700; }
+
+/* value props — clean benefits list */
+.valueprops {
+  background: #fff; border: 1px solid var(--line); border-radius: 16px;
+  padding: 4px 16px; margin: 22px 0 4px;
+  box-shadow: 0 12px 30px -24px rgba(20,22,39,.35);
+}
+.vp { display: flex; align-items: center; gap: 13px; padding: 13px 0; }
+.vp + .vp { border-top: 1px solid var(--line); }
+.vp-ico {
+  flex: none; width: 42px; height: 42px; font-size: 20px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--pillbg); border-radius: 12px;
+}
+.vp b { display: block; font-size: 13px; color: var(--ink); font-weight: 800; letter-spacing: -.2px; }
+.vp span { display: block; color: var(--muted); font-size: 11.5px; margin-top: 2px; line-height: 1.35; }
+
+/* recommended-for-you heading */
+.recs-head { margin: 4px 0 12px; }
+.recs-title { font-size: 20px; font-weight: 800; letter-spacing: -.4px; margin: 0; color: var(--ink); }
+.recs-sub { font-size: 12.5px; color: var(--body); margin: 5px 0 0; line-height: 1.45; }
+
+/* recommendations row — two reward cards */
+.recs {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 22px;
+}
+.rc {
+  background: #fff; border: 1px solid var(--line); border-radius: 16px; overflow: hidden;
+  display: flex; flex-direction: column;
+  box-shadow: 0 12px 30px -22px rgba(20,22,39,.4);
+  transition: transform .14s, box-shadow .14s;
+}
+.rc:hover { transform: translateY(-2px); box-shadow: 0 18px 40px -22px rgba(20,22,39,.45); }
+.rc-primary {
+  grid-column: 1 / -1;
+  border: 1px solid #c9d6ff;
+  box-shadow: 0 0 0 1px rgba(47,107,255,.15), 0 18px 44px -24px rgba(47,107,255,.6);
+}
+.rc-img {
+  height: 120px; background-size: cover; background-position: center;
+  background-color: #e8ecf7;
+  transition: background-image .25s ease;
+}
+.rc-primary .rc-img { height: 160px; }
+.rc-body { padding: 14px 15px 16px; display: flex; flex-direction: column; flex: 1; }
+.rc .eyebrow {
+  font-size: 9.5px; letter-spacing: 1.6px; text-transform: uppercase;
+  color: var(--eyebrow); font-weight: 800; margin-bottom: 7px;
+}
+.rc h3 { font-size: 15.5px; margin: 0 0 4px; line-height: 1.2; font-weight: 800; letter-spacing: -.3px; color: var(--ink); }
+.rc-primary h3 { font-size: 19px; }
+.rc-partner {
+  font-size: 11px; font-weight: 700; color: var(--pillink);
+  background: var(--pillbg); align-self: flex-start;
+  padding: 3px 9px; border-radius: 20px; margin-bottom: 8px;
+}
+.rc p { color: var(--body); font-size: 12.5px; line-height: 1.45; margin: 0 0 13px; }
+.rc-primary p { font-size: 13.5px; }
+.rc-cta {
+  margin-top: auto; align-self: flex-start;
+  background: var(--accent); color: #fff; border: 0;
+  padding: 10px 20px; border-radius: 9px; font-weight: 800; font-size: 13px;
+  cursor: pointer; text-decoration: none; box-shadow: 0 10px 22px -10px rgba(47,107,255,.55);
+  transition: transform .1s; letter-spacing: .2px;
+}
+.rc-cta:hover { transform: translateY(-1px); }
+.rc-src { font-size: 10.5px; color: var(--muted); margin-top: 10px; }
+.rc-src b { color: var(--ink); font-weight: 700; }
+
+/* membership benefits strip */
+.benefits {
+  background: #fff; border: 1px solid var(--line); border-radius: 16px;
+  padding: 15px 16px; margin-bottom: 20px;
+}
+.benefits h4 { font-size: 13px; font-weight: 800; margin: 0 0 11px; color: var(--ink); letter-spacing: -.2px; }
+.benefit-row { display: flex; align-items: center; gap: 12px; padding: 7px 0; }
+.benefit-row + .benefit-row { border-top: 1px solid var(--line); }
+.benefit-row .bi { font-size: 18px; width: 24px; text-align: center; }
+.benefit-row b { display: block; font-size: 13px; color: var(--ink); }
+.benefit-row span { display: block; color: var(--muted); font-size: 11.5px; margin-top: 1px; }
+
+/* section head */
+.section-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 14px; gap: 10px; }
+h3.section { font-size: 17px; font-weight: 800; letter-spacing: -.3px; margin: 0; color: var(--ink); }
+.hint { font-size: 11.5px; color: var(--muted); text-align: right; }
+
+/* catalog (partner rewards) */
+.grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+.product {
+  background: var(--card); border: 1px solid var(--line); border-radius: 16px; overflow: hidden;
+  cursor: pointer; transition: transform .14s, box-shadow .14s, border-color .14s;
+}
+.product:hover { transform: translateY(-3px); box-shadow: 0 16px 36px -18px rgba(20,22,39,.3); }
+.product .ph { height: 96px; background: #eef1fc center/cover no-repeat; }
+.product .meta { padding: 12px 12px 14px; }
+.product .chip {
+  display: inline-block; font-size: 9.5px; font-weight: 800; letter-spacing: .4px; text-transform: uppercase;
+  color: var(--pillink); background: var(--pillbg); padding: 3px 8px; border-radius: 20px; margin-bottom: 7px;
+}
+.product .name { font-weight: 700; font-size: 14px; letter-spacing: -.2px; line-height: 1.2; color: var(--ink); }
+.product .sub { color: var(--muted); font-size: 11.5px; margin-top: 2px; }
+.product .price { font-weight: 800; font-size: 14px; margin-top: 8px; color: var(--accent); }
+.product.viewed { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent) inset; }
+
+/* recent activity */
+.activity {
+  background: #fff; border: 1px solid var(--line); border-radius: 16px;
+  padding: 15px 16px; margin-top: 20px;
+}
+.activity h4 { font-size: 13px; font-weight: 800; margin: 0 0 4px; color: var(--ink); letter-spacing: -.2px; }
+.activity .alead { font-size: 11.5px; color: var(--muted); margin: 0 0 10px; }
+.activity .arow { display: flex; justify-content: space-between; gap: 10px; padding: 7px 0; font-size: 12.5px; }
+.activity .arow + .arow { border-top: 1px solid var(--line); }
+.activity .arow b { font-weight: 700; color: var(--ink); }
+.activity .arow span { color: var(--muted); }
+
+/* footer */
+.site-foot {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 6px;
+  padding: 22px 18px 30px; font-size: 12px;
+  background: var(--navy); color: #c7cbe0;
+}
+.site-foot [data-brand] { font-weight: 900; font-size: 18px; color: #fff; letter-spacing: -.6px; }
+.site-foot .fine { font-size: 11px; color: #7a7f99; }
+
+/* ─────────────────────────────────────────────────────────────────────
+ * PRESENTER DOCK (outside the phone)
+ * ───────────────────────────────────────────────────────────────────── */
+.dock { flex: 1; min-width: 300px; max-width: 420px; display: flex; flex-direction: column; gap: 18px; position: sticky; top: 46px; }
+.dock-card { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: 14px; padding: 16px 18px; }
+.dock-label { font-size: 10.5px; letter-spacing: 1.4px; text-transform: uppercase; color: #9db4ff; font-weight: 800; margin-bottom: 10px; }
+.dock .account { flex-direction: column; align-items: stretch; gap: 7px; }
+.dock .account-label { color: #a7acc4; font-size: 11px; }
+
+/* decision inspector */
+.inspector {
+  background: #0b0d1a; color: #cdd6f5; border-radius: 14px;
+  font-family: 'SF Mono', ui-monospace, Menlo, monospace; font-size: 12px;
+  border: 1px solid #1b2036;
+}
+.inspector header { display: flex; justify-content: space-between; align-items: center; padding: 13px 18px; border-bottom: 1px solid #1b2036; }
+.inspector header b { color: #9db4ff; font-family: var(--fd); letter-spacing: .3px; }
+.inspector pre { margin: 0; padding: 18px; overflow: auto; max-height: 420px; color: #d8ddf2; }
+.pill { font-size: 11px; padding: 3px 10px; border-radius: 20px; background: #1b2340; color: #9db4ff; font-family: var(--fd); font-weight: 700; letter-spacing: .3px; }
+.pill.mock { background: #3a2a12; color: #f0b47a; }
+.pill.live { background: #122a5e; color: #7fa6ff; }
+
+/* responsive — stack the dock under the phone on narrow viewports */
+@media (max-width: 900px) {
+  .stage { gap: 28px; }
+  .dock { position: static; max-width: 408px; width: 100%; }
+}

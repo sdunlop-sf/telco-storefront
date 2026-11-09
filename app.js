@@ -25,38 +25,69 @@
   // knowledge — the decision for each is served live by SP. Swapping personas
   // per demo is a config concern, not a code concern; kept here for the demo
   // switcher convenience only.
-  // NRMA re-skin: the "account" is now a MEMBER PROFILE at NRMA — the
-  // membership and vehicle/service context the engine reads to decide the next
-  // best reward. Each item is a membership / service line.
+  // Westpac re-skin: the "account" is a B2C banking profile — balances,
+  // products and recent activity the engine reads to decide the next best
+  // step. Contact Ids are the 4b personas the decisions are fired against.
   const PERSONAS = [
-    { id: "003g700000nHecjAAC", name: "Sarah Mitchell", tag: "Platinum · road-tripper · renewal in 42 days",
+    { id: "003Kh00001uijWCIAY", name: "Hannah Nguyen", tag: "Established · home loan roll-off in 45 days",
       account: {
-        since: "NRMA member since 2015", tier: "Platinum",
+        since: "Westpac customer since 2012", tier: "Everyday + Home loan",
         stats: [
-          { value: "12,480", label: "Rewards points" },
-          { value: "Platinum", label: "Top 5% of members" },
-          { value: "42 days", label: "To renewal" }
+          { value: "&#36;4,280", label: "Everyday account" },
+          { value: "&#36;18,940", label: "Savings" },
+          { value: "45 days", label: "Fixed rate rolls off" }
         ],
         policies: [
-          { kind: "Membership", label: "Roadside — Premium Care · NSW", ref: "NRMA",
-            renewsInDays: 42, premium: "Renews in 42 days", status: "Active" },
-          { kind: "Roadside", label: "Flat battery — M4, recovered", ref: "NRMA Patrol",
-            premium: "Job closed today", status: "Review suggested" }
+          { kind: "Home loan", label: "Fixed rate · owner occupier", ref: "Rolls to variable soon",
+            premium: "Fixed term ending", status: "Review suggested" },
+          { kind: "Everyday account", label: "Westpac Choice", ref: "BSB 032-000",
+            premium: "Salary paid in", status: "On track" }
+        ],
+        activity: [
+          { what: "Salary credit", when: "Today", amt: "+ &#36;3,912.40" },
+          { what: "Called us · asked about rates", when: "Yesterday", amt: "Contact centre" },
+          { what: "Woolworths Metro", when: "Yesterday", amt: "&#8211; &#36;46.20" },
+          { what: "Home loan repayment", when: "1 Nov", amt: "&#8211; &#36;2,604.00" }
         ]
       } },
-    { id: "003g700000nHeckAAC", name: "Marcus Hale", tag: "Gold · EV driver",
+    { id: "003Kh00001uijWDIAY", name: "Daniel Chen", tag: "New customer · joined 3 days ago",
       account: {
-        since: "NRMA member since 2019", tier: "Gold",
+        since: "Welcome to Westpac · joined 3 days ago", tier: "New customer",
         stats: [
-          { value: "6,920", label: "Rewards points" },
-          { value: "Gold", label: "EV driver" },
-          { value: "On a trip", label: "Charging en route" }
+          { value: "&#36;1,150", label: "Everyday account" },
+          { value: "&#36;0", label: "Savings" },
+          { value: "Day 3", label: "Of your first 30" }
         ],
         policies: [
-          { kind: "Membership", label: "Roadside — Complete Care · NSW", ref: "NRMA",
-            premium: "Active", status: "Active" },
-          { kind: "Vehicle", label: "Electric vehicle · road trip", ref: "EV",
-            premium: "Relies on EV charging", status: "Review suggested" }
+          { kind: "Everyday", label: "Everyday account", ref: "Opened 3 days ago",
+            premium: "Card on its way", status: "Set-up 2 of 4" },
+          { kind: "Digital", label: "Digital wallet", ref: "Not set up yet",
+            premium: "Pay with your phone", status: "Set up now" }
+        ],
+        activity: [
+          { what: "First deposit", when: "3 days ago", amt: "+ &#36;1,200.00" },
+          { what: "App installed", when: "3 days ago", amt: "Welcome" },
+          { what: "Coffee Supreme", when: "Today", amt: "&#8211; &#36;5.80" }
+        ]
+      } },
+    { id: "003Kh00001uijWFIAY", name: "Anita Kapoor", tag: "Financial hardship arrangement in place",
+      account: {
+        since: "Westpac customer since 2018", tier: "Support arrangement",
+        stats: [
+          { value: "&#36;312", label: "Everyday account" },
+          { value: "Paused", label: "Card repayments" },
+          { value: "In place", label: "Hardship arrangement" }
+        ],
+        policies: [
+          { kind: "Support", label: "Hardship arrangement", ref: "Reviewed with our team",
+            premium: "Repayments adjusted", status: "In place" },
+          { kind: "Credit card", label: "Low rate card", ref: "Card ending 9021",
+            premium: "Repayments paused", status: "Review due" }
+        ],
+        activity: [
+          { what: "Hardship arrangement confirmed", when: "Last week", amt: "Support team" },
+          { what: "Pharmacy", when: "Today", amt: "&#8211; &#36;18.40" },
+          { what: "Rent", when: "1 Nov", amt: "&#8211; &#36;520.00" }
         ]
       } }
   ];
@@ -77,58 +108,76 @@
   // hero every visitor sees, no account chrome. Picking a customer swaps this
   // for the DH-arbitrated, SP-served personal offer (the inbound-parity beat).
   const GENERIC_OFFER = {
-    eyebrow: "My NRMA",
-    heading: "Rewards that move with you.",
-    body: "Fuel savings, EV charging, parks, dining and travel — all in one membership. <strong>Sign in</strong> and your next best reward re-shapes to you.",
-    cta: "Explore rewards",
+    eyebrow: "Westpac",
+    heading: "Your money, your next step.",
+    body: "Everyday banking, savings, cards and home loans in one app. <strong>Sign in</strong> and your next best step re-shapes to you.",
+    cta: "Explore Westpac",
     url: "#",
-    img: "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?w=1000&q=80&auto=format&fit=crop"
+    img: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=1000&q=80&auto=format&fit=crop"
   };
 
-  // Per-persona local offer shown in the logged-in hero when the live SP serve
-  // has not resolved yet (fresh identity, item graph mid-refresh, propagation
-  // lag). Mirrors each persona's lead decision so the logged-in page is always a
-  // complete My NRMA mock-up. A live SP decision ALWAYS overrides this — the
-  // fallback only fills the gap so the hero never shows an empty "no-decision"
-  // state in front of a member. Keyed by Contact Id.
-  const FALLBACK_OFFER = {
-    // Per-persona NRMA recommendation, rendered locally (HERO_SOURCE
-    // "fallback") so the hero is guaranteed-clean and matches the email creative.
-    // (SP's live serve reads from a stale DC item-graph snapshot; until that is
-    // refreshed we render the correct creative here rather than serve a ghost.)
-    "003g700000nHecjAAC": { // Sarah — Rewards & Loyalty / Battery Check + Fuel Reward (NR_CARD_FUEL)
-      eyebrow: "A little something after today, Sarah",
-      heading: "Your battery check is on us — plus 10c/L for the drive home",
-      body: "We got you moving today. As a thank you, your next <strong>battery check is on us</strong>, and you can stack <strong>up to 10c/L off at Ampol</strong> on the drive home to Yamba. Live fuel prices are in the app so you can find the best stop on your route.",
-      cta: "View in My NRMA", url: "#",
-      img: "https://images.unsplash.com/photo-1527018601619-a508a2be00cd?w=1000&q=80&auto=format&fit=crop" },
-    "003g700000nHeckAAC": { // Marcus — Rewards & Loyalty / same action, EV card (NR_CARD_EV)
-      eyebrow: "A little something after today, Marcus",
-      heading: "Driving electric? Get 10% off Chargefox EV fast-charging along your route",
-      body: "Glad we got you back on the road. Since you're driving electric, here's <strong>10% off Chargefox fast-charging</strong> — find and save on charging stops along the rest of your trip, right in the app.",
-      cta: "View in My NRMA", url: "#",
-      img: "https://images.unsplash.com/photo-1593941707882-a5bba14938c7?w=1000&q=80&auto=format&fit=crop" }
+  // Local creative per Westpac offer code (WB_*). Generic copy, no rates —
+  // used for the per-persona fallback and to fill an image if a live serve
+  // carries none. A live SP decision ALWAYS overrides the fallback.
+  const OFFER_CREATIVE = {
+    WB_ONBOARD1: { eyebrow: "Welcome to Westpac", heading: "Let's get your app set up the way you like it",
+      body: "Turn on <strong>real-time alerts</strong> and add your card to your <strong>digital wallet</strong> so you can pay with your phone from today.",
+      cta: "Finish set-up", img: "https://images.unsplash.com/photo-1563986768609-322da13575f3?w=1000&q=80&auto=format&fit=crop" },
+    WB_ONBOARD2: { eyebrow: "Welcome to Westpac", heading: "Start a savings goal in a minute",
+      body: "Pick something you're saving for and we'll help you <strong>track it from your home screen</strong>. You can change it any time.",
+      cta: "Set a goal", img: "https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=1000&q=80&auto=format&fit=crop" },
+    WB_CARD: { eyebrow: "Picked for you", heading: "A credit card that fits how you spend",
+      body: "Compare our <strong>low-rate and rewards cards</strong> and see which one suits your everyday spending. Apply in the app in a few minutes.",
+      cta: "Compare cards", img: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=1000&q=80&auto=format&fit=crop" },
+    WB_SAVER: { eyebrow: "Picked for you", heading: "Give your savings a boost",
+      body: "Move some of today's balance into a <strong>bonus savings account</strong> and earn more when you grow it each month.",
+      cta: "Open a savings account", img: "https://images.unsplash.com/photo-1579621970795-87facc2f976d?w=1000&q=80&auto=format&fit=crop" },
+    WB_REPRICE: { eyebrow: "Your fixed rate ends soon", heading: "Let's look at your home loan options together",
+      body: "Your fixed term is ending. A home loan specialist can <strong>review your options before it rolls to variable</strong> — book a time that suits you.",
+      cta: "Book a review", img: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1000&q=80&auto=format&fit=crop" },
+    WB_HARDSHIP_HELP: { eyebrow: "We're here to help", heading: "Your support arrangement, and what happens next",
+      body: "Your arrangement is in place. See <strong>your next steps</strong>, check in with our support team, or find free financial counselling.",
+      cta: "See my next steps", img: "https://images.unsplash.com/photo-1521791136064-7986c2920216?w=1000&q=80&auto=format&fit=crop" }
   };
 
-  // Accept a live SP decision only when it serves a known NRMA offer, so a
-  // stale non-NRMA serve is ignored and the local offer shows instead.
-  // Offer Ids are regenerated on every rebuild, so acceptance keys on the NRMA
-  // BRAND TOKEN carried in the hydrated treatment (the card chip / footer all
-  // say "NRMA"). Add 15-char Id prefixes to NRMA_OFFER_IDS after a build if you
-  // want an exact-Id guard as well.
-  const NRMA_OFFER_IDS = new Set([]);
-  function isNrmaItem(item) {
+  // Per-persona local offer shown when the live serve has not resolved yet
+  // (fresh identity, item graph mid-refresh). Keyed by Contact Id -> offer code.
+  const FALLBACK_CODE = {
+    "003Kh00001uijWCIAY": "WB_REPRICE",       // Hannah — fixed-rate roll-off
+    "003Kh00001uijWDIAY": "WB_ONBOARD1",      // Daniel — new customer onboarding
+    "003Kh00001uijWFIAY": "WB_HARDSHIP_HELP"  // Anita — hardship: support only
+  };
+  const FALLBACK_OFFER = {};
+  Object.keys(FALLBACK_CODE).forEach(id => {
+    const c = OFFER_CREATIVE[FALLBACK_CODE[id]];
+    if (c) FALLBACK_OFFER[id] = Object.assign({ url: "#", code: FALLBACK_CODE[id] }, c);
+  });
+
+  // Accept a live SP decision only when it serves a Westpac offer, so a stale
+  // serve from a previous demo vertical (NRMA, telco, insurer) is ignored and
+  // the local offer shows instead. Offer Ids churn on every rebuild, so we key
+  // on the WB_ offer code or the Westpac brand token in the hydrated treatment.
+  const WESTPAC_OFFER_IDS = new Set([]);   // optional exact 15-char Id guard
+  const OTHER_BRANDS = /\b(nrma|my nrma|suncorp|medibank|bupa|telco|ampol|chargefox)\b/i;
+  function codeOf(item) {
+    const txt = [pick(item, "OfferTreatmentCode__c"), pick(item, "OfferCode__c", "offerCode"),
+                 pick(item, "Id__c"), pick(item, "TreatmentOutput__c", "treatmentOutput")].join(" ");
+    const m = /\bWB_[A-Z0-9_]+/.exec(txt);
+    return m ? m[0].replace(/_(EMAIL|SMS|PUSH|WEB)$/, "") : null;
+  }
+  function isWestpacItem(item) {
     const oid = pick(item, "OfferId__c", "offerId");
-    if (oid && NRMA_OFFER_IDS.has(String(oid).substring(0, 15))) return true;
-    // Brand-token discriminator (works regardless of offer-Id churn).
-    const txt = (pick(item, "TreatmentOutput__c", "treatmentOutput") || "") +
+    if (oid && WESTPAC_OFFER_IDS.has(String(oid).substring(0, 15))) return true;
+    const txt = (pick(item, "TreatmentOutput__c", "treatmentOutput") || "") + " " +
+                (pick(item, "OfferHeading__c", "offerHeading") || "") + " " +
                 (pick(item, "OfferBody__c", "offerBody") || "");
-    return /nrma/i.test(txt);
+    if (OTHER_BRANDS.test(txt)) return false;           // leftover NRMA / telco / insurer serve
+    return !!codeOf(item) || /westpac/i.test(txt);
   }
 
   const CAT_LABEL = {
-    CAT_FUEL: "Fuel Price Finder + Ampol", CAT_EV: "EV Charging — Chargefox",
-    CAT_PARKS: "NRMA Parks", CAT_DINING: "Dining Rewards", CAT_TRAVEL: "Travel — SIXT & Insurance"
+    CAT_SAVINGS: "Savings", CAT_CARDS: "Credit cards", CAT_HOMELOANS: "Home loans",
+    CAT_INSURANCE: "Insurance", CAT_HELP: "Support"
   };
 
   let state = { individualId: "", lastCategory: null, lastDecision: null };
@@ -168,9 +217,11 @@
     const body    = pick(item, "OfferBody__c", "offerBody", "body") || "";
     const cta     = pick(item, "CallToActionText__c", "callToActionText", "cta") || "Learn more";
     const url     = pick(item, "CallToActionUrl__c", "callToActionUrl") || "#";
+    const liveCode = codeOf(item);
     const img     = pick(item, "ImageUrl__c", "imageUrl")
-                    || imageFromTreatment(pick(item, "TreatmentOutput__c", "treatmentOutput"));
-    const code    = pick(item, "OfferId__c", "OfferTreatmentCode__c", "Id__c") || "—";
+                    || imageFromTreatment(pick(item, "TreatmentOutput__c", "treatmentOutput"))
+                    || (liveCode && OFFER_CREATIVE[liveCode] && OFFER_CREATIVE[liveCode].img);
+    const code    = liveCode || pick(item, "OfferId__c", "OfferTreatmentCode__c", "Id__c") || "—";
 
     setEyebrow("Recommended for you"); // personalised again (generic reset)
     document.getElementById("offer-heading").textContent = heading;
@@ -198,19 +249,19 @@
       JSON.stringify(state.lastDecision, null, 2);
   }
 
-  // Populate the logged-in My NRMA member summary from the selected persona.
+  // Populate the logged-in Westpac customer summary from the selected persona.
   // Demo dressing only — this is NOT SP/decision data; it just makes the offer
   // land inside a believable account context. Hidden when anonymous.
   function renderAccount(persona) {
     const panel = document.getElementById("account-summary");
     if (!panel) return;
     const a = persona && persona.account;
-    if (!a) { panel.hidden = true; return; }
+    if (!a) { panel.hidden = true; const act = document.getElementById("acct-activity"); if (act) act.hidden = true; return; }
 
     document.getElementById("acct-avatar").textContent = (persona.name || "s").trim()[0];
     document.getElementById("acct-name").textContent = (persona.name || "").split(" ")[0];
     document.getElementById("acct-since").textContent = a.since || "Welcome back";
-    document.getElementById("acct-tier").textContent = a.tier || "NRMA member";
+    document.getElementById("acct-tier").textContent = a.tier || "Westpac customer";
 
     // Signature stats row (points / standing / renewal) — mirrors the canonical
     // story. Demo dressing; hidden if a persona defines no stats.
@@ -247,13 +298,27 @@
       grid.appendChild(el);
     });
 
+    // Recent activity list (demo dressing).
+    const act = document.getElementById("acct-activity");
+    const rows = document.getElementById("activity-rows");
+    if (act && rows) {
+      rows.innerHTML = "";
+      (a.activity || []).forEach(r => {
+        const el = document.createElement("div");
+        el.className = "arow";
+        el.innerHTML = `<div><b>${r.what}</b><span class="awhen">${r.when}</span></div><span class="aamt${/^\+/.test(r.amt) ? " in" : ""}">${r.amt}</span>`;
+        rows.appendChild(el);
+      });
+      act.hidden = !(a.activity && a.activity.length);
+    }
+
     panel.hidden = false;
   }
 
   function renderEmpty(source) {
-    document.getElementById("offer-heading").textContent = "Loading your offer…";
+    document.getElementById("offer-heading").textContent = "Loading your next step…";
     document.getElementById("offer-body").textContent =
-      "Fetching the offer Decisioning has decided for your account.";
+      "Fetching the next step decided for your account.";
     const ctaEl = document.getElementById("offer-cta");
     ctaEl.textContent = "—"; ctaEl.setAttribute("href", "#");
     document.getElementById("offer-code").textContent = "—";
@@ -287,7 +352,7 @@
     document.getElementById("offer-body").innerHTML = f.body;
     const ctaEl = document.getElementById("offer-cta");
     ctaEl.textContent = f.cta; ctaEl.setAttribute("href", f.url);
-    document.getElementById("offer-code").textContent = "home";
+    document.getElementById("offer-code").textContent = f.code || "home";
     document.getElementById("offer-source").textContent = source || "home offer · awaiting live decision";
 
     const art = document.getElementById("offer-art");
@@ -304,7 +369,7 @@
     return true;
   }
 
-  // Render the generic, un-personalised NRMA hero for an anonymous visitor.
+  // Render the generic, un-personalised Westpac hero for an anonymous visitor.
   // Paints the native hero fields directly (synthetic content, not an SP call),
   // hides the member account chrome, and restores the native hero if a
   // drop-in treatment card was previously injected (persona -> anonymous).
@@ -398,7 +463,7 @@
     if (!id) return renderGeneric(); // anonymous visitor -> un-personalised brand hero
 
     // Mock-up mode: skip SP entirely and render the local home offer. The
-    // logged-in page is a complete My NRMA visual with no Data Cloud dependency.
+    // logged-in page is a complete Westpac visual with no Data Cloud dependency.
     if ((cfg.HERO_SOURCE || "live") === "fallback") {
       if (renderFallback(id, "home offer · local mock-up")) return;
     }
@@ -426,10 +491,10 @@
       .then((r) => r.json())
       .then((resp) => {
         const item = firstItem(resp);
-        // In "auto" only accept a live decision that serves a known NRMA offer;
+        // In "auto" only accept a live decision that serves a known Westpac offer;
         // otherwise fall through to the local home offer (ignores stale serves).
         const accept = item && (item.TreatmentOutput__c || item.OfferHeading__c || item.personalizationContentId)
-          && ((cfg.HERO_SOURCE || "live") !== "auto" || isNrmaItem(item));
+          && ((cfg.HERO_SOURCE || "live") !== "auto" || isWestpacItem(item));
         if (accept) {
           const prevOffer = state.lastDecision && state.lastDecision.offerId;
           const newOffer  = pick(item, "OfferId__c", "OfferTreatmentCode__c", "Id__c");
@@ -477,7 +542,7 @@
     const sec = document.getElementById("foryou");
     if (!sec) return;
     sec.style.transition = "box-shadow .25s ease";
-    sec.style.boxShadow = "0 0 0 3px rgba(0,74,66,.9)";
+    sec.style.boxShadow = "0 0 0 3px rgba(218,23,16,.85)";
     setTimeout(() => { sec.style.boxShadow = "none"; }, 900);
   }
 
@@ -550,7 +615,7 @@
       state.individualId = sel.value;
       state.lastCategory = null;
       highlight(null);
-      renderAccount(PERSONAS.find(p => p.id === sel.value)); // log in / out of My NRMA
+      renderAccount(PERSONAS.find(p => p.id === sel.value)); // log in / out of the Westpac app
       setIdentity(state.individualId);
       requestDecision(); // fresh arrival = serve the DH decision for this person
       startPolling();    // watch for live re-decisions on this identity
@@ -608,7 +673,7 @@
   // Which identity the storefront opens on (the parity beat starts logged in).
   //   ?who=<first name | contact id>  -> that persona
   //   ?who=anon | anonymous           -> anonymous / generic (no login)
-  //   (no param)                      -> Sarah (Platinum road-tripper) by default
+  //   (no param)                      -> Hannah (established customer) by default
   // On refresh the same identity is kept, so "fire decisions -> refresh" shows
   // the newly-served offer against a stable logged-in member.
   function resolveOpeningPersona() {
@@ -636,8 +701,8 @@
       renderItem(MOCK_ITEM, "MOCK · local sample");
     } else {
       pill.textContent = "LIVE · Salesforce Personalization"; pill.className = "pill live";
-      // Open LOGGED IN (default: Sarah) so the parity beat starts in a real
-      // My NRMA member account and the served offer updates on refresh as
+      // Open LOGGED IN (default: Hannah) so the parity beat starts in a real
+      // Westpac customer account and the served offer updates on refresh as
       // decisions fire. ?who=anon opens anonymous/generic instead.
       const opening = resolveOpeningPersona();
       if (opening) {
