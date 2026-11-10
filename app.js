@@ -122,7 +122,7 @@
   const OFFER_CREATIVE = {
     WB_ONBOARD1: { eyebrow: "Welcome to Westpac", heading: "Let's get your app set up the way you like it",
       body: "Turn on <strong>real-time alerts</strong> and add your card to your <strong>digital wallet</strong> so you can pay with your phone from today.",
-      cta: "Finish set-up", img: "https://images.unsplash.com/photo-1563986768609-322da13575f3?w=1000&q=80&auto=format&fit=crop" },
+      cta: "Finish set-up", img: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=1000&q=80&auto=format&fit=crop" },
     WB_ONBOARD2: { eyebrow: "Welcome to Westpac", heading: "Start a savings goal in a minute",
       body: "Pick something you're saving for and we'll help you <strong>track it from your home screen</strong>. You can change it any time.",
       cta: "Set a goal", img: "https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=1000&q=80&auto=format&fit=crop" },
@@ -131,7 +131,7 @@
       cta: "Compare cards", img: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=1000&q=80&auto=format&fit=crop" },
     WB_SAVER: { eyebrow: "Picked for you", heading: "Give your savings a boost",
       body: "Move some of today's balance into a <strong>bonus savings account</strong> and earn more when you grow it each month.",
-      cta: "Open a savings account", img: "https://images.unsplash.com/photo-1579621970795-87facc2f976d?w=1000&q=80&auto=format&fit=crop" },
+      cta: "Open a savings account", img: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=1000&q=80&auto=format&fit=crop" },
     WB_REPRICE: { eyebrow: "Your fixed rate ends soon", heading: "Let's look at your home loan options together",
       body: "Your fixed term is ending. A home loan specialist can <strong>review your options before it rolls to variable</strong> — book a time that suits you.",
       cta: "Book a review", img: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1000&q=80&auto=format&fit=crop" },
