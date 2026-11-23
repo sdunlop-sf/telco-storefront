@@ -1,19 +1,19 @@
 /* ─────────────────────────────────────────────────────────────────────────
- * Westpac app — demo config (B2C lifecycle banking: onboarding, cards,
- * savings, home-loan retention and hardship support, served into the app).
+ * AA Insurance (NZ) app — demo config (car, contents, home and travel cover,
+ * AA Insurance Rewards, renewals and claim care, served into the app).
  *
  * This is the ONE file you edit to flip the app from local mock to live SP.
  * MOCK_MODE false loads the Data 360 Web SDK beacon and lets Salesforce
  * Personalization serve the DH decision into the "For you" hero.
  *
- * Previous skin (NRMA) is kept in skins/nrma/ — copy those four files back
- * over the root ones to restore it.
+ * Switch skins with ./skins/use-skin.sh <name> (see skins/README.md). The
+ * Westpac skin is kept in skins/westpac/, NRMA in skins/nrma/.
  * ───────────────────────────────────────────────────────────────────────── */
 window.DEMO_CONFIG = {
   MOCK_MODE: false,
 
   // Shown in the header / footer. Pure cosmetics.
-  BRAND: "Westpac",
+  BRAND: "AA Insurance",
 
   // Beacon from the 4b Website/App connector (harness shared across demos).
   BEACON_URL: "https://cdn.c360a.salesforce.com/beacon/c360a/5e39738b-7dd0-46b3-b82d-10a7983da2fd/scripts/c360a.min.js",
@@ -37,45 +37,45 @@ window.DEMO_CONFIG = {
 
   // Where the logged-in "For you" hero sources its offer:
   //   "fallback" -> ALWAYS render the local per-persona home offer (app.js
-  //                 FALLBACK_OFFER). Guaranteed-clean Westpac mock-up, no
+  //                 FALLBACK_OFFER). Guaranteed-clean AAI mock-up, no
   //                 Data Cloud dependency.
   //   "auto"     -> prefer the live SP decision, but only accept it when the
-  //                 served offer is a known Westpac offer (WB_ code / brand
+  //                 served offer is a known AAI offer (AA_ code / brand
   //                 token); else show the local one. Safe AND live.
-  //   "live"     -> trust whatever SP serves, no Westpac guard.
+  //   "live"     -> trust whatever SP serves, no AAI guard.
   HERO_SOURCE: "auto",
 
   // How the "For you" slot renders the SP decision: "treatment" drops the
   // hydrated card in whole; "fields" paints the native hero from fields.
   RENDER_MODE: "fields",
 
-  // Catalogue = Westpac product lines. Browsing a line sends a Product Browse
-  // engagement event (SP re-shapes in session).
+  // Catalogue = AA Insurance product lines. Browsing a line sends a Product
+  // Browse engagement event (SP re-shapes in session).
   CATALOG: {
-    savings: {
-      id: "PROD_SAVINGS", category: "CAT_SAVINGS", label: "Savings accounts",
-      sub: "Set a goal, watch it grow", price: "Open in minutes",
-      img: "https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=600&q=80&auto=format&fit=crop"
+    car: {
+      id: "PROD_CAR", category: "CAT_CAR", label: "Car insurance",
+      sub: "Agreed value cover and a lifetime repair guarantee", price: "Get a quote",
+      img: "https://www.aainsurance.co.nz/i/880x580-px-AAI_website_tile_Young_Drivers_Road_Ready.jpg?xid=70piar1ns1oi|EkvP2bC0VNI9DaToyANWW|ca2fba511230779377302cec2661458b&w=600&q=70"
     },
-    cards: {
-      id: "PROD_CARDS", category: "CAT_CARDS", label: "Credit cards",
-      sub: "Low-rate and rewards options", price: "Compare cards",
-      img: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&q=80&auto=format&fit=crop"
+    contents: {
+      id: "PROD_CONTENTS", category: "CAT_CONTENTS", label: "Contents and renters",
+      sub: "Your laptop and phone, covered anywhere in NZ", price: "From $4 a week",
+      img: "https://www.aainsurance.co.nz/i/3W3A9137_800x600.jpg?xid=70piar1ns1oi|5VMOejO58vlZqJdWZM8OqI|5797f8f36c2f4c2ac9d18f8da0378ee9&w=600&q=70"
     },
-    homeloans: {
-      id: "PROD_HOMELOANS", category: "CAT_HOMELOANS", label: "Home loans",
-      sub: "Fixed, variable or split", price: "Talk to a specialist",
-      img: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=600&q=80&auto=format&fit=crop"
+    home: {
+      id: "PROD_HOME", category: "CAT_HOME", label: "Home insurance",
+      sub: "Cover for the place you call home", price: "Get a quote",
+      img: "https://www.aainsurance.co.nz/i/Own_the_Home_Hero_Homepage_900x720.png?xid=70piar1ns1oi|76EaRZqLrvP2Iz8CgJenH3|f5383a0ec22501aa3a3a2335f74acd1b&w=600&q=70"
     },
-    insurance: {
-      id: "PROD_INSURANCE", category: "CAT_INSURANCE", label: "Insurance",
-      sub: "Home, contents and car", price: "Get a quote",
-      img: "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?w=600&q=80&auto=format&fit=crop"
+    travel: {
+      id: "PROD_TRAVEL", category: "CAT_TRAVEL", label: "Travel insurance",
+      sub: "10% off for AA Insurance Rewards members", price: "Get a quote",
+      img: "https://www.aainsurance.co.nz/i/Get_you_sorted_768w.png?xid=70piar1ns1oi|3n7fNcUdAq7VB1rSEK1YCS|5132ee9875615307f86c6e22c3beae0f&w=600&q=70"
     },
-    help: {
-      id: "PROD_HELP", category: "CAT_HELP", label: "Financial support",
-      sub: "Help when things get tough", price: "Talk to us",
-      img: "https://images.unsplash.com/photo-1521791136064-7986c2920216?w=600&q=80&auto=format&fit=crop"
+    claims: {
+      id: "PROD_CLAIMS", category: "CAT_CLAIMS", label: "Claims and help",
+      sub: "A real person, any time you need one", price: "0800 500 213",
+      img: "https://www.aainsurance.co.nz/i/Car_pickup_768w.png?xid=70piar1ns1oi|4VhkCWjAyhSkpa6pHMsG2F|dbb8af19df6e50a7d618d98ec0f9ac65&w=600&q=70"
     }
   }
 };

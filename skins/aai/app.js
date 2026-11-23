@@ -30,9 +30,9 @@
   // decide the next best step. Contact Ids are the 4b personas created by
   // scripts/apex/build_aai_personas.apex (paste the printed Ids below; see
   // docs/aai-demo-runsheet.md "Storefront").
-  const MIA_ID    = "REPLACE_MIA_CONTACT_ID";
-  const ROBYN_ID  = "REPLACE_ROBYN_CONTACT_ID";
-  const WIREMU_ID = "REPLACE_WIREMU_CONTACT_ID";
+  const MIA_ID    = "003g700000tOvNFAA0";
+  const ROBYN_ID  = "003g700000tOvNGAA0";
+  const WIREMU_ID = "003g700000tOvNHAA0";
   const PERSONAS = [
     { id: MIA_ID, name: "Mia Tane", tag: "First car · quote saved · moving to Wellington",
       account: {

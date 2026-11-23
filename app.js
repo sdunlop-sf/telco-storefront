@@ -25,69 +25,73 @@
   // knowledge — the decision for each is served live by SP. Swapping personas
   // per demo is a config concern, not a code concern; kept here for the demo
   // switcher convenience only.
-  // Westpac re-skin: the "account" is a B2C banking profile — balances,
-  // products and recent activity the engine reads to decide the next best
-  // step. Contact Ids are the 4b personas the decisions are fired against.
+  // AA Insurance re-skin: the "account" is an insurance customer profile —
+  // policies, AA Insurance Rewards and recent activity the engine reads to
+  // decide the next best step. Contact Ids are the 4b personas created by
+  // scripts/apex/build_aai_personas.apex (paste the printed Ids below; see
+  // docs/aai-demo-runsheet.md "Storefront").
+  const MIA_ID    = "003g700000tOvNFAA0";
+  const ROBYN_ID  = "003g700000tOvNGAA0";
+  const WIREMU_ID = "003g700000tOvNHAA0";
   const PERSONAS = [
-    { id: "003Kh00001uijWCIAY", name: "Hannah Nguyen", tag: "Established · home loan roll-off in 45 days",
+    { id: MIA_ID, name: "Mia Tane", tag: "First car · quote saved · moving to Wellington",
       account: {
-        since: "Westpac customer since 2012", tier: "Everyday + Home loan",
+        since: "Grey Lynn, Auckland · quote saved last night", tier: "AA Insurance Rewards · Explorer",
         stats: [
-          { value: "&#36;4,280", label: "Everyday account" },
-          { value: "&#36;18,940", label: "Savings" },
-          { value: "45 days", label: "Fixed rate rolls off" }
+          { value: "750", label: "Rewards points" },
+          { value: "&#36;13.80/wk", label: "Saved quote" },
+          { value: "Wellington", label: "Moving soon" }
         ],
         policies: [
-          { kind: "Home loan", label: "Fixed rate · owner occupier", ref: "Rolls to variable soon",
-            premium: "Fixed term ending", status: "Review suggested" },
-          { kind: "Everyday account", label: "Westpac Choice", ref: "BSB 032-000",
-            premium: "Salary paid in", status: "On track" }
+          { kind: "Saved quote", label: "Car + contents bundle", ref: "2017 Mazda 2 GSX · NKR218",
+            premium: "&#36;13.80 a week", status: "Finish by Friday" },
+          { kind: "Contents", label: "Laptop + flat contents", ref: "&#36;15,000 · in the bundle",
+            premium: "Covered anywhere in NZ", status: "In your quote" }
         ],
         activity: [
-          { what: "Salary credit", when: "Today", amt: "+ &#36;3,912.40" },
-          { what: "Called us · asked about rates", when: "Yesterday", amt: "Contact centre" },
-          { what: "Woolworths Metro", when: "Yesterday", amt: "&#8211; &#36;46.20" },
-          { what: "Home loan repayment", when: "1 Nov", amt: "&#8211; &#36;2,604.00" }
+          { what: "Asked an AI about first-car cover", when: "Last night", amt: "Arrived from ChatGPT" },
+          { what: "Quote started · car + contents", when: "Last night", amt: "0:42 to price" },
+          { what: "Read: moving house and your cover", when: "Last week", amt: "Blog" }
         ]
       } },
-    { id: "003Kh00001uijWDIAY", name: "Daniel Chen", tag: "New customer · joined 3 days ago",
+    { id: ROBYN_ID, name: "Robyn Hale", tag: "18 years · car, home, contents · renewal in 45 days",
       account: {
-        since: "Welcome to Westpac · joined 3 days ago", tier: "New customer",
+        since: "AA Insurance customer since 2008 · Tauranga", tier: "AA Member · Premier",
         stats: [
-          { value: "&#36;1,150", label: "Everyday account" },
-          { value: "&#36;0", label: "Savings" },
-          { value: "Day 3", label: "Of your first 30" }
+          { value: "18 yrs", label: "Without a claim" },
+          { value: "3", label: "Policies" },
+          { value: "45 days", label: "To renewal" }
         ],
         policies: [
-          { kind: "Everyday", label: "Everyday account", ref: "Opened 3 days ago",
-            premium: "Card on its way", status: "Set-up 2 of 4" },
-          { kind: "Digital", label: "Digital wallet", ref: "Not set up yet",
-            premium: "Pay with your phone", status: "Set up now" }
+          { kind: "Car", label: "Comprehensive · 2019 Toyota RAV4", ref: "Agreed value",
+            premium: "Renews in 45 days", status: "Review due", renewsInDays: 45 },
+          { kind: "Home + contents", label: "Home and contents package", ref: "Tauranga",
+            premium: "Renews in 45 days", status: "Review due", renewsInDays: 45 }
         ],
         activity: [
-          { what: "First deposit", when: "3 days ago", amt: "+ &#36;1,200.00" },
-          { what: "App installed", when: "3 days ago", amt: "Welcome" },
-          { what: "Coffee Supreme", when: "Today", amt: "&#8211; &#36;5.80" }
+          { what: "Called us · asked about her renewal", when: "Today", amt: "Contact centre" },
+          { what: "Renewal notice sent", when: "3 days ago", amt: "Email" },
+          { what: "Bach insured elsewhere · renewal arrived", when: "This week", amt: "Omokoroa" }
         ]
       } },
-    { id: "003Kh00001uijWFIAY", name: "Anita Kapoor", tag: "Financial hardship arrangement in place",
+    { id: WIREMU_ID, name: "Wiremu Parata", tag: "Car claim open · courtesy car in use",
       account: {
-        since: "Westpac customer since 2018", tier: "Support arrangement",
+        since: "AA Insurance customer since 2020 · Christchurch", tier: "Claim in progress",
         stats: [
-          { value: "&#36;312", label: "Everyday account" },
-          { value: "Paused", label: "Card repayments" },
-          { value: "In place", label: "Hardship arrangement" }
+          { value: "Open", label: "Car claim" },
+          { value: "Day 6", label: "At the repairer" },
+          { value: "In use", label: "Courtesy car" }
         ],
         policies: [
-          { kind: "Support", label: "Hardship arrangement", ref: "Reviewed with our team",
-            premium: "Repayments adjusted", status: "In place" },
-          { kind: "Credit card", label: "Low rate card", ref: "Card ending 9021",
-            premium: "Repayments paused", status: "Review due" }
+          { kind: "Claim", label: "Car claim · rear-ended at the lights", ref: "Approved repairer",
+            premium: "Repairs under way", status: "In progress" },
+          { kind: "Car", label: "Comprehensive · 2016 Mazda CX-5", ref: "Agreed value",
+            premium: "Lifetime repair guarantee", status: "Active" }
         ],
         activity: [
-          { what: "Hardship arrangement confirmed", when: "Last week", amt: "Support team" },
-          { what: "Pharmacy", when: "Today", amt: "&#8211; &#36;18.40" },
-          { what: "Rent", when: "1 Nov", amt: "&#8211; &#36;520.00" }
+          { what: "Repairer update · parts ordered", when: "Today", amt: "Claims team" },
+          { what: "Courtesy car collected", when: "5 days ago", amt: "Christchurch" },
+          { what: "Claim lodged", when: "6 days ago", amt: "0800 500 213" }
         ]
       } }
   ];
@@ -97,55 +101,57 @@
   const MOCK_ITEM = {
     OfferHeading__c: "Your personalised offer appears here",
     OfferBody__c: "Set <strong>MOCK_MODE: false</strong> in config.js to serve a live decision from Salesforce Personalization.",
-    CallToActionText__c: "Shop now",
+    CallToActionText__c: "Get a quote",
     CallToActionUrl__c: "#",
-    ImageUrl__c: "https://images.unsplash.com/photo-1522199755839-a2bacb67c546?w=1000&q=80&auto=format&fit=crop",
+    ImageUrl__c: "https://www.aainsurance.co.nz/i/Motor_Hero_Homepage_895x600.jpg?xid=70piar1ns1oi|60TtPf71C7SyOqtr7sQ71T|707acbce1062d5dc2f7342de1ee027bc&w=1000&q=75",
     OfferId__c: "SAMPLE"
   };
 
   // Generic, UN-PERSONALISED opening offer shown to an anonymous visitor (no
-  // identity selected). This is the "before context" state: a brand/acquisition
-  // hero every visitor sees, no account chrome. Picking a customer swaps this
-  // for the DH-arbitrated, SP-served personal offer (the inbound-parity beat).
+  // identity selected). Picking a customer swaps this for the DH-arbitrated,
+  // SP-served personal offer (the inbound-parity beat).
   const GENERIC_OFFER = {
-    eyebrow: "Westpac",
-    heading: "Your money, your next step.",
-    body: "Everyday banking, savings, cards and home loans in one app. <strong>Sign in</strong> and your next best step re-shapes to you.",
-    cta: "Explore Westpac",
+    eyebrow: "AA Insurance",
+    heading: "Car, home and contents insurance, made simple.",
+    body: "<strong>New Zealand's most trusted brand for Car, Home and Contents Insurance.</strong> Sign in and your next step re-shapes to you.",
+    cta: "Get a quote",
     url: "#",
-    img: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=1000&q=80&auto=format&fit=crop"
+    img: "https://www.aainsurance.co.nz/i/Motor_Hero_Homepage_895x600.jpg?xid=70piar1ns1oi|60TtPf71C7SyOqtr7sQ71T|707acbce1062d5dc2f7342de1ee027bc&w=1000&q=75"
   };
 
-  // Local creative per Westpac offer code (WB_*). Generic copy, no rates —
-  // used for the per-persona fallback and to fill an image if a live serve
-  // carries none. A live SP decision ALWAYS overrides the fallback.
+  // Local creative per AAI offer code (AA_*), same copy family as the RTOM
+  // treatments — used for the per-persona fallback and to fill an image if a
+  // live serve carries none. A live SP decision ALWAYS overrides the fallback.
   const OFFER_CREATIVE = {
-    WB_ONBOARD1: { eyebrow: "Welcome to Westpac", heading: "Let's get your app set up the way you like it",
-      body: "Turn on <strong>real-time alerts</strong> and add your card to your <strong>digital wallet</strong> so you can pay with your phone from today.",
-      cta: "Finish set-up", img: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=1000&q=80&auto=format&fit=crop" },
-    WB_ONBOARD2: { eyebrow: "Welcome to Westpac", heading: "Start a savings goal in a minute",
-      body: "Pick something you're saving for and we'll help you <strong>track it from your home screen</strong>. You can change it any time.",
-      cta: "Set a goal", img: "https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=1000&q=80&auto=format&fit=crop" },
-    WB_CARD: { eyebrow: "Picked for you", heading: "A credit card that fits how you spend",
-      body: "Compare our <strong>low-rate and rewards cards</strong> and see which one suits your everyday spending. Apply in the app in a few minutes.",
-      cta: "Compare cards", img: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=1000&q=80&auto=format&fit=crop" },
-    WB_SAVER: { eyebrow: "Picked for you", heading: "Give your savings a boost",
-      body: "Move some of today's balance into a <strong>bonus savings account</strong> and earn more when you grow it each month.",
-      cta: "Open a savings account", img: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=1000&q=80&auto=format&fit=crop" },
-    WB_REPRICE: { eyebrow: "Your fixed rate ends soon", heading: "Let's look at your home loan options together",
-      body: "Your fixed term is ending. A home loan specialist can <strong>review your options before it rolls to variable</strong> — book a time that suits you.",
-      cta: "Book a review", img: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1000&q=80&auto=format&fit=crop" },
-    WB_HARDSHIP_HELP: { eyebrow: "We're here to help", heading: "Your support arrangement, and what happens next",
-      body: "Your arrangement is in place. See <strong>your next steps</strong>, check in with our support team, or find free financial counselling.",
-      cta: "See my next steps", img: "https://images.unsplash.com/photo-1521791136064-7986c2920216?w=1000&q=80&auto=format&fit=crop" }
+    AA_FIRST_CAR: { eyebrow: "First-car cover", heading: "Your first car, covered before you drive it home",
+      body: "Comprehensive cover for first-time drivers: <strong>agreed value cover and a lifetime repair guarantee</strong>, with your excess explained in plain English.",
+      cta: "Get a quote", img: "https://www.aainsurance.co.nz/i/880x580-px-AAI_website_tile_Young_Drivers_Road_Ready.jpg?xid=70piar1ns1oi|EkvP2bC0VNI9DaToyANWW|ca2fba511230779377302cec2661458b&w=1000&q=75" },
+    AA_CONTENTS: { eyebrow: "Renters cover", heading: "Renting? Cover your stuff from &#36;4 a week",
+      body: "Your <strong>laptop, phone and e-scooter</strong> covered at the flat and when you are out and about, anywhere in New Zealand.",
+      cta: "Get a quote", img: "https://www.aainsurance.co.nz/i/3W3A9137_800x600.jpg?xid=70piar1ns1oi|5VMOejO58vlZqJdWZM8OqI|5797f8f36c2f4c2ac9d18f8da0378ee9&w=1000&q=75" },
+    AA_TRAVEL: { eyebrow: "AA Insurance Rewards", heading: "Heading away? 10 percent off travel insurance",
+      body: "As a Rewards member you get <strong>10 percent off travel insurance</strong>, with 24/7 emergency help.",
+      cta: "Get a quote", img: "https://www.aainsurance.co.nz/i/Get_you_sorted_768w.png?xid=70piar1ns1oi|3n7fNcUdAq7VB1rSEK1YCS|5132ee9875615307f86c6e22c3beae0f&w=1000&q=75" },
+    AA_QUOTE_SAVED: { eyebrow: "Your saved quote", heading: "Your car and contents quote is saved",
+      body: "<strong>&#36;13.80 a week</strong> for your Mazda and your contents. Buy this week and get <strong>500 bonus points</strong>.",
+      cta: "Finish my quote", img: "https://www.aainsurance.co.nz/i/First_Keys_Hero_Homepage_880x580v2.png?xid=70piar1ns1oi|3ZpyrZk5XqpJyGMgjboqzJ|507b56e1d60908398879c7d369565b6a&w=1000&q=75" },
+    AA_RW_QUESTS: { eyebrow: "AA Insurance Rewards", heading: "Two quests to go: 600 more points",
+      body: "Add your licence photo and save AA Roadservice to finish your welcome quests.",
+      cta: "Finish my quests", img: "https://www.aainsurance.co.nz/i/Wear_and_tear_768w.png?xid=70piar1ns1oi|zX7oPduPCGOpMGjo02D63|d3d3395ae38c96e2a5bac39e95186cec&w=1000&q=75" },
+    AA_LOYALTY_CREDIT: { eyebrow: "Your renewal", heading: "Your renewal, explained, with a loyalty credit",
+      body: "18 years without a claim. We have applied a <strong>loyalty credit</strong> and explained every change line by line.",
+      cta: "See my renewal", img: "https://www.aainsurance.co.nz/i/Own_the_Home_Hero_Homepage_900x720.png?xid=70piar1ns1oi|76EaRZqLrvP2Iz8CgJenH3|f5383a0ec22501aa3a3a2335f74acd1b&w=1000&q=75" },
+    AA_CLAIM_CARE: { eyebrow: "Your claim", heading: "Your claim: what happens next",
+      body: "Your car is with an <strong>approved repairer</strong> and your courtesy car is sorted. Track every step in the app.",
+      cta: "Track my claim", img: "https://www.aainsurance.co.nz/i/Car_pickup_768w.png?xid=70piar1ns1oi|4VhkCWjAyhSkpa6pHMsG2F|dbb8af19df6e50a7d618d98ec0f9ac65&w=1000&q=75" }
   };
 
   // Per-persona local offer shown when the live serve has not resolved yet
   // (fresh identity, item graph mid-refresh). Keyed by Contact Id -> offer code.
   const FALLBACK_CODE = {
-    "003Kh00001uijWCIAY": "WB_REPRICE",       // Hannah — fixed-rate roll-off
-    "003Kh00001uijWDIAY": "WB_ONBOARD1",      // Daniel — new customer onboarding
-    "003Kh00001uijWFIAY": "WB_HARDSHIP_HELP"  // Anita — hardship: support only
+    [MIA_ID]:    "AA_FIRST_CAR",      // Mia — first-car cover (Beat 3 flips to contents)
+    [ROBYN_ID]:  "AA_LOYALTY_CREDIT", // Robyn — renewal in 45 days
+    [WIREMU_ID]: "AA_CLAIM_CARE"      // Wiremu — open claim: care only
   };
   const FALLBACK_OFFER = {};
   Object.keys(FALLBACK_CODE).forEach(id => {
@@ -153,31 +159,31 @@
     if (c) FALLBACK_OFFER[id] = Object.assign({ url: "#", code: FALLBACK_CODE[id] }, c);
   });
 
-  // Accept a live SP decision only when it serves a Westpac offer, so a stale
-  // serve from a previous demo vertical (NRMA, telco, insurer) is ignored and
+  // Accept a live SP decision only when it serves an AAI offer, so a stale
+  // serve from a previous demo vertical (Westpac, NRMA, telco) is ignored and
   // the local offer shows instead. Offer Ids churn on every rebuild, so we key
-  // on the WB_ offer code or the Westpac brand token in the hydrated treatment.
-  const WESTPAC_OFFER_IDS = new Set([]);   // optional exact 15-char Id guard
-  const OTHER_BRANDS = /\b(nrma|my nrma|suncorp|medibank|bupa|telco|ampol|chargefox)\b/i;
+  // on the AA_ offer code or the AA Insurance brand token in the treatment.
+  const AAI_OFFER_IDS = new Set([]);   // optional exact 15-char Id guard
+  const OTHER_BRANDS = /\b(westpac|nrma|my nrma|suncorp|medibank|bupa|telco|ampol|chargefox)\b/i;
   function codeOf(item) {
     const txt = [pick(item, "OfferTreatmentCode__c"), pick(item, "OfferCode__c", "offerCode"),
                  pick(item, "Id__c"), pick(item, "TreatmentOutput__c", "treatmentOutput")].join(" ");
-    const m = /\bWB_[A-Z0-9_]+/.exec(txt);
+    const m = /\bAA_[A-Z0-9_]+/.exec(txt);
     return m ? m[0].replace(/_(EMAIL|SMS|PUSH|WEB)$/, "") : null;
   }
-  function isWestpacItem(item) {
+  function isBrandItem(item) {
     const oid = pick(item, "OfferId__c", "offerId");
-    if (oid && WESTPAC_OFFER_IDS.has(String(oid).substring(0, 15))) return true;
+    if (oid && AAI_OFFER_IDS.has(String(oid).substring(0, 15))) return true;
     const txt = (pick(item, "TreatmentOutput__c", "treatmentOutput") || "") + " " +
                 (pick(item, "OfferHeading__c", "offerHeading") || "") + " " +
                 (pick(item, "OfferBody__c", "offerBody") || "");
-    if (OTHER_BRANDS.test(txt)) return false;           // leftover NRMA / telco / insurer serve
-    return !!codeOf(item) || /westpac/i.test(txt);
+    if (OTHER_BRANDS.test(txt)) return false;           // leftover Westpac / NRMA / telco serve
+    return !!codeOf(item) || /aa insurance|aainsurance/i.test(txt);
   }
 
   const CAT_LABEL = {
-    CAT_SAVINGS: "Savings", CAT_CARDS: "Credit cards", CAT_HOMELOANS: "Home loans",
-    CAT_INSURANCE: "Insurance", CAT_HELP: "Support"
+    CAT_CAR: "Car", CAT_CONTENTS: "Contents", CAT_HOME: "Home",
+    CAT_TRAVEL: "Travel", CAT_CLAIMS: "Help"
   };
 
   let state = { individualId: "", lastCategory: null, lastDecision: null };
@@ -235,7 +241,7 @@
     const art = document.getElementById("offer-art");
     if (img) {
       art.style.backgroundImage =
-        `linear-gradient(120deg, rgba(8,14,26,.45), rgba(8,14,26,.05)), url('${img}')`;
+        `linear-gradient(120deg, rgba(9,67,143,.35), rgba(9,67,143,.0)), url('${img}')`;
     }
 
     state.lastDecision = {
@@ -249,7 +255,7 @@
       JSON.stringify(state.lastDecision, null, 2);
   }
 
-  // Populate the logged-in Westpac customer summary from the selected persona.
+  // Populate the logged-in AA Insurance customer summary from the selected persona.
   // Demo dressing only — this is NOT SP/decision data; it just makes the offer
   // land inside a believable account context. Hidden when anonymous.
   function renderAccount(persona) {
@@ -261,7 +267,7 @@
     document.getElementById("acct-avatar").textContent = (persona.name || "s").trim()[0];
     document.getElementById("acct-name").textContent = (persona.name || "").split(" ")[0];
     document.getElementById("acct-since").textContent = a.since || "Welcome back";
-    document.getElementById("acct-tier").textContent = a.tier || "Westpac customer";
+    document.getElementById("acct-tier").textContent = a.tier || "AA Insurance customer";
 
     // Signature stats row (points / standing / renewal) — mirrors the canonical
     // story. Demo dressing; hidden if a persona defines no stats.
@@ -357,7 +363,7 @@
 
     const art = document.getElementById("offer-art");
     art.style.backgroundImage =
-      `linear-gradient(120deg, rgba(8,14,26,.45), rgba(8,14,26,.05)), url('${f.img}')`;
+      `linear-gradient(120deg, rgba(9,67,143,.35), rgba(9,67,143,.0)), url('${f.img}')`;
 
     state.lastDecision = {
       offerId: null, treatment: null, heading: f.heading,
@@ -369,7 +375,7 @@
     return true;
   }
 
-  // Render the generic, un-personalised Westpac hero for an anonymous visitor.
+  // Render the generic, un-personalised AA Insurance hero for an anonymous visitor.
   // Paints the native hero fields directly (synthetic content, not an SP call),
   // hides the member account chrome, and restores the native hero if a
   // drop-in treatment card was previously injected (persona -> anonymous).
@@ -396,7 +402,7 @@
 
     const art = document.getElementById("offer-art");
     art.style.backgroundImage =
-      `linear-gradient(120deg, rgba(8,14,26,.45), rgba(8,14,26,.05)), url('${GENERIC_OFFER.img}')`;
+      `linear-gradient(120deg, rgba(9,67,143,.35), rgba(9,67,143,.0)), url('${GENERIC_OFFER.img}')`;
 
     state.lastDecision = null;
     document.getElementById("decision-json").textContent =
@@ -463,7 +469,7 @@
     if (!id) return renderGeneric(); // anonymous visitor -> un-personalised brand hero
 
     // Mock-up mode: skip SP entirely and render the local home offer. The
-    // logged-in page is a complete Westpac visual with no Data Cloud dependency.
+    // logged-in page is a complete AA Insurance visual with no Data Cloud dependency.
     if ((cfg.HERO_SOURCE || "live") === "fallback") {
       if (renderFallback(id, "home offer · local mock-up")) return;
     }
@@ -491,10 +497,10 @@
       .then((r) => r.json())
       .then((resp) => {
         const item = firstItem(resp);
-        // In "auto" only accept a live decision that serves a known Westpac offer;
+        // In "auto" only accept a live decision that serves a known AAI offer;
         // otherwise fall through to the local home offer (ignores stale serves).
         const accept = item && (item.TreatmentOutput__c || item.OfferHeading__c || item.personalizationContentId)
-          && ((cfg.HERO_SOURCE || "live") !== "auto" || isWestpacItem(item));
+          && ((cfg.HERO_SOURCE || "live") !== "auto" || isBrandItem(item));
         if (accept) {
           const prevOffer = state.lastDecision && state.lastDecision.offerId;
           const newOffer  = pick(item, "OfferId__c", "OfferTreatmentCode__c", "Id__c");
@@ -542,7 +548,7 @@
     const sec = document.getElementById("foryou");
     if (!sec) return;
     sec.style.transition = "box-shadow .25s ease";
-    sec.style.boxShadow = "0 0 0 3px rgba(218,23,16,.85)";
+    sec.style.boxShadow = "0 0 0 3px rgba(255,212,0,.95)";
     setTimeout(() => { sec.style.boxShadow = "none"; }, 900);
   }
 
@@ -615,7 +621,7 @@
       state.individualId = sel.value;
       state.lastCategory = null;
       highlight(null);
-      renderAccount(PERSONAS.find(p => p.id === sel.value)); // log in / out of the Westpac app
+      renderAccount(PERSONAS.find(p => p.id === sel.value)); // log in / out of the AA Insurance app
       setIdentity(state.individualId);
       requestDecision(); // fresh arrival = serve the DH decision for this person
       startPolling();    // watch for live re-decisions on this identity
@@ -673,7 +679,7 @@
   // Which identity the storefront opens on (the parity beat starts logged in).
   //   ?who=<first name | contact id>  -> that persona
   //   ?who=anon | anonymous           -> anonymous / generic (no login)
-  //   (no param)                      -> Hannah (established customer) by default
+  //   (no param)                      -> Mia (first persona) by default
   // On refresh the same identity is kept, so "fire decisions -> refresh" shows
   // the newly-served offer against a stable logged-in member.
   function resolveOpeningPersona() {
@@ -701,8 +707,8 @@
       renderItem(MOCK_ITEM, "MOCK · local sample");
     } else {
       pill.textContent = "LIVE · Salesforce Personalization"; pill.className = "pill live";
-      // Open LOGGED IN (default: Hannah) so the parity beat starts in a real
-      // Westpac customer account and the served offer updates on refresh as
+      // Open LOGGED IN (default: Mia) so the parity beat starts in a real
+      // AA Insurance customer account and the served offer updates on refresh as
       // decisions fire. ?who=anon opens anonymous/generic instead.
       const opening = resolveOpeningPersona();
       if (opening) {

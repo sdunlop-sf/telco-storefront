@@ -1,20 +1,21 @@
 :root {
-  /* Westpac app palette: signature red accent, white surfaces, deep navy ink */
-  --ink: #1f1c4f;          /* headings / primary ink (deep navy) */
-  --eyebrow: #da1710;      /* red eyebrow label */
-  --pillbg: #fbe9e8;       /* soft red pill background */
-  --pillink: #b3120d;      /* pill text */
-  --body: #4a4a63;         /* body copy */
-  --bar: #da1710;          /* accent bar / divider */
-  --muted: #868aa3;        /* secondary text */
-  --line: #ebe9f0;         /* hairline borders */
+  /* AA Insurance palette: AA yellow accent, AAI blue + navy ink, cream surfaces */
+  --ink: #09438f;          /* headings / primary ink (AAI navy) */
+  --eyebrow: #0d59bf;      /* blue eyebrow label */
+  --pillbg: #fff6c2;       /* soft yellow pill background */
+  --pillink: #262626;      /* pill text (charcoal) */
+  --body: #262626;         /* body copy (charcoal) */
+  --bar: #ffd400;          /* accent bar / divider (AA yellow) */
+  --muted: #6b6b6b;        /* secondary text */
+  --line: #e3e1da;         /* hairline borders */
   --white: #fff;
-  --navy: #151338;         /* deep stage / footer */
-  --accent: #da1710;       /* primary CTA / brand red */
-  --blue: #a50f0a;         /* deeper red (gradient end) */
+  --navy: #09438f;         /* deep stage / footer */
+  --accent: #ffd400;       /* primary CTA / AA yellow */
+  --blue: #0d59bf;         /* AAI blue */
+  --cta-ink: #262626;      /* text on yellow */
   --card: #ffffff;
-  --bg: #f7f6fa;
-  --fd: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --bg: #f2f1ed;           /* cream */
+  --fd: Arial, Helvetica, sans-serif;
 }
 * { box-sizing: border-box; }
 html, body { margin: 0; }
@@ -33,8 +34,8 @@ body {
  * ───────────────────────────────────────────────────────────────────── */
 body.ff {
   background:
-    radial-gradient(1200px 600px at 12% -10%, rgba(218,23,16,.40), transparent 60%),
-    radial-gradient(1000px 520px at 112% 10%, rgba(60,52,160,.38), transparent 55%),
+    radial-gradient(1200px 600px at 12% -10%, rgba(255,212,0,.28), transparent 60%),
+    radial-gradient(1000px 520px at 112% 10%, rgba(13,89,191,.55), transparent 55%),
     var(--navy);
   min-height: 100vh;
 }
@@ -63,26 +64,26 @@ body.ff {
   height: min(852px, calc(100vh - 96px));
   width: auto;
   scrollbar-width: none;
-  background: linear-gradient(135deg, #f7f6fa 0%, #ffffff 42%, #ffffff 100%);
+  background: linear-gradient(135deg, #f2f1ed 0%, #ffffff 42%, #ffffff 100%);
 }
 .phone-screen::-webkit-scrollbar { display: none; }
 
 /* promo strip */
 .promo-strip {
-  background: linear-gradient(90deg, var(--blue), var(--accent));
+  background: linear-gradient(90deg, var(--navy), var(--blue));
   color: #fff; text-align: center; font-size: 11px; font-weight: 700;
   padding: 8px 14px 7px; letter-spacing: .4px; text-transform: uppercase;
   padding-top: 40px; /* clear the notch */
 }
 
-/* header — Westpac W mark + wordmark on white, red hairline */
+/* header — AA Insurance logo on white, yellow rule */
 header.site {
   display: flex; align-items: center; gap: 14px;
-  padding: 46px 18px 12px; background: #ffffff; border-bottom: 3px solid var(--accent);
+  padding: 46px 18px 12px; background: #ffffff; border-bottom: 4px solid var(--accent);
   position: sticky; top: 0; z-index: 20;
 }
 .brand { display: flex; align-items: center; gap: 9px; text-decoration: none; margin-right: auto; }
-.brand-logo { height: 22px; width: auto; display: block; }
+.brand-logo { height: 30px; width: auto; display: block; }
 .wordmark { font-weight: 800; font-size: 19px; letter-spacing: -.6px; color: var(--ink); }
 .icon-btn { background: none; border: 0; padding: 4px; cursor: pointer; }
 .icon-btn svg { width: 22px; height: 22px; fill: none; stroke: var(--ink); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; display: block; }
@@ -103,7 +104,7 @@ nav.chips .chip {
   transition: background .12s, color .12s, border-color .12s;
 }
 nav.chips .chip:hover { background: var(--pillbg); color: var(--pillink); border-color: var(--pillbg); }
-nav.chips .chip.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+nav.chips .chip.active { background: var(--accent); color: var(--cta-ink); border-color: var(--accent); }
 
 .account { display: flex; align-items: center; gap: 9px; font-size: 13px; color: var(--muted); }
 .account-label { white-space: nowrap; }
@@ -116,7 +117,7 @@ nav.chips .chip.active { background: var(--accent); color: #fff; border-color: v
 
 /* logged-in member summary — greeting + stats */
 .account-summary {
-  background: linear-gradient(160deg, #f6f3f8, #faf8fc);
+  background: linear-gradient(160deg, #f2f1ed, #f7f6f2);
   border: 1px solid var(--line); border-radius: 18px;
   padding: 16px 16px 17px; margin-bottom: 16px;
   box-shadow: 0 14px 34px -24px rgba(20,22,39,.4);
@@ -126,12 +127,12 @@ nav.chips .chip.active { background: var(--accent); color: #fff; border-color: v
 .greeting-copy { min-width: 0; margin-right: auto; }
 .avatar {
   width: 42px; height: 42px; border-radius: 50%; flex: none;
-  background: linear-gradient(135deg, var(--accent) 0%, var(--blue) 100%);
-  color: #fff; font-weight: 800; font-size: 19px; text-transform: uppercase;
+  background: var(--accent);
+  color: var(--cta-ink); font-weight: 800; font-size: 19px; text-transform: uppercase;
   display: flex; align-items: center; justify-content: center; letter-spacing: -1px;
 }
 .hello { font-size: 18px; font-weight: 700; letter-spacing: -.3px; color: var(--ink); }
-.hello b { color: var(--accent); font-weight: 800; }
+.hello b { color: var(--blue); font-weight: 800; }
 .acct-sub { font-size: 12px; color: var(--muted); margin-top: 1px; }
 .tier-chip {
   display: inline-block; margin-top: 6px;
@@ -191,13 +192,13 @@ nav.chips .chip.active { background: var(--accent); color: #fff; border-color: v
  * ───────────────────────────────────────────────────────────────────── */
 .foryou {
   position: relative; display: flex; flex-direction: column;
-  background: #fff; border: 1px solid #f2c7c5; border-radius: 20px;
+  background: #fff; border: 1px solid #f3dc6b; border-radius: 20px;
   overflow: hidden; margin-bottom: 22px;
-  box-shadow: 0 0 0 1px rgba(218,23,16,.10), 0 24px 54px -28px rgba(218,23,16,.7);
+  box-shadow: 0 0 0 1px rgba(13,89,191,.10), 0 24px 54px -28px rgba(13,89,191,.7);
 }
 .foryou .art {
   order: -1; height: 184px; flex: none;
-  background: #f1eef4 center/cover no-repeat;
+  background: #ecebe5 center/cover no-repeat;
   transition: background-image .3s ease;
 }
 /* "Picked for you" badge floated on the image */
@@ -221,13 +222,13 @@ nav.chips .chip.active { background: var(--accent); color: #fff; border-color: v
 #offer-body strong { color: var(--ink); font-weight: 800; }
 .cta-row { display: flex; align-items: center; gap: 13px; flex-wrap: wrap; }
 .cta {
-  background: linear-gradient(135deg, var(--accent), var(--blue));
-  color: #fff; text-decoration: none; font-weight: 800; font-size: 13.5px;
-  padding: 12px 24px; border-radius: 11px; letter-spacing: .2px;
-  box-shadow: 0 14px 28px -12px rgba(218,23,16,.7);
+  background: var(--accent);
+  color: var(--cta-ink); text-decoration: none; font-weight: 800; font-size: 13.5px;
+  padding: 12px 24px; border-radius: 6px; letter-spacing: .2px;
+  box-shadow: 0 14px 28px -12px rgba(13,89,191,.7);
   transition: transform .1s, box-shadow .1s;
 }
-.cta:hover { transform: translateY(-1px); box-shadow: 0 18px 34px -12px rgba(218,23,16,.75); }
+.cta:hover { transform: translateY(-1px); box-shadow: 0 18px 34px -12px rgba(13,89,191,.75); }
 .src { font-size: 10.5px; color: var(--muted); line-height: 1.4; }
 .src b { color: var(--ink); font-weight: 700; }
 
@@ -265,12 +266,12 @@ nav.chips .chip.active { background: var(--accent); color: #fff; border-color: v
 .rc:hover { transform: translateY(-2px); box-shadow: 0 18px 40px -22px rgba(20,22,39,.45); }
 .rc-primary {
   grid-column: 1 / -1;
-  border: 1px solid #f2c7c5;
-  box-shadow: 0 0 0 1px rgba(218,23,16,.15), 0 18px 44px -24px rgba(218,23,16,.6);
+  border: 1px solid #f3dc6b;
+  box-shadow: 0 0 0 1px rgba(13,89,191,.15), 0 18px 44px -24px rgba(13,89,191,.6);
 }
 .rc-img {
   height: 120px; background-size: cover; background-position: center;
-  background-color: #f1eef4;
+  background-color: #ecebe5;
   transition: background-image .25s ease;
 }
 .rc-primary .rc-img { height: 160px; }
@@ -290,9 +291,9 @@ nav.chips .chip.active { background: var(--accent); color: #fff; border-color: v
 .rc-primary p { font-size: 13.5px; }
 .rc-cta {
   margin-top: auto; align-self: flex-start;
-  background: var(--accent); color: #fff; border: 0;
-  padding: 10px 20px; border-radius: 9px; font-weight: 800; font-size: 13px;
-  cursor: pointer; text-decoration: none; box-shadow: 0 10px 22px -10px rgba(218,23,16,.55);
+  background: var(--accent); color: var(--cta-ink); border: 0;
+  padding: 10px 20px; border-radius: 6px; font-weight: 800; font-size: 13px;
+  cursor: pointer; text-decoration: none; box-shadow: 0 10px 22px -10px rgba(13,89,191,.55);
   transition: transform .1s; letter-spacing: .2px;
 }
 .rc-cta:hover { transform: translateY(-1px); }
@@ -323,7 +324,7 @@ h3.section { font-size: 17px; font-weight: 800; letter-spacing: -.3px; margin: 0
   cursor: pointer; transition: transform .14s, box-shadow .14s, border-color .14s;
 }
 .product:hover { transform: translateY(-3px); box-shadow: 0 16px 36px -18px rgba(20,22,39,.3); }
-.product .ph { height: 96px; background: #f6f3f8 center/cover no-repeat; }
+.product .ph { height: 96px; background: #f2f1ed center/cover no-repeat; }
 .product .meta { padding: 12px 12px 14px; }
 .product .chip {
   display: inline-block; font-size: 9.5px; font-weight: 800; letter-spacing: .4px; text-transform: uppercase;
@@ -331,7 +332,7 @@ h3.section { font-size: 17px; font-weight: 800; letter-spacing: -.3px; margin: 0
 }
 .product .name { font-weight: 700; font-size: 14px; letter-spacing: -.2px; line-height: 1.2; color: var(--ink); }
 .product .sub { color: var(--muted); font-size: 11.5px; margin-top: 2px; }
-.product .price { font-weight: 800; font-size: 14px; margin-top: 8px; color: var(--accent); }
+.product .price { font-weight: 800; font-size: 14px; margin-top: 8px; color: var(--blue); }
 .product.viewed { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent) inset; }
 
 /* recent activity */
@@ -358,7 +359,7 @@ h3.section { font-size: 17px; font-weight: 800; letter-spacing: -.3px; margin: 0
 }
 .tabbar .tb { display: flex; flex-direction: column; align-items: center; gap: 3px; text-decoration: none; color: var(--muted); font-size: 10px; font-weight: 700; }
 .tabbar .tb svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-.tabbar .tb.on { color: var(--accent); }
+.tabbar .tb.on { color: var(--blue); }
 
 /* footer */
 .site-foot {
@@ -374,7 +375,7 @@ h3.section { font-size: 17px; font-weight: 800; letter-spacing: -.3px; margin: 0
  * ───────────────────────────────────────────────────────────────────── */
 .dock { flex: 1; min-width: 300px; max-width: 420px; display: flex; flex-direction: column; gap: 18px; position: sticky; top: 46px; }
 .dock-card { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: 14px; padding: 16px 18px; }
-.dock-label { font-size: 10.5px; letter-spacing: 1.4px; text-transform: uppercase; color: #ff9d98; font-weight: 800; margin-bottom: 10px; }
+.dock-label { font-size: 10.5px; letter-spacing: 1.4px; text-transform: uppercase; color: #ffd400; font-weight: 800; margin-bottom: 10px; }
 .dock .account { flex-direction: column; align-items: stretch; gap: 7px; }
 .dock .account-label { color: #a7acc4; font-size: 11px; }
 
@@ -385,11 +386,11 @@ h3.section { font-size: 17px; font-weight: 800; letter-spacing: -.3px; margin: 0
   border: 1px solid #1b2036;
 }
 .inspector header { display: flex; justify-content: space-between; align-items: center; padding: 13px 18px; border-bottom: 1px solid #1b2036; }
-.inspector header b { color: #ff9d98; font-family: var(--fd); letter-spacing: .3px; }
+.inspector header b { color: #ffd400; font-family: var(--fd); letter-spacing: .3px; }
 .inspector pre { margin: 0; padding: 18px; overflow: auto; max-height: 420px; color: #d8ddf2; }
-.pill { font-size: 11px; padding: 3px 10px; border-radius: 20px; background: #1b2340; color: #ff9d98; font-family: var(--fd); font-weight: 700; letter-spacing: .3px; }
+.pill { font-size: 11px; padding: 3px 10px; border-radius: 20px; background: #1b2340; color: #ffd400; font-family: var(--fd); font-weight: 700; letter-spacing: .3px; }
 .pill.mock { background: #3a2a12; color: #f0b47a; }
-.pill.live { background: #3a1216; color: #ff8f88; }
+.pill.live { background: #3a3210; color: #ffd400; }
 
 /* responsive — stack the dock under the phone on narrow viewports */
 @media (max-width: 900px) {
