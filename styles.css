@@ -90,11 +90,21 @@ header.site {
 .hamb { background: none; border: 0; display: flex; flex-direction: column; gap: 4px; cursor: pointer; padding: 4px; }
 .hamb span { width: 20px; height: 2px; background: var(--ink); border-radius: 2px; display: block; }
 
+/* The AA app header (dark, NZAA logo) + AA Insurance strip, per the SE's designs */
+header.site.nz { background: #1d1d1b; border-bottom: 0; padding: 46px 16px 12px; }
+header.site.nz .brand-logo { height: 30px; width: 30px; }
+header.site.nz .wordmark { color: #ffffff; font: 700 16px Arial, sans-serif; letter-spacing: 0; }
+header.site.nz .icon-btn svg { stroke: #ffffff; }
+header.site.nz .hamb span { background: #ffffff; }
+.aai-in { display: flex; align-items: center; gap: 8px; background: #ffd400; padding: 7px 16px;
+  font: 600 12px Arial, sans-serif; color: #1d1d1b; position: sticky; top: 88px; z-index: 19; }
+.aai-in img { height: 18px; display: block; }
+
 /* category chips */
 nav.chips {
   display: flex; gap: 7px; padding: 11px 16px; background: rgba(255,255,255,.75);
   border-bottom: 1px solid var(--line); overflow-x: auto; white-space: nowrap;
-  position: sticky; top: 85px; z-index: 15; scrollbar-width: none;
+  position: sticky; top: 120px; z-index: 15; scrollbar-width: none;
   backdrop-filter: blur(6px);
 }
 nav.chips::-webkit-scrollbar { display: none; }

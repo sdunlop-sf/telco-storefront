@@ -22,21 +22,28 @@
 <body class="ff">
   <div class="stage">
 
-    <!-- The AA Insurance customer app, inside a phone device frame. -->
+    <!-- The AA app (AA Insurance inside it), in a phone device frame. -->
     <div class="phone">
       <div class="phone-shell">
         <div class="phone-notch"></div>
         <div class="phone-screen" id="phone-screen">
 
-          <header class="site">
-            <a class="brand" href="#" aria-label="AA Insurance">
-              <img src="assets/aai-logo.png" alt="AA Insurance" class="brand-logo" />
+          <!-- AA Insurance lives inside The AA app (no standalone insurance app): NZAA header, then the
+               AA Insurance strip, as in the SE's designs. -->
+          <header class="site nz">
+            <a class="brand" href="#" aria-label="The AA">
+              <img src="assets/nzaa-logo.svg" alt="AA" class="brand-logo" />
+              <b class="wordmark">The AA</b>
             </a>
             <button class="icon-btn" aria-label="Notifications">
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 16V11a6 6 0 1 1 12 0v5l1.5 2h-15L6 16Z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg>
             </button>
             <button class="hamb" aria-label="Menu"><span></span><span></span><span></span></button>
           </header>
+          <div class="aai-in">
+            <img src="assets/aai-logo-se.svg" alt="AA Insurance" />
+            <span>Your insurance, in The AA app</span>
+          </div>
 
           <!-- Category chips. Browsing one fires a Product Browse event -> SP
                re-shapes the hero in session. -->
