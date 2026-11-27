@@ -39,13 +39,13 @@
         since: "Grey Lynn, Auckland · quote saved last night", tier: "AA Insurance Rewards · Explorer",
         stats: [
           { value: "750", label: "Rewards points" },
-          { value: "&#36;13.80/wk", label: "Saved quote" },
+          { value: "$13.80/wk", label: "Saved quote" },
           { value: "Wellington", label: "Moving soon" }
         ],
         policies: [
           { kind: "Saved quote", label: "Car + contents bundle", ref: "2017 Mazda 2 GSX · NKR218",
-            premium: "&#36;13.80 a week", status: "Finish by Friday" },
-          { kind: "Contents", label: "Laptop + flat contents", ref: "&#36;15,000 · in the bundle",
+            premium: "$13.80 a week", status: "Finish by Friday" },
+          { kind: "Contents", label: "Laptop + flat contents", ref: "$15,000 · in the bundle",
             premium: "Covered anywhere in NZ", status: "In your quote" }
         ],
         activity: [
@@ -126,14 +126,14 @@
     AA_FIRST_CAR: { eyebrow: "First-car cover", heading: "Your first car, covered before you drive it home",
       body: "Comprehensive cover for first-time drivers: <strong>agreed value cover and a lifetime repair guarantee</strong>, with your excess explained in plain English.",
       cta: "Get a quote", img: "https://www.aainsurance.co.nz/i/880x580-px-AAI_website_tile_Young_Drivers_Road_Ready.jpg?xid=70piar1ns1oi|EkvP2bC0VNI9DaToyANWW|ca2fba511230779377302cec2661458b&w=1000&q=75" },
-    AA_CONTENTS: { eyebrow: "Renters cover", heading: "Renting? Cover your stuff from &#36;4 a week",
+    AA_CONTENTS: { eyebrow: "Renters cover", heading: "Renting? Cover your stuff from $4 a week",
       body: "Your <strong>laptop, phone and e-scooter</strong> covered at the flat and when you are out and about, anywhere in New Zealand.",
       cta: "Get a quote", img: "https://www.aainsurance.co.nz/i/3W3A9137_800x600.jpg?xid=70piar1ns1oi|5VMOejO58vlZqJdWZM8OqI|5797f8f36c2f4c2ac9d18f8da0378ee9&w=1000&q=75" },
     AA_TRAVEL: { eyebrow: "AA Insurance Rewards", heading: "Heading away? 10 percent off travel insurance",
       body: "As a Rewards member you get <strong>10 percent off travel insurance</strong>, with 24/7 emergency help.",
       cta: "Get a quote", img: "https://www.aainsurance.co.nz/i/Get_you_sorted_768w.png?xid=70piar1ns1oi|3n7fNcUdAq7VB1rSEK1YCS|5132ee9875615307f86c6e22c3beae0f&w=1000&q=75" },
     AA_QUOTE_SAVED: { eyebrow: "Your saved quote", heading: "Your car and contents quote is saved",
-      body: "<strong>&#36;13.80 a week</strong> for your Mazda and your contents. Buy this week and get <strong>500 bonus points</strong>.",
+      body: "<strong>$13.80 a week</strong> for your Mazda and your contents. Buy this week and get <strong>500 bonus points</strong>.",
       cta: "Finish my quote", img: "https://www.aainsurance.co.nz/i/First_Keys_Hero_Homepage_880x580v2.png?xid=70piar1ns1oi|3ZpyrZk5XqpJyGMgjboqzJ|507b56e1d60908398879c7d369565b6a&w=1000&q=75" },
     AA_RW_QUESTS: { eyebrow: "AA Insurance Rewards", heading: "Two quests to go: 600 more points",
       body: "Add your licence photo and save AA Roadservice to finish your welcome quests.",
